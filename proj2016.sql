@@ -30,7 +30,8 @@ create table admins(
 drop table product;
 create table product(
 	productID integer primary key,
-	brand varchar(24)
+	brand varchar(24),
+	model varchar(24)
 );
 
 drop table auction;
@@ -64,63 +65,85 @@ create table bid(
 drop table storage;
 create table storage(
 	productID integer references product,
-	brand varchar(24) references product,
+	capacityInGB decimal(9,3),
+	storageType varchar(3),
 	primary key (productID)
 );
 
 drop table psu;
 create table psu(
 	productID integer references product,
-	brand varchar(24) references product,
+	power integer,
+	modular boolean,
 	primary key (productID)
 );
 
 drop table motherboard;
 create table motherboard(
 	productID integer references product,
-	brand varchar(24) references product,
+	pcieSlots integer,
+	memorySlots integer,
+	maxRAM integer,
+	socketType varchar(16),
+	chipset varchar(16),
+	onBoardSound boolean,
+	onBoardVideo boolean,
 	primary key (productID)
 );
 
 drop table cpu;
 create table cpu(
 	productID integer references product,
-	brand varchar(24) references product,
+	cores integer,
+	clockSpeed decimal(4,2),
+	socketType varchar(16),
 	primary key (productID)
 );
 
 drop table ram;
 create table ram(
 	productID integer references product,
-	brand varchar(24) references product,
+	capacity integer,
+	memoryType varchar(4),
+	clockSpeed integer,
 	primary key (productID)
 );
 
 drop table fan;
 create table fan(
 	productID integer references product,
-	brand varchar(24) references product,
+	dimensions varchar(15),
+	flowrate integer,
+	maxRPM integer,
 	primary key (productID)
 );
 
 drop table gpu;
 create table gpu(
 	productID integer references product,
-	brand varchar(24) references product,
+	coreClockSpeed decimal(4,2),
+	numCores integer,
+	memoryCapacity integer,
+	memoryClockSpeed integer,
+	memoryType varchar(4),
+	numHDMI integer,
+	numDVI integer,
+	numDP integer,
+	powerRequirement integer,
 	primary key (productID)
 );
 
 drop table case_hw;
 create table case_hw(
 	productID integer references product,
-	brand varchar(24) references product,
+	dimensions varchar(15),
+	numCaseFans integer,
 	primary key (productID)
 );
 
 drop table other;
 create table other(
 	productID integer references product,
-	brand varchar(24) references product,
 	primary key (productID)
 );
 
