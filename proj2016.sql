@@ -82,7 +82,7 @@ create table psu(
 drop table motherboard;
 create table motherboard(
 	productID integer references product,
-	pcieSlots intege not nullr,
+	pcieSlots integer not null,
 	memorySlots integer not null,
 	maxRAM integer not null,
 	socketType varchar(16) not null,
