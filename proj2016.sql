@@ -31,7 +31,8 @@ drop table product;
 create table product(
 	productID integer primary key,
 	brand varchar(24),
-	model varchar(24)
+	model varchar(24),
+	extraInfo Text
 );
 
 drop table auction;
@@ -65,79 +66,80 @@ create table bid(
 drop table storage;
 create table storage(
 	productID integer references product,
-	capacityInGB decimal(9,3),
-	storageType varchar(3),
+	capacityInGB decimal(9,3) not null,
+	storageType varchar(3) not null,
 	primary key (productID)
 );
 
 drop table psu;
 create table psu(
 	productID integer references product,
-	power integer,
-	modular boolean,
+	power integer not null,
+	modular boolean not null,
 	primary key (productID)
 );
 
 drop table motherboard;
 create table motherboard(
 	productID integer references product,
-	pcieSlots integer,
-	memorySlots integer,
-	maxRAM integer,
-	socketType varchar(16),
-	chipset varchar(16),
-	onBoardSound boolean,
-	onBoardVideo boolean,
+	pcieSlots intege not nullr,
+	memorySlots integer not null,
+	maxRAM integer not null,
+	socketType varchar(16) not null,
+	chipset varchar(16) not null,
+	onBoardSound boolean not null,
+	onBoardVideo boolean not null,
 	primary key (productID)
 );
 
 drop table cpu;
 create table cpu(
 	productID integer references product,
-	cores integer,
-	clockSpeed decimal(4,2),
-	socketType varchar(16),
+	cores integer not null,
+	clockSpeed decimal(4,2) not null,
+	socketType varchar(16) not null,
 	primary key (productID)
 );
 
 drop table ram;
 create table ram(
 	productID integer references product,
-	capacity integer,
-	memoryType varchar(4),
-	clockSpeed integer,
+	capacity integer not null,
+	memoryType varchar(4) not null,
+	clockSpeed integer not null,
 	primary key (productID)
 );
 
 drop table fan;
 create table fan(
 	productID integer references product,
-	dimensions varchar(15),
-	flowrate integer,
-	maxRPM integer,
+	dimensions varchar(15) not null,
+	flowrate integer not null,
+	maxRPM integer not null,
 	primary key (productID)
 );
 
 drop table gpu;
 create table gpu(
 	productID integer references product,
-	coreClockSpeed decimal(4,2),
-	numCores integer,
-	memoryCapacity integer,
-	memoryClockSpeed integer,
-	memoryType varchar(4),
-	numHDMI integer,
-	numDVI integer,
-	numDP integer,
-	powerRequirement integer,
+	coreClockSpeed decimal(4,2) not null,
+	numCores integer not null,
+	memoryCapacity integer not null,
+	memoryClockSpeed integer not null,
+	memoryType varchar(4) not null,
+	numHDMI integer not null,
+	numDVI integer not null,
+	numDP integer not null,
+	powerRequirement integer not null,
 	primary key (productID)
 );
 
 drop table case_hw;
 create table case_hw(
 	productID integer references product,
-	dimensions varchar(15),
-	numCaseFans integer,
+	dimensions varchar(15) not null,
+	numCaseFans integer not null,
+	isLITT boolean not null,
 	primary key (productID)
 );
 
