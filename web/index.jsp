@@ -38,8 +38,8 @@
   if(username != null && password != null){
     // get salt from DB
     PreparedStatement getSalt = conn.createStatement();
-    String salt_query = "SELECT password_hash FROM users WHERE username=\'"+username+"\'";
-    ResultSet rs = stmt.executeQuery(salt_query);
+    String pw_query = "SELECT password_salt, password_hash FROM users WHERE username=\'"+username+"\'";
+    ResultSet rs = stmt.executeQuery(pw_query);
     
     // append salt to password
     // hash password
