@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="org.mindrot.jbcrypt.BCrypt" %>
 
 
 <html>
@@ -16,7 +17,7 @@
         <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <form>       
+                <form method="post">       
                     <h2>Please login</h2>
                     <input type="text" name="username" placeholder="Username" required="" autofocus="" />
                     <input type="password" name="password" placeholder="Password" required=""/>      
@@ -24,32 +25,48 @@
                     <a href="register.jsp" class="button btn btn-lg btn-primary btn-block">Create Account</a>
                 </form>
 <%
+  Connection conn = null;
   try{
     Class.forName("com.mysql.jdbc.Driver").newInstance();
-    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost","test_user","test_password");
+    conn = DriverManager.getConnection("jdbc:mysql://localhost/YABE","test_user","test_password");
   }
 
   catch(Exception e){
+    System.out.println("Could not connect to SQL server");
     e.printStackTrace();
   }
 
   String username = request.getParameter("username");
   String password = request.getParameter("password");
   if(username != null && password != null){
-    // get salt from DB
-    PreparedStatement getSalt = conn.createStatement();
-    String pw_query = "SELECT password_salt, password_hash FROM users WHERE username=\'"+username+"\'";
+    // get and hash from DB
+    Statement stmt = conn.createStatement();
+    String pw_query = "SELECT password_hash FROM users WHERE username=\'"+username+"\'";
     ResultSet rs = stmt.executeQuery(pw_query);
+    String db_hash = null;
+
+    try{
+      db_hash = rs.getString("password_hash");
+    }
+    catch(SQLException se){
+      if(username != null)
+        out.print("<p>Username not found in database.</p>");
+    }
+
+    // check password
+    if(db_hash != null){
+      if(BCrypt.checkpw(password,db_hash)){
+        out.print("<p>Login successful.</p>");
+        // send some token for later auth? ...TBD
+      }
+      else{
+        out.print("<p>Incorrect password.</p>");
+      }
+    }
     
-    // append salt to password
-    // hash password
-    // check hash against DB
-    // confirm logged in ...how do we do this?
   }
   else{
-    // show missing data text
   }
-
 %>
             </div>   
         </div>
