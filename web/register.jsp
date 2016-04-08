@@ -45,11 +45,11 @@
   Connection conn = null;
   try{
     Class.forName("com.mysql.jdbc.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:mysql://localhost/YABE","test_user","test_password");
+    conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
   }
 
   catch(Exception e){
-    System.out.println("Could not connect to SQL server");
+    out.print("<p>Could not connect to SQL server.</p>");
     e.printStackTrace();
   }
   

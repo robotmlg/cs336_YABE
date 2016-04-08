@@ -28,7 +28,7 @@
   Connection conn = null;
   try{
     Class.forName("com.mysql.jdbc.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:mysql://localhost/YABE","test_user","test_password");
+    conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
   }
 
   catch(Exception e){
