@@ -30,7 +30,7 @@
                     <input type="text" name="name" placeholder="Name" required autofocus />
                     <input type="text" name="age" placeholder="Age" required autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                     <input type="text" name="address" placeholder="Address" required autofocus />
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="regscript">Register</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     <a href="index.jsp" class="button btn btn-lg btn-primary btn-block">Already have an account?</a>
                 </form>
 <%
@@ -46,14 +46,18 @@
   }
   
   String name = request.getParameter("name");
-  int age = Integer.parseInt(request.getParameter("age"));
+  int age;
+  if (request.getParameter("age") != null) {
+      age = Integer.parseInt(request.getParameter("age").trim());
+  } else {
+      age = 0;
+  }
   String address = request.getParameter("address");
   String username = request.getParameter("username");
   String password = request.getParameter("password");
   int password_hash = 0;
   int password_salt = 0;
   if(name != null && age >= 13 && address != null && username != null && password != null){
-    // get and hash from DB
     Statement stmt = conn.createStatement();
     String ins_query = "INSERT INTO users (username, password_hash, password_salt, age, name, address) VALUES (\'" + username + "\', \'" + password_hash + "\', \'" + password_salt + "\', \'" + age + "\', \'" + name + "\', \'" + address + "\')";
     int res = stmt.executeUpdate(ins_query);
