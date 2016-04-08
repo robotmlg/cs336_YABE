@@ -25,11 +25,19 @@
             <div class="col-md-4">
                 <form method="post">       
                     <h2>Please register your account</h2>
-                    <input type="text" name="username" placeholder="Username" required autofocus />
-                    <input type="password" name="password" placeholder="Password" required />
-                    <input type="text" name="name" placeholder="Name" required autofocus />
-                    <input type="text" name="age" placeholder="Age" required autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
-                    <input type="text" name="address" placeholder="Address" required autofocus />
+                    <p>
+                      <input type="text" name="username" placeholder="Username" required autofocus />
+                      <input type="password" name="password" placeholder="Password" required />
+                    </p>
+                    <p>
+                      <input type="text" name="name" placeholder="Name" required autofocus />
+                    </p>
+                    <p>
+                      <input type="text" name="age" placeholder="Age" required autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                    </p>
+                    <p>
+                      <input type="text" name="address" placeholder="Address" required autofocus />
+                    </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     <a href="index.jsp" class="button btn btn-lg btn-primary btn-block">Already have an account?</a>
                 </form>
@@ -55,11 +63,10 @@
   String address = request.getParameter("address");
   String username = request.getParameter("username");
   String password = request.getParameter("password");
-  int password_hash = 0;
-  int password_salt = 0;
+  String password_hash = BCrypt.hashpw(password,BCrypt.gensalt());
   if(name != null && age >= 13 && address != null && username != null && password != null){
     Statement stmt = conn.createStatement();
-    String ins_query = "INSERT INTO users (username, password_hash, password_salt, age, name, address) VALUES (\'" + username + "\', \'" + password_hash + "\', \'" + password_salt + "\', \'" + age + "\', \'" + name + "\', \'" + address + "\')";
+    String ins_query = "INSERT INTO users (username, password_hash, age, name, address) VALUES (\'" + username + "\', \'" + password_hash + "\', \'" + age + "\', \'" + name + "\', \'" + address + "\')";
     int res = stmt.executeUpdate(ins_query);
     
     if (res < 1) {

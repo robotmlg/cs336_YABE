@@ -43,18 +43,11 @@
     Statement stmt = conn.createStatement();
     String pw_query = "SELECT password_hash FROM users WHERE username=\'"+username+"\'";
     ResultSet rs = stmt.executeQuery(pw_query);
-    String db_hash = null;
 
-    try{
-      db_hash = rs.getString("password_hash");
-    }
-    catch(SQLException se){
-      if(username != null)
-        out.print("<p>Username not found in database.</p>");
-    }
-
-    // check password
-    if(db_hash != null){
+    // check if we found a DB result
+    if(rs.next()){
+      String db_hash = rs.getString("password_hash");
+      // check password
       if(BCrypt.checkpw(password,db_hash)){
         out.print("<p>Login successful.</p>");
         // send some token for later auth? ...TBD
@@ -62,6 +55,9 @@
       else{
         out.print("<p>Incorrect password.</p>");
       }
+    }
+    else{
+      out.print("<p>Username not found.</p>");
     }
     
   }

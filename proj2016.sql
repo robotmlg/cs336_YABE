@@ -1,8 +1,7 @@
 drop table users;
 create table users(
 	username varchar(16) primary key,
-	password_hash binary(32) not null, 
-	password_salt varchar(8) not null,
+	password_hash char(60) binary not null, 
 	age integer not null,
 	name varchar(32) not null,
 	address varchar(64) not null
