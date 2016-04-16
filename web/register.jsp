@@ -16,10 +16,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.css" rel="stylesheet">
+        <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            padding-bottom: 40px;
+        }
+        </style>
         <script src="js/jquery-1.10.2.min.js"></script>
         <script src="js/bootstrap.js"></script>
     </head>
     <body>
+        <%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -39,7 +46,7 @@
                       <input type="text" name="address" placeholder="Address" required autofocus />
                     </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-                    <a href="index.jsp" class="button btn btn-lg btn-primary btn-block">Already have an account?</a>
+                    <a href="login.jsp" class="button btn btn-lg btn-primary btn-block">Already have an account?</a>
                 </form>
 <%
   Connection conn = null;
@@ -80,6 +87,7 @@
 %>
             </div>   
         </div>
+        <%@include file="includes/footer.jsp" %>
         </div>
     </body>
 </html>
