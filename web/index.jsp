@@ -23,17 +23,9 @@
         <%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <form action="processlogin.jsp" method="post">       
-                    <h2>Please login</h2>
-                    <p>
-                    <input type="text" name="username" placeholder="Username" required="" autofocus="" />
-                    <input type="password" name="password" placeholder="Password" required=""/>      
-                    </p>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-                    <a href="register.jsp" class="button btn btn-lg btn-primary btn-block">Create Account</a>
-                </form>
-            </div>   
+        <div class="col-lg-12">
+        <h1>Welcome to YABE!</h1>
+        </div>
         </div>
         <%@include file="includes/footer.jsp" %>
         </div>
