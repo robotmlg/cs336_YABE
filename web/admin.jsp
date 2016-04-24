@@ -20,7 +20,7 @@
 
 <html>
     <head>
-        <title>YABE</title>
+        <title>YABE Admin Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -53,8 +53,51 @@
                 if(rs.getInt(1) == 0){%>
         <p> Must be logged in as an administrator to view this page.<p>
               <% }
-                else { %>
-        <p> Welcome!<p>
+                else { 
+
+                    if(session.getAttribute("alert") != null){%>
+        <div class="alert alert-<%= session.getAttribute("alert_type")%>" role="alert"><%= session.getAttribute("alert") %></div>
+                    <%
+                    session.setAttribute("alert",null);
+                    }
+        %>
+
+        <div class="jumbotron">
+        <h2>Generate Reports</h2>
+        </div>
+
+        <div class="jumbotron">
+        <h2>Create Customer Representatives</h2>
+        <p>Enter a username to make that account a customer representative</p>
+        <form action="makeRep.jsp" method="put">
+            <input type="text" name="username" placeholder="Username" required />
+            <button type="submit" class="btn btn-primary btn-lg">Create rep</button>
+        </form>
+        </div>
+
+        <div class="jumbotron">
+        <h2>Delete YABE</h2>
+        <p>Press this button to erase the YABE database (except for your admin
+        account) 
+        </p>
+        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteModal">Delete DB</button>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Are you sure you want to delete all info from the database?</h4>
+        </div>
+        <div class="modal-footer">
+            <form action="deleteYABE.jsp">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">No, go back</button>
+            <button type="submit" class="btn btn-danger">Yes, nuke it</button>
+            </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
               <% }
         } %>
 
