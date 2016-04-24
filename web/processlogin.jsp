@@ -26,19 +26,23 @@
       if(BCrypt.checkpw(password,db_hash)){
         session.setAttribute("username",username);
         session.setAttribute("loggedIn","true");
+        session.setAttribute("alert","User "+username+" successfully logged in.");
+        session.setAttribute("alert_type","success");
         %>
-        <%@ include file="index.jsp"%>
         <%
       }
       else{
-        out.print("<p>Incorrect password.</p>");
+            session.setAttribute("alert","User "+username+" could not be logged in.");
+            session.setAttribute("alert_type","danger");
       }
     }
     else{
-      out.print("<p>Username not found.</p>");
+        session.setAttribute("alert","User "+username+" could not be logged in.");
+        session.setAttribute("alert_type","danger");
     }
     
   }
   else{
   }
 %>
+        <%@ include file="index.jsp"%>

@@ -25,6 +25,11 @@
         <div class="row">
         <div class="col-lg-12">
         <h1>Welcome to YABE!</h1>
+                    <% if(session.getAttribute("alert") != null){%>
+        <div class="alert alert-<%= session.getAttribute("alert_type")%>" role="alert"><%= session.getAttribute("alert") %></div>
+                    <%
+                    session.setAttribute("alert",null);
+                    }%>
         </div>
         </div>
         <%@include file="includes/footer.jsp" %>
