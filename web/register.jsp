@@ -1,9 +1,3 @@
-<%-- 
-    Document   : register
-    Created on : Apr 8, 2016, 2:21:52 PM
-    Author     : 
---%>
-
 <!DOCTYPE html>
 <%@ page language="java" %>
 <%@ page import="java.sql.*" %>
@@ -30,61 +24,24 @@
         <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <form method="post">       
+                <form action="processregistration.jsp" method="post">       
                     <h2>Please register your account</h2>
                     <p>
                       <input type="text" name="username" placeholder="Username" required autofocus />
                       <input type="password" name="password" placeholder="Password" required />
                     </p>
                     <p>
-                      <input type="text" name="name" placeholder="Name" required autofocus />
+                      <input type="text" name="name" placeholder="Name" required />
                     </p>
                     <p>
-                      <input type="text" name="age" placeholder="Age" required autofocus onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                      <input type="number" name="age" value="1" min="1" step="1" required />
                     </p>
                     <p>
-                      <input type="text" name="address" placeholder="Address" required autofocus />
+                      <input type="text" name="address" placeholder="Address" required />
                     </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     <a href="login.jsp" class="button btn btn-lg btn-primary btn-block">Already have an account?</a>
                 </form>
-<%
-  Connection conn = null;
-  try{
-    Class.forName("com.mysql.jdbc.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
-  }
-
-  catch(Exception e){
-    out.print("<p>Could not connect to SQL server.</p>");
-    e.printStackTrace();
-  }
-  
-  String name = request.getParameter("name");
-  int age;
-  if (request.getParameter("age") != null) {
-      age = Integer.parseInt(request.getParameter("age").trim());
-  } else {
-      age = 0;
-  }
-  String address = request.getParameter("address");
-  String username = request.getParameter("username");
-  String password = request.getParameter("password");
-  String password_hash = BCrypt.hashpw(password,BCrypt.gensalt());
-  if(name != null && age >= 13 && address != null && username != null && password != null){
-    Statement stmt = conn.createStatement();
-    String ins_query = "INSERT INTO users (username, password_hash, age, name, address) VALUES (\'" + username + "\', \'" + password_hash + "\', \'" + age + "\', \'" + name + "\', \'" + address + "\')";
-    int res = stmt.executeUpdate(ins_query);
-    
-    if (res < 1) {
-        out.print("<p>Registration failed.</p>");
-    } else {
-        out.print("<p>Registration successful.</p>");
-    }
-  }
-  else{
-  }
-%>
             </div>   
         </div>
         <%@include file="includes/footer.jsp" %>
