@@ -23,9 +23,16 @@
         <%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
+            <div class="col-lg-12">
+                <h1>Please register your account</h1>
+                        <% if(session.getAttribute("alert") != null){%>
+            <div class="alert alert-<%= session.getAttribute("alert_type")%>" role="alert"><%= session.getAttribute("alert") %></div>
+                        <%
+                        session.setAttribute("alert",null);
+                        }%>
+            </div>
             <div class="col-md-4">
                 <form action="processregistration.jsp" method="post">       
-                    <h2>Please register your account</h2>
                     <p>
                       <input type="text" name="username" placeholder="Username" required autofocus />
                       <input type="password" name="password" placeholder="Password" required />

@@ -29,20 +29,26 @@
         session.setAttribute("alert","User "+username+" successfully logged in.");
         session.setAttribute("alert_type","success");
         %>
+        <%@ include file="index.jsp"%>
         <%
       }
       else{
             session.setAttribute("alert","User "+username+" could not be logged in.");
             session.setAttribute("alert_type","danger");
+        %>
+        <%@ include file="login.jsp"%>
+        <%
       }
     }
     else{
         session.setAttribute("alert","User "+username+" could not be logged in.");
         session.setAttribute("alert_type","danger");
+        %>
+        <%@ include file="login.jsp"%>
+        <%
     }
     
   }
   else{
   }
 %>
-        <%@ include file="index.jsp"%>

@@ -29,11 +29,17 @@
         int res = stmt.executeUpdate(ins_query);
     
         if (res < 1) {
-            out.print("<p>Registration failed.</p>");
+            session.setAttribute("alert","Registration failed.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="register.jsp" %><%
         } else {
-            out.print("<p>Registration successful.</p>");
+            session.setAttribute("alert","Registration success. Login to continue.");
+            session.setAttribute("alert_type","success");
+            %><%@ include file="login.jsp" %><%
         }
     } else {
-        out.print("<p>Invalid registration fields. Please review your information and try again</p>");
+            session.setAttribute("alert","Invalid registration fields. Please review your information and try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="register.jsp" %><%
     }
 %>
