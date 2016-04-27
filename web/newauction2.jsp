@@ -28,15 +28,15 @@
                     <p>
                         <b>Product information:</b><br>
                         Product ID: 
-                        <input type="text" name="products" value="<%= request.getParameter("products") %>" disabled /><br>
+                        <input type="text" name="products" value="<%= request.getParameter("products") %>" /><br>
                         <%
                             if (request.getParameter("products").equalsIgnoreCase("New")) {
                                     String brand = request.getParameter("brand");
                                     String model = request.getParameter("model"); %>
                                     Product brand: 
-                                    <input type="text" name="brand" value="<%= brand %>" disabled /><br>
+                                    <input type="text" name="brand" value="<%= brand %>" /><br>
                                     Product model: 
-                                    <input type="text" name="model" value="<%= model %>" disabled />
+                                    <input type="text" name="model" value="<%= model %>" />
                         <%
                             } else {
                                 Connection conn = null;
@@ -56,16 +56,16 @@
                                 String brand = resultset.getString("brand");
                                 String model = resultset.getString("model"); %>
                                 Product brand: 
-                                <input type="text" name="brand" value="<%= brand %>" disabled /><br>
+                                <input type="text" name="brand" value="<%= brand %>" /><br>
                                 Product model: 
-                                <input type="text" name="model" value="<%= model %>" disabled />
+                                <input type="text" name="model" value="<%= model %>" />
                         <%
                             }
                         %>
                     </p>
                     <p>
                         Product type: 
-                        <input type="text" name="producttype" value="<%= request.getParameter("producttype") %>" disabled />
+                        <input type="text" name="producttype" value="<%= request.getParameter("producttype") %>" />
                     </p>
                     <p>
                         Product Information:
@@ -166,17 +166,17 @@
                     <p>
                         <b>General Auction Information:</b><br>
                         Start date: 
-                        <input type="datetime-local" name="startdate" value="<%= request.getParameter("startdate") %>" disabled /><br>
+                        <input type="datetime-local" name="startdate" value="<%= request.getParameter("startdate") %>" /><br>
                         End date: 
-                        <input type="datetime-local" name="enddate" value="<%= request.getParameter("enddate") %>" disabled /><br>
+                        <input type="datetime-local" name="enddate" value="<%= request.getParameter("enddate") %>" /><br>
                         Reserve Price: 
-                        <input type="number" name="reserveprice" value="<%= request.getParameter("reserveprice") %>" disabled /><br>
+                        <input type="number" name="reserveprice" value="<%= request.getParameter("reserveprice") %>" /><br>
                         Bidding start price: 
-                        <input type="number" name="startprice" value="<%= request.getParameter("startprice") %>" disabled /><br>
+                        <input type="number" name="startprice" value="<%= request.getParameter("startprice") %>" /><br>
                         Quantity being sold: 
-                        <input type="number" name="quantity" value="<%= request.getParameter("quantity") %>" disabled /><br>
+                        <input type="number" name="quantity" value="<%= request.getParameter("quantity") %>" /><br>
                         Condition: 
-                        <input type="text" name="condition" value="<%= request.getParameter("condition") %>" disabled />
+                        <input type="text" name="condition" value="<%= request.getParameter("condition") %>" />
                     </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Create Auction</button>
                 </form>

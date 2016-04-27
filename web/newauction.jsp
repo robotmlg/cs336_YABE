@@ -29,10 +29,10 @@
                         Select a product if it already exists (otherwise, select 'New'):<br>
                         <select name="products">
                             <%
-                                Connection conn = null;
+                                Connection products_conn = null;
                                 try{
                                     Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                    conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
+                                    products_conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
                                 }
 
                                 catch(Exception e){
@@ -40,7 +40,7 @@
                                     e.printStackTrace();
                                 }
 
-                                Statement statement = conn.createStatement() ;
+                                Statement statement = products_conn.createStatement() ;
                                 ResultSet resultset;
                                 resultset = statement.executeQuery("select * from product");
                             %>

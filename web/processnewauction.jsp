@@ -11,14 +11,27 @@
         e.printStackTrace();
     }
     
-    int productID;
-    String product = request.getParameter("product");
+    int productID=0;
+    String product = request.getParameter("products");
     String producttype = request.getParameter("producttype");
     String brand = request.getParameter("brand");
     String model = request.getParameter("model");
     
     if (product.equalsIgnoreCase("New")) {
+        // assign a new productID by incrementing the last one
         Statement stmt = conn.createStatement();
+        String id_query = "SELECT MAX(productID) FROM product";
+        ResultSet rs = stmt.executeQuery(id_query);
+
+        // if there is a result
+        if(rs.next()){
+            productID = rs.getInt(1) + 1;
+        }
+        // if the table was empty and we don't have a Max ID, start at 1
+        else{
+            productID=1;
+        }
+
         String ins_query = "INSERT INTO product (productID, brand, model) VALUES (\'" + productID + "\', \'" + brand + "\', \'" + model + "\')";
         int res = stmt.executeUpdate(ins_query);
         
@@ -68,7 +81,7 @@
             }
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, pcieSlots, memorySlots, maxRAM, socketType, chipset, onBoardSound, onBoardVideo) VALUES (\'" + productID + "\', \'" + pcieSlots + "\', \'" + memorySlots + "\', \'" + maxRAM + "\', \'" + socketType + "\', \'" + chipset + "\', \'" + onBoardSound + "\', \'" + onBoardVideo + "\')";
+            ins_query = "INSERT INTO motherboard (productID, pcieSlots, memorySlots, maxRAM, socketType, chipset, onBoardSound, onBoardVideo) VALUES (\'" + productID + "\', \'" + pcieSlots + "\', \'" + memorySlots + "\', \'" + maxRAM + "\', \'" + socketType + "\', \'" + chipset + "\', \'" + onBoardSound + "\', \'" + onBoardVideo + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -87,7 +100,7 @@
             String cpusocketType = request.getParameter("socketType");
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, cores, clockSpeed, socketType) VALUES (\'" + productID + "\', \'" + cores + "\', \'" + clockSpeed + "\', \'" + cpusocketType + "\')";
+            ins_query = "INSERT INTO cpu (productID, cores, clockSpeed, socketType) VALUES (\'" + productID + "\', \'" + cores + "\', \'" + clockSpeed + "\', \'" + cpusocketType + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -106,7 +119,7 @@
             int ramclockSpeed = Integer.parseInt(request.getParameter("clockSpeed"));
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, capacity, memoryType, ramclockSpeed) VALUES (\'" + productID + "\', \'" + capacity + "\', \'" + memoryType + "\', \'" + ramclockSpeed + "\')";
+            ins_query = "INSERT INTO ram (productID, capacity, memoryType, ramclockSpeed) VALUES (\'" + productID + "\', \'" + capacity + "\', \'" + memoryType + "\', \'" + ramclockSpeed + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -131,7 +144,7 @@
             int powerRequirement = Integer.parseInt(request.getParameter("powerRequirement"));
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, coreClockSpeed, numCores, memoryCapacity, memoryClockSpeed, memoryType, numHDMI, numDVI, numDP, powerRequirement) VALUES (\'" + productID + "\', \'" + coreClockSpeed + "\', \'" + numCores + "\', \'" + memoryCapacity + "\', \'" + memoryClockSpeed + "\', \'" + gpumemoryType + "\', \'" + numHDMI + "\', \'" + numDVI + "\', \'" + numDP + "\', \'" + powerRequirement + "\')";
+            ins_query = "INSERT INTO gpu (productID, coreClockSpeed, numCores, memoryCapacity, memoryClockSpeed, memoryType, numHDMI, numDVI, numDP, powerRequirement) VALUES (\'" + productID + "\', \'" + coreClockSpeed + "\', \'" + numCores + "\', \'" + memoryCapacity + "\', \'" + memoryClockSpeed + "\', \'" + gpumemoryType + "\', \'" + numHDMI + "\', \'" + numDVI + "\', \'" + numDP + "\', \'" + powerRequirement + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -149,7 +162,7 @@
             String storageType = request.getParameter("storageType");
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, capacityInGB, storageType) VALUES (\'" + productID + "\', \'" + capacityInGB + "\', \'" + storageType + "\')";
+            ins_query = "INSERT INTO storage (productID, capacityInGB, storageType) VALUES (\'" + productID + "\', \'" + capacityInGB + "\', \'" + storageType + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -173,7 +186,7 @@
             }
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, dimension, numCaseFans, isLITT) VALUES (\'" + productID + "\', \'" + dimensions + "\', \'" + numCaseFans + "\', \'" + isLITT + "\')";
+            ins_query = "INSERT INTO case_hw (productID, dimension, numCaseFans, isLITT) VALUES (\'" + productID + "\', \'" + dimensions + "\', \'" + numCaseFans + "\', \'" + isLITT + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -196,7 +209,7 @@
             }
             
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, power, modular) VALUES (\'" + productID + "\', \'" + power + "\', \'" + modular + "\')";
+            ins_query = "INSERT INTO psu (productID, power, modular) VALUES (\'" + productID + "\', \'" + power + "\', \'" + modular + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
@@ -215,7 +228,7 @@
             int maxRPM = Integer.parseInt(request.getParameter("maxRPM"));
 
             stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID, dimensions, flowrate, maxRPM) VALUES (\'" + productID + "\', \'" + fandimensions + "\', \'" + flowrate + "\', \'" + maxRPM + "\')";
+            ins_query = "INSERT INTO fan (productID, dimensions, flowrate, maxRPM) VALUES (\'" + productID + "\', \'" + fandimensions + "\', \'" + flowrate + "\', \'" + maxRPM + "\')";
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
