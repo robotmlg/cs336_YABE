@@ -11,7 +11,7 @@
         e.printStackTrace();
     }
     
-    int productID=0;
+    int productID = 0;
     String product = request.getParameter("products");
     String producttype = request.getParameter("producttype");
     String brand = request.getParameter("brand");
@@ -85,13 +85,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "cpu":
@@ -104,13 +100,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "ram":
@@ -123,13 +115,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "gpu":
@@ -148,13 +136,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "storage":
@@ -166,13 +150,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "case":
@@ -190,13 +170,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "psu":
@@ -213,13 +189,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "fan":
@@ -232,13 +204,9 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
         case "other":
@@ -247,14 +215,36 @@
             res = stmt.executeUpdate(ins_query);
 
             if (res < 1) {
-                session.setAttribute("alert","Auction creation failed. Please try again.");
+                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
                 session.setAttribute("alert_type","danger");
                 %><%@ include file="newauction.jsp" %><%
-            } else {
-                session.setAttribute("alert","Auction creation successful.");
-                session.setAttribute("alert_type","success");
-                %><%@ include file="auction.jsp" %><%
             }
             break;
+    }
+    
+    int auctionID = 0;
+    String auction_id_query = "SELECT MAX(auctionID) FROM auction";
+    ResultSet rs = stmt.executeQuery(auction_id_query);
+
+    // if there is a result
+    if(rs.next()){
+        auctionID = rs.getInt(1) + 1;
+    }
+    // if the table was empty and we don't have a Max ID, start at 1
+    else{
+        auctionID=1;
+    }
+        
+    String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, productID) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', \'" + productID + "\')";
+    int res = stmt.executeUpdate(ins_auction);
+
+    if (res < 1) {
+        session.setAttribute("alert","Auction creation failed. Please try again.");
+        session.setAttribute("alert_type","danger");
+        %><%@ include file="newauction.jsp" %><%
+    } else {
+        session.setAttribute("alert","Auction creation successful.");
+        session.setAttribute("alert_type","success");
+        %><%@ include file="auction.jsp" %><%
     }
 %>

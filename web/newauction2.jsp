@@ -26,7 +26,7 @@
                 <form action="processnewauction.jsp" method="post">       
                     <h2>New Auction: Additional Information</h2>
                     <p>
-                        <b>Product information:</b><br>
+                        <b>General product information:</b><br>
                         Product ID: 
                         <input type="text" name="products" value="<%= request.getParameter("products") %>" /><br>
                         <%
@@ -68,7 +68,7 @@
                         <input type="text" name="producttype" value="<%= request.getParameter("producttype") %>" />
                     </p>
                     <p>
-                        Product Information:
+                        <b>Product specific information:</b><br>
                         <%
                             switch (request.getParameter("producttype")) {
                                 case "motherboard": %>
@@ -169,7 +169,7 @@
                         <input type="datetime-local" name="startdate" value="<%= request.getParameter("startdate") %>" /><br>
                         End date: 
                         <input type="datetime-local" name="enddate" value="<%= request.getParameter("enddate") %>" /><br>
-                        Reserve Price: 
+                        Reserve price: 
                         <input type="number" name="reserveprice" value="<%= request.getParameter("reserveprice") %>" /><br>
                         Bidding start price: 
                         <input type="number" name="startprice" value="<%= request.getParameter("startprice") %>" /><br>
