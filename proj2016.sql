@@ -43,6 +43,8 @@ create table auction(
 	start_price decimal(10,2) not null,
 	quantity integer not null,
 	item_condition varchar(16) not null,
+	maxBid decimal(10,2) not null,
+	numBids integer not null,
 	productID integer references product
 );
 
