@@ -62,9 +62,139 @@
                     }
         %>
 
-        <div class="jumbotron">
-        <h2>Generate Reports</h2>
         </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4">
+        <div class="jumbotron">
+        <h3>Best Selling Users</h3>
+        <%
+        String user_earnings = "SELECT win.owner, SUM(win.winning_bid) as total " +
+            "FROM (SELECT MAX(b.amount) as winning_bid, a.username as owner " +
+                    "FROM  auction a, bid b WHERE b.auctionID=a.auctionID AND " +
+                    "TIMESTAMPDIFF(SECOND,NOW(),a.end_date)<0 " +
+                    "GROUP BY a.auctionID) as win "+
+            "GROUP BY win.owner ORDER BY total DESC";
+        ResultSet users = stmt.executeQuery(user_earnings);
+        %>
+        <p><table border="1">
+            <tr><th>User</th><th>Earnings</th><tr>
+            <% for(int i=0; users.next() && i<10; ++i){%>
+            <tr><td><%=users.getString(1)%></td><td><%=users.getDouble(2)%></td></tr>
+            <%}%>
+        </table></p>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#userReportModal">See all users</button>
+        <div class="modal fade" id="userReportModal" tabindex="-1" role="dialog" aria-labelledby="userReportModalLabel">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="userReportModalLabel">User Report</h4>
+        </div>
+        <div class="modal-body">
+        <p><table border="1">
+            <tr><th>User</th><th>Earnings</th><tr>
+            <% while(users.next()){%>
+            <tr><td><%=users.getString(1)%></td><td><%=users.getDouble(2)%></td></tr>
+            <%}%>
+        </table></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="col-lg-4">
+        <div class="jumbotron">
+        <%
+        String item_earnings = "SELECT p.brand, p.model, SUM(win.win_bid) as total "+
+            "FROM (SELECT MAX(b.amount) as win_bid, a.productID as productID " +
+                    "FROM  auction a, bid b WHERE b.auctionID=a.auctionID AND " +
+                    "TIMESTAMPDIFF(SECOND,NOW(),a.end_date)<0 " +
+                    "GROUP BY a.auctionID) as win, product p "+
+            "WHERE p.productID=win.productID "+
+            "GROUP BY p.productID ORDER BY total DESC";
+        ResultSet items = stmt.executeQuery(item_earnings);
+        %>
+        <h3>Best Selling Items</h3>
+        <p><table border="1">
+            <tr><th>Brand</th><th>Model</th><th>Earnings</th><tr>
+            <% for(int i=0; items.next() && i<10; ++i){%>
+            <tr><td><%=items.getString(1)%></td>
+                <td><%=items.getString(2)%></td>
+                <td><%=items.getDouble(3)%></td></tr>
+            <%}%>
+        </table></p>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#itemReportModal">See all items</button>
+        <div class="modal fade" id="itemReportModal" tabindex="-1" role="dialog" aria-labelledby="itemReportModalLabel">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="itemReportModalLabel">Item Report</h4>
+        </div>
+        <div class="modal-body">
+        <p><table border="1">
+            <tr><th>Brand</th><th>Model</th><th>Earnings</th><tr>
+            <% while(items.next()){%>
+            <tr><td><%=items.getString(1)%></td>
+                <td><%=items.getString(2)%></td>
+                <td><%=items.getDouble(3)%></td></tr>
+            <%}%>
+        </table></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+        </div>
+        <div class="col-lg-4">
+        <div class="jumbotron">
+        <!-- earnings per item, item type;  best-selling items -->
+        <%
+        // get the sum of all winning bids of ended auctions
+        double total_earnings = 0;
+        String total_earnings_q = "SELECT SUM(win.winning_bid) FROM (SELECT MAX(amount) as winning_bid FROM bid b, auction a WHERE b.auctionID=a.auctionID AND TIMESTAMPDIFF(SECOND,NOW(),end_date)<0 GROUP BY a.auctionID) as win";
+        ResultSet total = stmt.executeQuery(total_earnings_q);
+        if(total.first()){
+            total_earnings = total.getDouble(1);
+        }
+        %>
+        <h3>Total Earnings = <%= total_earnings %></h3>
+        <h3>Earnings by Item Type</h3>
+        <p><table border="1">
+            <tr><th>Item Type</th><th>Earnings</th><tr>
+            <% String types_list_q = "SELECT table_name, nice_name FROM item_types";
+               ResultSet types_list = stmt.executeQuery(types_list_q);
+               Statement stmt2 = conn.createStatement();
+
+               while(types_list.next()){
+
+        String type_earnings = "SELECT SUM(win.win_bid) as total "+
+            "FROM (SELECT MAX(b.amount) as win_bid, a.productID as productID " +
+                    "FROM  auction a, bid b WHERE b.auctionID=a.auctionID AND " +
+                    "TIMESTAMPDIFF(SECOND,NOW(),a.end_date)<0 " +
+                    "GROUP BY a.auctionID) as win "+
+            "WHERE win.productID IN (SELECT productID FROM "+types_list.getString(1)+")";
+        ResultSet types = stmt2.executeQuery(type_earnings);
+        types.first();
+        %>
+            <tr><td><%=types_list.getString(2)%></td>
+                <td><%=types.getDouble(1)%></td></tr>
+            <%}%>
+        </table></p>
+        </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-12">
 
         <div class="jumbotron">
         <h2>Create Customer Representatives</h2>
