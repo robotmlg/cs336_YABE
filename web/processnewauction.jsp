@@ -236,9 +236,9 @@
     }
         
     String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', '0.00', '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
-    int res = stmt.executeUpdate(ins_auction);
+    int res2 = stmt.executeUpdate(ins_auction);
 
-    if (res < 1) {
+    if (res2 < 1) {
         session.setAttribute("alert","Auction creation failed. Please try again.");
         session.setAttribute("alert_type","danger");
         %><%@ include file="newauction.jsp" %><%
