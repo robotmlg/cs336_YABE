@@ -222,29 +222,31 @@
             break;
     }
     
-    int auctionID = 0;
-    String auction_id_query = "SELECT MAX(a.auctionID) FROM auction a";
-    ResultSet rs = stmt.executeQuery(auction_id_query);
+    if (res > 0) {
+        int auctionID = 0;
+        String auction_id_query = "SELECT MAX(a.auctionID) FROM auction a";
+        ResultSet rs = stmt.executeQuery(auction_id_query);
 
-    // if there is a result
-    if(rs.next()){
-        auctionID = rs.getInt(1) + 1;
-    }
-    // if the table was empty and we don't have a Max ID, start at 1
-    else{
-        auctionID=1;
-    }
-        
-    String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', '0.00', '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
-    int res2 = stmt.executeUpdate(ins_auction);
+        // if there is a result
+        if(rs.next()){
+            auctionID = rs.getInt(1) + 1;
+        }
+        // if the table was empty and we don't have a Max ID, start at 1
+        else{
+            auctionID=1;
+        }
 
-    if (res2 < 1) {
-        session.setAttribute("alert","Auction creation failed. Please try again.");
-        session.setAttribute("alert_type","danger");
-        %><%@ include file="newauction.jsp" %><%
-    } else {
-        session.setAttribute("alert","Auction creation successful.");
-        session.setAttribute("alert_type","success");
-        %><%@ include file="auction.jsp" %><%
+        String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', '0.00', '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
+        int res2 = stmt.executeUpdate(ins_auction);
+
+        if (res2 < 1) {
+            session.setAttribute("alert","Auction creation failed. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        } else {
+            session.setAttribute("alert","Auction creation successful.");
+            session.setAttribute("alert_type","success");
+            %><%@ include file="auction.jsp" %><%
+        }
     }
 %>
