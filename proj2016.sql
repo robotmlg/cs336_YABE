@@ -151,6 +151,21 @@ create table other(
 	primary key (productID)
 );
 
+drop table item_types;
+create table item_types(
+    table_name varchar(12) primary key,
+    nice_name varchar(16)
+);
+insert into item_types (table_name,nice_name) VALUES ("case_hw","Cases");
+insert into item_types (table_name,nice_name) VALUES ("cpu","CPUs");
+insert into item_types (table_name,nice_name) VALUES ("fan","Fans");
+insert into item_types (table_name,nice_name) VALUES ("gpu","Video Cards");
+insert into item_types (table_name,nice_name) VALUES ("motherboard","Motherboards");
+insert into item_types (table_name,nice_name) VALUES ("other","Other");
+insert into item_types (table_name,nice_name) VALUES ("psu","Power Supplies");
+insert into item_types (table_name,nice_name) VALUES ("ram","Memory");
+insert into item_types (table_name,nice_name) VALUES ("storage","Storage");
+
 
 
 
