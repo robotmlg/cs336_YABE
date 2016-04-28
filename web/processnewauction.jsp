@@ -20,7 +20,7 @@
     if (product.equalsIgnoreCase("New")) {
         // assign a new productID by incrementing the last one
         Statement stmt = conn.createStatement();
-        String id_query = "SELECT MAX(productID) FROM product";
+        String id_query = "SELECT MAX(p.productID) FROM product p";
         ResultSet rs = stmt.executeQuery(id_query);
 
         // if there is a result
@@ -223,7 +223,7 @@
     }
     
     int auctionID = 0;
-    String auction_id_query = "SELECT MAX(auctionID) FROM auction";
+    String auction_id_query = "SELECT MAX(a.auctionID) FROM auction a";
     ResultSet rs = stmt.executeQuery(auction_id_query);
 
     // if there is a result
@@ -235,7 +235,7 @@
         auctionID=1;
     }
         
-    String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, productID) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', \'" + productID + "\')";
+    String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', '0.00', '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
     int res = stmt.executeUpdate(ins_auction);
 
     if (res < 1) {

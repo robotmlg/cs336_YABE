@@ -42,7 +42,7 @@
 
                                 Statement statement = products_conn.createStatement() ;
                                 ResultSet resultset;
-                                resultset = statement.executeQuery("select * from product");
+                                resultset = statement.executeQuery("SELECT * FROM product p");
                             %>
                             <option value="new">New</option><br>
                             <%  while(resultset.next()){ %>

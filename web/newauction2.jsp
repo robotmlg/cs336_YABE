@@ -30,7 +30,7 @@
                         Product ID: 
                         <input type="text" name="products" value="<%= request.getParameter("products") %>" /><br>
                         <%
-                            if (request.getParameter("products").equalsIgnoreCase("New")) {
+                            if (request.getParameter("products").equalsIgnoreCase("new")) {
                                     String brand = request.getParameter("brand");
                                     String model = request.getParameter("model"); %>
                                     Product brand: 
@@ -52,7 +52,7 @@
 
                                 Statement statement = conn.createStatement() ;
                                 ResultSet resultset;
-                                resultset = statement.executeQuery("select prod from product where prod.productID = " + request.getParameter("products"));
+                                resultset = statement.executeQuery("SELECT p.productID FROM product p WHERE p.productID = " + request.getParameter("products"));
                                 String brand = resultset.getString("brand");
                                 String model = resultset.getString("model"); %>
                                 Product brand: 
