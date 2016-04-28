@@ -37,13 +37,13 @@ create table product(
 drop table auction;
 create table auction(
 	auctionID integer primary key,
-  start_date datetime not null,
-  end_date datetime not null,
-  reserve_price decimal(10,2),
-  start_price decimal(10,2) not null,
-  quantity integer not null,
-  item_condition varchar(16) not null,
-  productID integer references product
+	start_date datetime not null,
+	end_date datetime not null,
+	reserve_price decimal(10,2),
+	start_price decimal(10,2) not null,
+	quantity integer not null,
+	item_condition varchar(16) not null,
+	productID integer references product
 );
 
 drop table participatesIn;
