@@ -157,7 +157,6 @@
         </div>
         <div class="col-lg-4">
         <div class="jumbotron">
-        <!-- earnings per item, item type;  best-selling items -->
         <%
         // get the sum of all winning bids of ended auctions
         double total_earnings = 0;
