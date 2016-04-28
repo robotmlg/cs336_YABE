@@ -52,7 +52,7 @@
 
                                 Statement statement = conn.createStatement() ;
                                 ResultSet resultset;
-                                resultset = statement.executeQuery("SELECT p.productID FROM product p WHERE p.productID = " + request.getParameter("products"));
+                                resultset = statement.executeQuery("SELECT * FROM product p WHERE p.productID = " + request.getParameter("products"));
                                 String brand = resultset.getString("brand");
                                 String model = resultset.getString("model"); %>
                                 Product brand: 
