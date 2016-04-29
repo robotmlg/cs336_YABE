@@ -19,6 +19,7 @@
         <% if(session.getAttribute("loggedIn") == "true"){%>
         <li><a>Hi, <%= session.getAttribute("username") %></a></li>
         <li><a href="/newauction.jsp">Create New Auction</a></li>
+        <li><a href="/inbox.jsp">Inbox</a></li>
         <li><a href="/logout.jsp">Logout</a></li>
         <%}else{ %>
         <li><a href="/login.jsp">Login</a></li>
