@@ -60,7 +60,7 @@
         </div>
         </div>
         <div class="row">
-        <div class="col-lg-4">
+        <div class="col-sm-4">
         <div class="jumbotron">
         <h3>Best Selling Users</h3>
         <%
@@ -102,7 +102,7 @@
         </div>
         </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-sm-4">
         <div class="jumbotron">
         <%
         String item_earnings = "SELECT p.brand, p.model, SUM(win.win_bid) as total "+
@@ -150,7 +150,7 @@
 
         </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-sm-4">
         <div class="jumbotron">
         <%
         // get the sum of all winning bids of ended auctions
