@@ -17,6 +17,8 @@
     String brand = request.getParameter("brand");
     String model = request.getParameter("model");
     
+    String extraInfo = request.getParameter("extraInfo");
+    
     if (product.equalsIgnoreCase("New")) {
         // assign a new productID by incrementing the last one
         Statement stmt = conn.createStatement();
@@ -32,7 +34,7 @@
             productID=1;
         }
 
-        String ins_query = "INSERT INTO product (productID, brand, model) VALUES (\'" + productID + "\', \'" + brand + "\', \'" + model + "\')";
+        String ins_query = "INSERT INTO product (productID, brand, model, extraInfo) VALUES (\'" + productID + "\', \'" + brand + "\', \'" + model + "\', \'" + extraInfo + "\')";
         int res = stmt.executeUpdate(ins_query);
         
         if (res < 1) {
@@ -48,8 +50,6 @@
         productID = Integer.parseInt(product);
     }
     
-    String extraInfo = request.getParameter("extraInfo");
-    
     String startdate = request.getParameter("startdate");
     String enddate = request.getParameter("enddate");
     int reserveprice = Integer.parseInt(request.getParameter("reserveprice"));
@@ -59,7 +59,7 @@
     
     Statement stmt = conn.createStatement();
     String ins_query = "";
-    int res;
+    int res = 0;
     switch (request.getParameter("producttype")) {
         case "motherboard":
             int pcieSlots = Integer.parseInt(request.getParameter("pcieSlots"));

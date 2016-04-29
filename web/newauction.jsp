@@ -64,9 +64,9 @@
                     </p>
                     <p>
                         <b>Product information (required for a new product entry):</b><br>
-                        Model: 
-                        <input type="text" name="brand" maxlength="24" placeholder="Brand" /><br>
                         Brand: 
+                        <input type="text" name="brand" maxlength="24" placeholder="Brand" /><br>
+                        Model: 
                         <input type="text" name="model" maxlength="24" placeholder="Model" />
                     </p>
                     <p>
