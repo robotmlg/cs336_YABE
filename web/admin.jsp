@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%@ page language="java" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="org.mindrot.jbcrypt.BCrypt" %>
 
@@ -72,7 +71,7 @@
             "GROUP BY win.owner ORDER BY total DESC";
         ResultSet users = stmt.executeQuery(user_earnings);
         %>
-        <p><table border="1">
+        <p><table class="table">
             <tr><th>User</th><th>Earnings</th><tr>
             <% for(int i=0; users.next() && i<10; ++i){%>
             <tr><td><%=users.getString(1)%></td><td><%=users.getDouble(2)%></td></tr>
@@ -87,7 +86,7 @@
             <h4 class="modal-title" id="userReportModalLabel">User Report</h4>
         </div>
         <div class="modal-body">
-        <p><table border="1">
+        <p><table class="table">
             <tr><th>User</th><th>Earnings</th><tr>
             <% while(users.next()){%>
             <tr><td><%=users.getString(1)%></td><td><%=users.getDouble(2)%></td></tr>
@@ -115,7 +114,7 @@
         ResultSet items = stmt.executeQuery(item_earnings);
         %>
         <h3>Best Selling Items</h3>
-        <p><table border="1">
+        <p><table class="table">
             <tr><th>Brand</th><th>Model</th><th>Earnings</th><tr>
             <% for(int i=0; items.next() && i<10; ++i){%>
             <tr><td><%=items.getString(1)%></td>
@@ -132,7 +131,7 @@
             <h4 class="modal-title" id="itemReportModalLabel">Item Report</h4>
         </div>
         <div class="modal-body">
-        <p><table border="1">
+        <p><table class="table">
             <tr><th>Brand</th><th>Model</th><th>Earnings</th><tr>
             <% while(items.next()){%>
             <tr><td><%=items.getString(1)%></td>
@@ -163,7 +162,7 @@
         %>
         <h3>Total Earnings = <%= total_earnings %></h3>
         <h3>Earnings by Item Type</h3>
-        <p><table border="1">
+        <p><table class="table">
             <tr><th>Item Type</th><th>Earnings</th><tr>
             <% String types_list_q = "SELECT table_name, nice_name FROM item_types";
                ResultSet types_list = stmt.executeQuery(types_list_q);
