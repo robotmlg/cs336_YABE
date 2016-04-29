@@ -25,21 +25,25 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1>Please register your account</h1>
+                        <% if(session.getAttribute("alert") != null){%>
+            <div class="alert alert-<%= session.getAttribute("alert_type")%>" role="alert"><%= session.getAttribute("alert") %></div>
+                        <%
+                        session.setAttribute("alert",null);
+                        }%>
             </div>
             <div class="col-md-4">
                 <form action="processregistration.jsp" method="post">       
                     <p>
-                      <input type="text" name="username" placeholder="Username" required autofocus />
-                      <input type="password" name="password" placeholder="Password" required />
-                    </p>
-                    <p>
-                      <input type="text" name="name" placeholder="Name" required />
-                    </p>
-                    <p>
-                      <input type="number" name="age" value="1" min="1" step="1" required />
-                    </p>
-                    <p>
-                      <input type="text" name="address" placeholder="Address" required />
+                        Username: 
+                        <input type="text" name="username" placeholder="Username" required autofocus /><br>
+                        Password: 
+                        <input type="password" name="password" placeholder="Password" required /><br>
+                        Name: 
+                        <input type="text" name="name" placeholder="Name" required /><br>
+                        Age: 
+                        <input type="number" name="age" value="1" min="1" step="1" required /><br>
+                        Address: 
+                        <input type="text" name="address" placeholder="Address" required />
                     </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     <a href="login.jsp" class="button btn btn-lg btn-primary btn-block">Already have an account?</a>
