@@ -30,3 +30,17 @@
 </nav>
 
 <a name="top"></a>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <% if(session.getAttribute("alert") != null){%>
+                <div class="alert alert-<%= session.getAttribute("alert_type")%>" role="alert">
+                    <%= session.getAttribute("alert") %>
+                </div>
+            <%
+            session.setAttribute("alert",null);
+            }%>
+        </div>
+    </div>
+</div>
