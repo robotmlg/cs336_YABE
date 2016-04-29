@@ -13,7 +13,8 @@ create table messages(
 	to_user varchar(16) references users,
 	from_user varchar(16) references users,
 	body text, 
-	subject varchar(64)
+	subject varchar(64),
+    send_time timestamp
 );
 
 drop table cust_reps;
