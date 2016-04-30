@@ -167,7 +167,3 @@ insert into item_types (table_name,nice_name) VALUES ("other","Other");
 insert into item_types (table_name,nice_name) VALUES ("psu","Power Supplies");
 insert into item_types (table_name,nice_name) VALUES ("ram","Memory");
 insert into item_types (table_name,nice_name) VALUES ("storage","Storage");
-
-
-
-
