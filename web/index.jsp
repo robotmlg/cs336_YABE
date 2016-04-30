@@ -51,10 +51,10 @@
         <div class="jumbotron">
             <h2>Your active auctions</h2>
             <table class="table">
-            <tr><th>Item</th><th>Current Bid</th><th>End Date</th></tr>
+            <tr><th>User</th><th>Item</th><th>Current Bid</th><th>End Date</th></tr>
             <%
                 String active_q = "SELECT p.model, p.brand, a.end_date, a.maxBid, "+
-                    "a.auctionID FROM auction a, product p "+
+                    "a.auctionID, a.username FROM auction a, product p "+
                     "WHERE a.productID=p.productID AND a.username=\'"+username+
                     "\' AND TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0";
                 rs = stmt.executeQuery(active_q);
@@ -62,7 +62,12 @@
                 while(rs.next()){ %>
             <tr>
                 <td>
-                    <a href="auction.jsp#auctionID=<%= rs.getInt("auctionID")%>">
+                    <a href="userprofile.jsp?username=<%= rs.getString("username")%>">
+                    <%= rs.getString("username") %>
+                    </a>
+                </td>
+                <td>
+                    <a href="auction.jsp?auctionID=<%= rs.getInt("auctionID")%>">
                     <%= rs.getString("brand") %> <%= rs.getString("model") %>
                     </a>
                 </td>
@@ -90,7 +95,7 @@
             <% } else { %>
             <tr> 
                 <td>
-                    <a href="auction.jsp#auctionID=<%= rs.getInt("auctionID")%>">
+                    <a href="auction.jsp?auctionID=<%= rs.getInt("auctionID")%>">
                     <%= rs.getString("brand") %> <%= rs.getString("model") %>
                     </a>
                 </td>
@@ -125,7 +130,7 @@
                 for(int i=0;rs.next() && i<10; ++i){ %>
             <tr> 
                 <td>
-                    <a href="auction.jsp#auctionID=<%= rs.getInt("auctionID")%>">
+                    <a href="auction.jsp?auctionID=<%= rs.getInt("auctionID")%>">
                     <%= rs.getString("brand") %> <%= rs.getString("model") %>
                     </a>
                 </td>
@@ -140,10 +145,10 @@
         <div class="jumbotron">
             <h2>Popular Items</h2>
             <table class="table">
-            <tr><th>Item</th><th>Current Bid</th><th>End Date</th></tr>
+            <tr><th>User</th><th>Item</th><th>Current Bid</th><th>End Date</th></tr>
             <%
-                String popular_q = "SELECT p.model, p.brand, a.end_date, a.maxBid "+
-                    "FROM auction a, product p, "+
+                String popular_q = "SELECT p.model, p.brand, a.end_date, a.maxBid, "+
+                    "a.username FROM auction a, product p, "+
                         "(SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) b "+
                     "WHERE TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0 AND "+
@@ -156,7 +161,12 @@
                 for(int i=0;rs.next() && i<10; ++i){ %>
             <tr> 
                 <td>
-                    <a href="auction.jsp#auctionID=<%= rs.getInt("auctionID")%>">
+                    <a href="userprofile.jsp?username=<%= rs.getString("username")%>">
+                    <%= rs.getString("username") %>
+                    </a>
+                </td>
+                <td>
+                    <a href="auction.jsp?auctionID=<%= rs.getInt("auctionID")%>">
                     <%= rs.getString("brand") %> <%= rs.getString("model") %>
                     </a>
                 </td>
