@@ -40,17 +40,17 @@
                }
 
                
-        Integer auctionId = Integer.parseInt(request.getParameter("auctionID"));
-			  Integer productID = Integer.parseInt(request.getParameter("productID"));
-			  String username = request.getParameter("username");
-			  String condition = request.getParameter("item_condition");
-			  Double reservePrice = Double.parseDouble(request.getParameter("reserve_price"));
-			  Double startPrice = Double.parseDouble(request.getParameter("start_price"));
-			  Integer quantity = Integer.parseInt(request.getParameter("quantity"));
-			  Integer maxBid = Integer.parseInt(request.getParameter("maxBid"));
-			  Integer numBids = Integer.parseInt(request.getParameter("numBids"));
-			  String start_date = request.getParameter("start_date");
-			  String end_date = request.getParameter("end_date");
+        	Integer auctionId = Integer.parseInt(request.getParameter("auctionID"));
+		Integer productID = Integer.parseInt(request.getParameter("productID"));
+		String username = request.getParameter("username");
+		String condition = request.getParameter("item_condition");
+		Double reservePrice = Double.parseDouble(request.getParameter("reserve_price"));
+		Double startPrice = Double.parseDouble(request.getParameter("start_price"));
+		Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+		Integer maxBid = Integer.parseInt(request.getParameter("maxBid"));
+		Integer numBids = Integer.parseInt(request.getParameter("numBids"));
+		String start_date = request.getParameter("start_date");
+		String end_date = request.getParameter("end_date");
 
               Statement statement = auction_conn.createStatement() ;
               ResultSet resultset;
