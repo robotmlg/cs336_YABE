@@ -63,11 +63,33 @@
         <div class="col-sm-6">
         <div class="jumbotron">
         <h3>Delete Auction</h3>
+        <form class="form-horizontal" method="post" action="deleteItem.jsp"> 
+            <fieldset>
+            <div class="form-group">
+                <label for="auctionID" class="col-xs-2 control-label">ID</label>
+                <div class="col-xs-10">
+                <input type="number" name="auctionID" placeholder="Auction ID" class="form-control" required>
+                </div>
+            </div>
+            </fieldset>
+            <button type="submit" class="btn btn-lg btn-danger" align="right">Delete</button>
+        </form>
         </div>
         </div>
         <div class="col-sm-6">
         <div class="jumbotron">
         <h3>Delete Bid</h3>
+        <form class="form-horizontal" method="post" action="deleteItem.jsp"> 
+            <fieldset>
+            <div class="form-group">
+                <label for="bidID" class="col-xs-2 control-label">ID</label>
+                <div class="col-xs-10">
+                <input type="number" name="bidID" placeholder="Bid ID" class="form-control" required>
+                </div>
+            </div>
+            </fieldset>
+            <button type="submit" class="btn btn-lg btn-danger" align="right">Delete</button>
+        </form>
         </div>
         </div>
         </div>
