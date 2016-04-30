@@ -192,7 +192,7 @@
         <div class="jumbotron">
         <h2>Create Customer Representatives</h2>
         <p>Enter a username to make that account a customer representative</p>
-        <form action="makeRep.jsp" method="put">
+        <form action="makeRep.jsp" method="post">
             <input type="text" name="username" placeholder="Username" required />
             <button type="submit" class="btn btn-primary btn-lg">Create rep</button>
         </form>
