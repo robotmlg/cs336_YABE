@@ -10,7 +10,10 @@
         <li class="pull-right">
           <a href="admin.jsp">Admin</a>
         </li>
-        <li>&copy; Matt Goldman, Omar Bakir, and Saif Saiyed, 2016</li>
+        <li class="pull-right">
+          <a href="custrep.jsp">Customer Rep</a>
+        </li>
+        <li>&copy; <a href="https://mattgoldman.us">Matt Goldman</a>, Omar Bakir, and Saif Saiyed, 2016</li>
       </ul>
     </div>
   </div>

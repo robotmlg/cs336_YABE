@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<%@ page language="java" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="org.mindrot.jbcrypt.BCrypt" %>
 <%@ page import="java.util.Date" %>
+
 
 <% 
   Connection conn = null;
@@ -19,7 +20,7 @@
 
 <html>
     <head>
-        <title>YABE Messages</title>
+        <title>YABE Customer Rep Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -37,13 +38,45 @@
         <div class="container">
         <div class="row">
         <div class="col-lg-12">
-        <h1>YABE Messages
-        <!-- check if user is logged in -->
+        <h1>YABE Customer Representative Page</h1>
+        <!-- check if user is admin -->
         <% if(session.getAttribute("loggedIn") != "true") {%>
-            </h1>
-            <p> Must be logged in to view this page.<p>
-        <% } else { %>
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#composeModal">Compose Message</button></h1>
+        <p> Must be logged in as a customer representative to view this page.<p>
+        <% } else {
+            
+                String username = (String)session.getAttribute("username");
+                Statement stmt = conn.createStatement();
+                String cr_query = "SELECT COUNT(*) FROM cust_reps WHERE username=\'"+username+"\'";
+                ResultSet rs = stmt.executeQuery(cr_query);
+                rs.next();
+
+                if(rs.getInt(1) == 0){%>
+        <p> Must be logged in as a customer representative to view this page.<p>
+              <% }
+                else { 
+
+        %>
+
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-6">
+        <div class="jumbotron">
+        <h3>Delete Auction</h3>
+        </div>
+        </div>
+        <div class="col-sm-6">
+        <div class="jumbotron">
+        <h3>Delete Bid</h3>
+        </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-12">
+        <div class="jumbotron">
+        <h3>Customer Rep Messages
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#composeModal">Compose Message</button>
+        </h3>
         <div class="modal fade" id="composeModal" tabindex="-1" role="dialog" aria-labelledby="composeModalLabel">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -57,7 +90,7 @@
             <div class="form-group">
                 <label for="from_user" class="col-xs-2 control-label">From</label>
                 <div class="col-xs-10">
-                <input type="text" name="from_user" value="<%= session.getAttribute("username")%>" class="form-control" required readonly>
+                <input type="text" name="from_user" value="cust_rep" class="form-control" required readonly>
                 </div>
             </div>
             <div class="form-group">
@@ -89,12 +122,9 @@
         </div>
         </div>
         <%
-            String username = (String)session.getAttribute("username");
-
-            String msg_q = "SELECT * FROM messages WHERE to_user=\'"+username+
-                "\' OR from_user=\'"+username+"\' ORDER BY send_time DESC";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(msg_q);
+            String msg_q = "SELECT * FROM messages WHERE to_user=\'cust_rep\' "+
+                "OR from_user=\'cust_rep\' ORDER BY send_time DESC";
+            rs = stmt.executeQuery(msg_q);
 
             int msg_cnt = 0;
         %>
@@ -131,10 +161,6 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        </div>
-        </div>
-        </div>
         <%
             }
 
@@ -144,7 +170,11 @@
         } %>
         </table>
 
+              <% 
+        } %>
 
+
+        </div>
         </div>
         </div>
         <%@include file="includes/footer.jsp" %>
