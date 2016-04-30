@@ -14,7 +14,7 @@ create table messages(
 	from_user varchar(16) references users,
 	body text, 
 	subject varchar(64),
-    send_time timestamp
+	send_time timestamp
 );
 
 drop table cust_reps;
@@ -154,8 +154,8 @@ create table other(
 
 drop table item_types;
 create table item_types(
-    table_name varchar(12) primary key,
-    nice_name varchar(16)
+	table_name varchar(12) primary key,
+	nice_name varchar(16)
 );
 insert into item_types (table_name,nice_name) VALUES ("case_hw","Cases");
 insert into item_types (table_name,nice_name) VALUES ("cpu","CPUs");
