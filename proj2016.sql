@@ -47,7 +47,8 @@ create table auction(
 	maxBid decimal(10,2) not null,
 	numBids integer not null,
 	productID integer references product,
-	username varchar(16) references users
+	username varchar(16) references users,
+    sponsored boolean
 );
 
 drop table participatesIn;

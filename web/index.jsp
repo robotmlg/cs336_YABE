@@ -102,6 +102,41 @@
             </table>
         </div>
         <% } %>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-4">
+        <div class="jumbotron">
+            <h3>Sponsored Auctions</h3>
+            <table class="table">
+            <tr><th>Item</th><th>End Date</th></tr>
+            <%
+                String sponsor_q = "SELECT p.model, p.brand, a.end_date "+
+                    "FROM auction a, product p, "+
+                        "(SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
+                        "GROUP BY auctionID) b "+
+                    "WHERE TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0 AND "+
+                    "b.num_bids < (SELECT AVG(num_bids) "+
+                        "FROM (SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
+                        "GROUP BY auctionID) as c) AND "+
+                    "a.productID=p.productID";
+                rs = stmt.executeQuery(sponsor_q);
+
+                for(int i=0;rs.next() && i<10; ++i){ %>
+            <tr> 
+                <td>
+                    <a href="auction.jsp#auctionID=<%= rs.getInt("auctionID")%>">
+                    <%= rs.getString("brand") %> <%= rs.getString("model") %>
+                    </a>
+                </td>
+                <td><%= rs.getDouble("maxBid") %></td>
+                <td><%= rs.getTimestamp("end_date").toString() %></td>
+            </tr>
+            <%  } %>
+            </table>
+        </div>
+        </div>
+        <div class="col-md-8">
         <div class="jumbotron">
             <h2>Popular Items</h2>
             <table class="table">
