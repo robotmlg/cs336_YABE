@@ -44,7 +44,9 @@
                     if (request.getParameter("username") == null) {
                         Statement statement = userinfo_conn.createStatement() ;
                         ResultSet resultset;
-                        resultset = statement.executeQuery("SELECT * FROM users u WHERE u.username = '" + session.getAttribute("username") + "'");
+                        resultset = statement.executeQuery("SELECT * FROM users u WHERE u.username = \'" + session.getAttribute("username") + "\'");
+
+                        resultset.next();
 
                         name = resultset.getString("name");
                         age = resultset.getInt("age");
@@ -53,12 +55,20 @@
                     } else {
                         Statement statement = userinfo_conn.createStatement() ;
                         ResultSet resultset;
-                        resultset = statement.executeQuery("SELECT * FROM users u WHERE u.username = '" + request.getParameter("username") + "'");
+                        resultset = statement.executeQuery("SELECT * FROM users u WHERE u.username = \'" + (String)request.getParameter("username") + "\'");
 
-                        name = resultset.getString("name");
-                        age = resultset.getInt("age");
-                        address = resultset.getString("address");
-                        username = resultset.getString("username");
+                        if(resultset.next()){
+                            name = resultset.getString("name");
+                            age = resultset.getInt("age");
+                            address = resultset.getString("address");
+                            username = resultset.getString("username");
+                        }
+                        else{
+                            name = "User Not Found";
+                            age = 0;
+                            address = "";
+                            username = "";
+                        }
                     } %>
                     
                 <%  if (session.getAttribute("username").equals(username)) { %>
@@ -67,18 +77,18 @@
                         <p>
                             <b>Account Info:</b><br>
                             Name: 
-                            <input type="text" name="name" placeholder="<%= name %>" required /><br>
+                            <input type="text" name="name" placeholder="<%= name %>" /><br>
                             Age: 
-                            <input type="number" name="age" value="<%= age %>" min="1" step="1" required /><br>
+                            <input type="number" name="age" value="<%= age %>" min="1" step="1" /><br>
                             Address: 
-                            <input type="text" name="address" placeholder="<%= address %>" required /><br>
+                            <input type="text" name="address" placeholder="<%= address %>" /><br>
                             Password: 
-                            <input type="password" name="password" placeholder="New Password" required /><br>
+                            <input type="password" name="password" placeholder="New Password" /><br>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Changes</button>
                         </p>
                     </form>
                 <%  } else { %>
-                    <h><%= request.getAttribute("username") %>'s Public Profile</h>
+                    <h><%= request.getParameter("username") %>'s Public Profile</h>
                     <p>
                         <b>Account Info:</b><br>
                         Name: 
@@ -92,7 +102,7 @@
                 
                 <p>
                     <b>Auctions:</b><br>
-                    <table border="1" style="width:100%">
+                    <table class="table" style="width:100%">
                         <tr>
                             <th>Auction ID</th>
                             <th>Username</th>
@@ -141,7 +151,7 @@
                 
                 <p>
                     <b>Bids:</b><br>
-                    <table border="1" style="width:100%">
+                    <table class="table" style="width:100%">
                         <tr>
                             <th>Auction ID</th>
                             <th>Username</th>
@@ -154,7 +164,7 @@
                             Connection userbids_conn = null;
                             try{
                                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                userauctions_conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
+                                userbids_conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
                             }
 
                             catch(Exception e){
