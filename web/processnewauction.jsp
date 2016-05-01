@@ -12,12 +12,12 @@
     }
     
     int productID = 0;
-    String product = request.getParameter("products");
-    String producttype = request.getParameter("producttype");
-    String brand = request.getParameter("brand");
-    String model = request.getParameter("model");
+    String new_product = request.getParameter("products");
+    String new_producttype = request.getParameter("producttype");
+    String new_brand = request.getParameter("brand");
+    String new_model = request.getParameter("model");
     
-    String extraInfo = request.getParameter("extraInfo");
+    String new_extraInfo = request.getParameter("extraInfo");
     
     if (product.equalsIgnoreCase("New")) {
         // assign a new productID by incrementing the last one
@@ -50,12 +50,12 @@
         productID = Integer.parseInt(product);
     }
     
-    String startdate = request.getParameter("startdate");
-    String enddate = request.getParameter("enddate");
-    int reserveprice = Integer.parseInt(request.getParameter("reserveprice"));
-    int startprice = Integer.parseInt(request.getParameter("startprice"));
-    int quantity = Integer.parseInt(request.getParameter("quantity"));
-    String condition = request.getParameter("condition");
+    String new_startdate = request.getParameter("startdate");
+    String new_enddate = request.getParameter("enddate");
+    int new_reserveprice = Integer.parseInt(request.getParameter("reserveprice"));
+    int new_startprice = Integer.parseInt(request.getParameter("startprice"));
+    int new_quantity = Integer.parseInt(request.getParameter("quantity"));
+    String new_condition = request.getParameter("condition");
     
     Statement stmt = conn.createStatement();
     String ins_query = "";
