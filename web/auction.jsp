@@ -30,7 +30,7 @@
                Connection auction_conn = null;
                try{
                  Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 auction_conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yabe?autoReconnect=true&useSSL=false","yabe","yabe");
+                 auction_conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yabe,"yabe","yabe");
                }
 
                catch(Exception e){
@@ -90,17 +90,13 @@
                	<div style="text-align:center;">
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
 				</div>
-            </form>
+            	</form>
 			
 			
 			<br>
 			<br>
 			<br>
-			
-			
-			
-    				
-			
+	
 		</body>
             </div>
             <div class="col-md-4">
