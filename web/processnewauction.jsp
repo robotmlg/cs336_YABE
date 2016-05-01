@@ -37,11 +37,9 @@
         if (res < 1) {
             session.setAttribute("alert","Auction creation failed. Please try again.");
             session.setAttribute("alert_type","danger");
-            %><%@ include file="newauction.jsp" %><%
         } else {
             session.setAttribute("alert","Auction creation successful.");
             session.setAttribute("alert_type","success");
-            %><%@ include file="auction.jsp" %><%
         }
     } else {
         productID = Integer.parseInt(product);
@@ -230,7 +228,8 @@
         } else {
             session.setAttribute("alert","Auction creation successful.");
             session.setAttribute("alert_type","success");
-            %><%@ include file="auction.jsp" %><%
+            String a_page = "auction.jsp?auctionID="+auctionID;
+            %><jsp:include page="index.jsp" /><%
         }
     }
 %>
