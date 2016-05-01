@@ -230,7 +230,7 @@
         } else {
             session.setAttribute("alert","Auction creation successful.");
             session.setAttribute("alert_type","success");
-            %><%@ include file="auction.jsp?auctionID=<%= auctionID %>" %><%
+            %><%@ include file="auction.jsp" %><%
         }
     }
 %>
