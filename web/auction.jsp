@@ -30,7 +30,7 @@
                Connection auction_conn = null;
                try{
                  Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 auction_conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yabe,"yabe","yabe");
+                 auction_conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe,"yabe","yabe");
                }
 
                catch(Exception e){
@@ -85,14 +85,11 @@
                      <input type="number" name="bid" placeholder="[Max Bid]" value=<%="new_maxBid"%> min="1" step="1" required />
                      Bid History: <a href="bidhistory.jsp"> Number: <%="new_numBids"%></a><center-right>
                      </center>
-                     
                  </p>
                	<div style="text-align:center;">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
-				</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
+			</div>
             	</form>
-			
-			
 			<br>
 			<br>
 			<br>
@@ -100,10 +97,6 @@
 		</body>
             </div>
             <div class="col-md-4">
-                </p>
-             
-
-                <p>
             </div>   
         </div>
         <%@include file="includes/footer.jsp" %>
