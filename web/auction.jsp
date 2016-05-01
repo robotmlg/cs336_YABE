@@ -25,13 +25,12 @@
         <div class="container">
         <div class="row">
             <div class="col-lg-12">
-            
-               <% 
+               <%
                
                Connection auction_conn = null;
                try{
                  Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 auction_conn = DriverManager.getConnection("jdbc:mysql://localhost,"yabe","yabe");
+                 auction_conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yabe?autoReconnect=true&useSSL=false","yabe","yabe");
                }
 
                catch(Exception e){
@@ -39,43 +38,74 @@
                  e.printStackTrace();
                }
 
-               
-        	Integer auctionId = Integer.parseInt(request.getParameter("auctionID"));
-		Integer productID = Integer.parseInt(request.getParameter("productID"));
-		String username = request.getParameter("username");
-		String condition = request.getParameter("item_condition");
-		Double reservePrice = Double.parseDouble(request.getParameter("reserve_price"));
-		Double startPrice = Double.parseDouble(request.getParameter("start_price"));
-		Integer quantity = Integer.parseInt(request.getParameter("quantity"));
-		Integer maxBid = Integer.parseInt(request.getParameter("maxBid"));
-		Integer numBids = Integer.parseInt(request.getParameter("numBids"));
-		String start_date = request.getParameter("start_date");
-		String end_date = request.getParameter("end_date");
+              Integer auctionId = Integer.parseInt(request.getParameter("auctionID"));
+			  Integer productID = Integer.parseInt(request.getParameter("productID"));
+			  String username = request.getParameter("username");
+			  String condition = request.getParameter("item_condition");
+			  String start_date = request.getParameter("start_date");
+              String end_date = request.getParameter("end_date");
+			  Double reservePrice = Double.parseDouble(request.getParameter("reserve_price"));
+			  Double startPrice = Double.parseDouble(request.getParameter("start_price"));
+			  Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+			  Integer maxBid = Integer.parseInt(request.getParameter("maxBid"));
+			  Integer numBids = Integer.parseInt(request.getParameter("numBids"));
 
+              
               Statement statement = auction_conn.createStatement() ;
               ResultSet resultset;
               resultset = statement.executeQuery("SELECT * FROM product p, auction a WHERE p.productID=productID and a.auctionID = auctionId");
               String brand = resultset.getString("brand");
               String model = resultset.getString("model");
+              Date date = new Date();
+              
+              
 			  %>			  
                 <h1> 
-				<input type="text" name="brand" value="<%= brand %>" />
-				<input type="text" name="model" value="<%= model %>" />
-                <input type="text" name="condition" value="<%= condition %>" />
-                For Sale By 
-                <input type="text" name= "username" value="<%=username%>"/>
+				<center>Auction:<%="condition"%>,<%="brand"%>, Sold by <%="username"%> - Condition:<%="condition"%> </center>
                 </h1>
+                
+                <body>
+			<br>
+			<br>
+			<center>Item Condition:<b><%="condition"%></b></center>
+			<br>
+			<center>Time Left:<%=resultset.getString("TIMESTAMPDIFF(SECOND,'date','end_date')")%>
+			</center>
+			<br>
+			<center>Starting Time:<%= resultset.getTimestamp("start_date") %></center>
+			<br>
+			<center>Location:<%= resultset.getString("address")%></center>
+			<br>
+			<center><b>Quantity:<%= resultset.getString("quantity")%></b><br></center>
+			<br>
+			
+			<form action="processbid.jsp" method="post">       
+                 <p>
+                     <center>
+                     <input type="number" name="bid" placeholder="[Max Bid]" value=<%="maxBid"%> min="1" step="1" required />
+                     Bid History: <a href="bidhistory.jsp"> Number:</a><center-right>
+                     </center>
+                     
+                 </p>
+               	<div style="text-align:center;">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
+				</div>
+            </form>
+			
+			
+			<br>
+			<br>
+			<br>
+			
+			
+			
+    				
+			
+		</body>
             </div>
             <div class="col-md-4">
                 </p>
-              Starting Bid: 
-              <input type="number" name="startprice" value="<%=startPrice %>" /><br>
-              <br> 
-              Current Bid:
-              <input type="number" name="maxBid" value="<%=maxBid %>" /><br>
-              <br>
-              Number of Bids:
-              <input type="number" name="numBids" value="<%=numBids %>" /><br>
+             
 
                 <p>
             </div>   
