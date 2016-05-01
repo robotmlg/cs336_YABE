@@ -38,56 +38,63 @@
                  e.printStackTrace();
                 }
 
-              	Integer new_auctionId = Integer.parseInt(request.getParameter("auctionID"));
 
-              	Statement statement = auction_conn.createStatement() ;
-         	ResultSet resultset;
-              	resultset = null;
-              	String active_query = "SELECT *, FROM auction a, product p WHERE a.auctionID = new_auctionID and a.productID=p.productID";
-              	resultset = statement.executeQuery(active_query);
-    
-        	Date date = new Date();
+              Integer new_auctionId = Integer.parseInt(request.getParameter("auctionID"));
+              Statement statement = auction_conn.createStatement() ;
+              ResultSet resultset;
+              resultset = null;
+              String active_query = "SELECT *, FROM auction a, product p WHERE a.auctionID = new_auctionID and a.productID=p.productID";
+              resultset = statement.executeQuery(active_query);
+              
 
-		%>			  
-              	<h1> 
-		<center>Auction:<%=resultset.getString("brand")%>,<%=resultset.getString("model")%>, Sold by <%=resultset.getString("username")%> - Condition:<%=resultset.getString("condition")%> </center>
-              	</h1>
+                      
+              Date date = new Date();
+              
+              
+			  %>			  
+              <h1> 
+			  <center>Auction:<%=resultset.getString("brand")%>,<%=resultset.getString("model")%>, Sold by <%=resultset.getString("username")%> - Condition:<%=resultset.getString("condition")%> </center>
+              </h1>
                 
-    <body>
-	<br>
-	<br>
-	<center>Item Condition:<b><%=resultset.getString("condition")%></b></center>
-	<br>
-	<center>Time Left:<%=resultset.getString("TIMESTAMPDIFF(SECOND,'date','new_end_date')")%> </center>
-	<br>
-	<center>Starting Time:<%= resultset.getTimestamp("start_date") %></center>
-	<br>
-	<center>Location:<%= resultset.getString("address")%></center>
-	<br>
-	<center><b>Quantity:<%= resultset.getInt("quantity")%></b><br></center>
-	<br>
-	
-	<form action="processbid.jsp" method="post">       
-        	<p>
-                	<center>
-                	<input type="number" name="bid" placeholder="[Max Bid]" value=<%=resultset.getInt("maxBid")%> min="1" step="1" required />
+            <body>
+				<br>
+				<br>
+				<center>Item Condition:<b><%=resultset.getString("condition")%></b></center>
+				<br>
+				<center>Time Left:<%=resultset.getString("TIMESTAMPDIFF(SECOND,'date','new_end_date')")%>
+				</center>
+				<br>
+				<center>Starting Time:<%= resultset.getTimestamp("start_date") %></center>
+				<br>
+				<center>Location:<%= resultset.getString("address")%></center>
+				<br>
+				<center><b>Quantity:<%= resultset.getInt("quantity")%></b><br></center>
+				<br>
+			
+				<% if(session.getAttribute("loggedIn") == "true"){%>
+        			<form action="processbid.jsp" method="post">       
+                 	<p>
+                     	<center>
+                     	<input type="number" name="bid" placeholder="[Max Bid]" value=<%=resultset.getInt("maxBid")%> min="1" step="1" required />
                      	Bid History: <a href="bidhistory.jsp"> Number: <%=resultset.getInt("numBids")%></a><center-right>
                      	</center>
-                </p>
-               		<div style="text-align:center;">
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
-			</div>
-        </form>
-		<br>
-		<br>
-		<br>
-</body>
-        </div>
-        <div class="col-md-4">
-        </div>   
+                     
+                 	</p>
+               	<div style="text-align:center;">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
+				</div>
+            	</form>
+            	
+        		<%  } %>		
+			<br>
+			<br>
+			<br>
+		</body>
+            </div>
+            <div class="col-md-4">
+            </div>   
         </div>
         <%@include file="includes/footer.jsp" %>
         </div>
-</body>
-</html>
+    </body>
 </html>
