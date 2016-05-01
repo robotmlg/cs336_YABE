@@ -2,7 +2,7 @@
 <%@ page language="java" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="mindrot.jbcrypt.BCrypt" %>
+<%@ page import="org.mindrot.jbcrypt.BCrypt" %>
 
   
 <html>
