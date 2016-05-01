@@ -37,8 +37,7 @@
                  System.out.println("Could not connect to SQL server");
                  e.printStackTrace();
                }
-
-              Integer new_auctionId = Integer.parseInt(request.getParameter("auctionID"));
+             Integer new_auctionId = Integer.parseInt(request.getParameter("auctionID"));
 
               
               Statement statement = auction_conn.createStatement() ;
@@ -65,14 +64,14 @@
 			<br>
 			<center>Location:<%= resultset.getString("address")%></center>
 			<br>
-			<center><b>Quantity:<%= resultset.getString("quantity")%></b><br></center>
+			<center><b>Quantity:<%= resultset.getInt("quantity")%></b><br></center>
 			<br>
 			
 			<form action="processbid.jsp" method="post">       
                  <p>
                      <center>
-                     <input type="number" name="bid" placeholder="[Max Bid]" value=<%=resultset.getString("maxBid")%> min="1" step="1" required />
-                     Bid History: <a href="bidhistory.jsp"> Number: <%=resultset.getString("numBids")%></a><center-right>
+                     <input type="number" name="bid" placeholder="[Max Bid]" value=<%=resultset.getInt("maxBid")%> min="1" step="1" required />
+                     Bid History: <a href="bidhistory.jsp"> Number: <%=resultset.getInt("numBids")%></a><center-right>
                      </center>
                      
                  </p>
@@ -102,5 +101,4 @@
         <%@include file="includes/footer.jsp" %>
         </div>
     </body>
-</html>
 </html>
