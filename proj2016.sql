@@ -62,6 +62,7 @@ drop table bid;
 create table bid(
 	bidID integer primary key,
 	amount decimal(10,2) not null,
+	max_amount decimal(10,2),
 	time timestamp not null,
 	username varchar(16) references users,
 	auctionID integer references auction
@@ -167,3 +168,23 @@ insert into item_types (table_name,nice_name) VALUES ("other","Other");
 insert into item_types (table_name,nice_name) VALUES ("psu","Power Supplies");
 insert into item_types (table_name,nice_name) VALUES ("ram","Memory");
 insert into item_types (table_name,nice_name) VALUES ("storage","Storage");
+
+delimiter $$
+create trigger autobid
+after insert on bid
+for each row
+begin
+SET @curr_high = (SELECT MAX(amount) FROM bid WHERE auctionID=new.auctionID);
+SET @curr_ID   = (SELECT bidID FROM bid WHERE amount=@curr_high AND 
+    auctionID=new.auctionID);
+SET @curr_user = (SELECT username FROM bid WHERE bidID=@curr_ID);
+SET @curr_max  = (SELECT max_amount FROM bid WHERE bidID=@curr_ID);
+if new.amount+1 < @curr_max
+then
+    SET @new_ID = (SELECT MAX(bidID) FROM bid) + 1;
+    INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID)
+        VALUES (@new_ID, new.amount+1, @curr_max, NOW(), @curr_user, new.auctionID);
+end if;
+end$$
+delimiter ;
+
