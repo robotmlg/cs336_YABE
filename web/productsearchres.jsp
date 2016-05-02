@@ -24,6 +24,15 @@
         <div class="container">
         <div class="row">
             <div class="col-md-4">
+                <form action="hybridsearchres.jsp" method="post">
+                    <p>
+                        <b>Further refine product search with keyword search:</b><br>
+                        Search brand and model names (separate keywords by spaces):<br>
+                        <input type="text" name="searchparam" value="Search keywords" /><br>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Keyword Search</button>
+                    </p>
+                </form>
                 <p>
                     <b>Search Results</b><br>
                     <table border="1" style="width:100%">

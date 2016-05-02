@@ -28,7 +28,7 @@
                 <form action="keywordsearchres.jsp" method="post">
                     <p>
                         <b>Search brand and model names (separate keywords by spaces):</b><br>
-                        <input type="text" name="searchparam" value="Search keywords" />
+                        <input type="text" name="searchparam" value="Search keywords" /><br>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Keyword Search</button>
                     </p>
@@ -38,7 +38,7 @@
                 </p>
                 <form action="productsearchres.jsp" method="post">
                     <p>
-                        Specialized product search (can be combined with keyword search after you submit):<br>
+                        <b>Specialized product search (can be combined with keyword search after you submit):</b><br>
                         <b>Select a product type:</b><br>
                         <input type="radio" name="producttype" value="motherboard" checked> Motherboard<br>
                         <input type="radio" name="producttype" value="cpu" checked> CPU<br>
