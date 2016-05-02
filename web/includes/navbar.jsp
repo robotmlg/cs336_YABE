@@ -19,6 +19,7 @@
         <% if(session.getAttribute("loggedIn") == "true"){%>
         <li><a href="/userprofile.jsp">Hi, <%= session.getAttribute("username") %></a></li>
         <li><a href="/newauction.jsp">Create New Auction</a></li>
+        <li><a href="/allauctions.jsp">Search Auctions</a></li>
         <li><a href="/inbox.jsp">Inbox</a></li>
         <li>
             <a href="#" data-toggle="modal" data-target="#composeModal">Contact Us</a>
