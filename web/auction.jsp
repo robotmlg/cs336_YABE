@@ -83,13 +83,14 @@
         			<form action="processbid.jsp" method="post">       
                  	<p>
                      	<center>
-                     	<input type="number" name="bid" placeholder="[Max Bid]" value=<%=resultset.getInt("maxBid")%> min="1" step="1" required />
+                     	<input type="number" name="amount" placeholder="[Min_Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required autofocus />
+                      	<input type="number" name="max_amount" placeholder="[Max Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required />
+                      	<input type="number" name="auctionID"  value=<%=new_auctionID%>required autofocus />
                      	Bid History: <a href="bidhistory.jsp"> Number: <%=resultset.getInt("numBids")%></a><center-right>
                      	</center>
-                     
                  	</p>
                	<div style="text-align:center;">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
 				</div>
             	</form>
             	
