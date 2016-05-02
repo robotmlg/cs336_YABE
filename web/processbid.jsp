@@ -18,7 +18,7 @@
     int bidID = 0;
     
     Statement stmt = conn.createStatement();
-    String id_query = "SELECT MAX(a.bidID) FROM auction a";
+    String id_query = "SELECT MAX(b.bidID) FROM bid b";
     ResultSet rs = stmt.executeQuery(id_query);
     
     if(rs.next()){
