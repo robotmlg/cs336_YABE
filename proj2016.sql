@@ -12,9 +12,9 @@ create table messages(
 	message_id integer primary key,
 	to_user varchar(16) references users,
 	from_user varchar(16) references users,
-	body text, 
-	subject varchar(64),
-	send_time timestamp
+	body text not null, 
+	subject varchar(64) not null,
+	send_time timestamp not null
 );
 
 drop table cust_reps;
@@ -168,6 +168,19 @@ insert into item_types (table_name,nice_name) VALUES ("other","Other");
 insert into item_types (table_name,nice_name) VALUES ("psu","Power Supplies");
 insert into item_types (table_name,nice_name) VALUES ("ram","Memory");
 insert into item_types (table_name,nice_name) VALUES ("storage","Storage");
+
+delimiter $$
+create trigger bid_check
+before insert on bid
+for each row
+begin
+SET @curr_high = (SELECT MAX(amount) FROM bid WHERE auctionID=new.auctionID);
+if new.amount <= @curr_high
+then 
+SET new.amount = null; -- set amount to null so that insert will get rejected
+end if;
+end$$
+delimiter ;
 
 delimiter $$
 create trigger autobid
