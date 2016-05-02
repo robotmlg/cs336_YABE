@@ -4,7 +4,7 @@
     Connection conn = null;
     try{
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yabe?autoReconnect=true&useSSL=false","yabe","yabe");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/","yabe","yabe");
     }
 
     catch(Exception e){
@@ -18,7 +18,7 @@
     int bidID = 0;
     
     Statement stmt = conn.createStatement();
-    String id_query = "SELECT MAX(a.bidID) FROM product p";
+    String id_query = "SELECT MAX(a.bidID) FROM auction a";
     ResultSet rs = stmt.executeQuery(id_query);
     
     if(rs.next()){
