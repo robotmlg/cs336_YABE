@@ -4,7 +4,7 @@
     Connection conn = null;
     try{
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        conn = DriverManager.getConnection("jdbc:mysql://localhost/","yabe","yabe");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
     }
 
     catch(Exception e){
