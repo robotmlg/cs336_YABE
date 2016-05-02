@@ -51,15 +51,23 @@
                         <input type="radio" name="producttype" value="other"> Other<br>
 
                         <b>Auction sorting options:</b><br>
-                        <input type="checkbox" name="sorttype" value="motherboard" > Sort by max bid<br>
+                        <input type="checkbox" name="brand" value="brand" > Sort by product brand name<br>
+                        Sorting order: 
+                        <input type="radio" name="brand_order" value="ASC" checked> Ascending
+                        <input type="radio" name="brand_order" value="DESC" > Descending<br>
+                        <input type="checkbox" name="model" value="model" > Sort by product model name<br>
+                        Sorting order: 
+                        <input type="radio" name="model_order" value="ASC" checked> Ascending
+                        <input type="radio" name="model_order" value="DESC" > Descending<br>
+                        <input type="checkbox" name="maxbid" value="maxbid" > Sort by max bid<br>
                         Sorting order: 
                         <input type="radio" name="maxBid_order" value="ASC" checked> Ascending
                         <input type="radio" name="maxBid_order" value="DESC" > Descending<br>
-                        <input type="checkbox" name="sorttype" value="cpu" > Sort by number of bids<br>
+                        <input type="checkbox" name="numbids" value="numbids" > Sort by number of bids<br>
                         Sorting order: 
                         <input type="radio" name="numBids_order" value="ASC" checked> Ascending
                         <input type="radio" name="numBids_order" value="DESC" > Descending<br>
-                        <input type="checkbox" name="sorttype" value="ram" > Sort by auction end date<br>
+                        <input type="checkbox" name="enddate" value="enddate" > Sort by auction end date<br>
                         Sorting order: 
                         <input type="radio" name="endDate_order" value="ASC" checked> Ascending
                         <input type="radio" name="endDate_order" value="DESC" > Descending<br>

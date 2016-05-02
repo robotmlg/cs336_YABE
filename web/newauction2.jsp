@@ -71,42 +71,39 @@
                     <p>
                         <b>Product specific information:</b><br>
                         <%
-                            switch (request.getParameter("producttype")) {
-                                case "motherboard": %>
-                                    Number of PCIe Slots?<br>
-                                    <input type="number" name="pcieSlots" value="0" min="0" step="1" required autofocus /><br>
-                                    Number of RAM memory slots?<br>
-                                    <input type="number" name="memorySlots" value="0" min="0" step="1" required /><br>
-                                    Maximum RAM capacity (GBs)?<br>
-                                    <input type="number" name="maxRAM" value="0" min="0" step="1" required /><br>
-                                    Socket type?<br>
-                                    <input type="text" name="socketType" maxlength="16" placeholder="Socket Type" required /><br>
-                                    Chipset?<br>
-                                    <input type="text" name="chipset" maxlength="16" placeholder="Chipset" required /><br>
-                                    Does the motherboard have on-board sound?<br>
-                                    <input type="radio" name="onBoardSound" value="yes" checked> Yes<br>
-                                    <input type="radio" name="onBoardSound" value="no" > No<br>
-                                    Does the motherboard have on-board video?<br>
-                                    <input type="radio" name="onBoardVideo" value="yes" checked> Yes<br>
-                                    <input type="radio" name="onBoardVideo" value="no" > No<br>
-                        <%          break;
-                                case "cpu": %>
+                            String prodtype = request.getParameter("producttype");
+                            if (prodtype.equalsIgnoreCase("motherboard")) { %>
+                                Number of PCIe Slots?<br>
+                                <input type="number" name="pcieSlots" value="0" min="0" step="1" required autofocus /><br>
+                                Number of RAM memory slots?<br>
+                                <input type="number" name="memorySlots" value="0" min="0" step="1" required /><br>
+                                Maximum RAM capacity (GBs)?<br>
+                                <input type="number" name="maxRAM" value="0" min="0" step="1" required /><br>
+                                Socket type?<br>
+                                <input type="text" name="socketType" maxlength="16" placeholder="Socket Type" required /><br>
+                                Chipset?<br>
+                                <input type="text" name="chipset" maxlength="16" placeholder="Chipset" required /><br>
+                                Does the motherboard have on-board sound?<br>
+                                <input type="radio" name="onBoardSound" value="yes" checked> Yes<br>
+                                <input type="radio" name="onBoardSound" value="no" > No<br>
+                                Does the motherboard have on-board video?<br>
+                                <input type="radio" name="onBoardVideo" value="yes" checked> Yes<br>
+                                <input type="radio" name="onBoardVideo" value="no" > No<br>
+                        <%  } else if (prodtype.equalsIgnoreCase("cpu")) { %>
                                     Number of cores?<br>
                                     <input type="number" name="cores" value="1" min="1" step="1" required autofocus /><br>
                                     Clock speed (GHz)?<br>
                                     <input type="number" name="clockSpeed" value="1" min="1" max="10.00" step=".01" required /><br>
                                     Socket type?<br>
                                     <input type="text" name="socketType" maxlength="16" placeholder="Socket Type" required /><br>
-                        <%          break;
-                                case "ram": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("ram")) { %>
                                     Capacity (GB)?<br>
                                     <input type="number" name="capacity" value="1" min="1" step="1" required autofocus /><br>
                                     Memory type (DDR-X)?<br>
                                     <input type="text" name="memoryType" maxlength="4" placeholder="DDR(#)" required /><br>
                                     Clock speed?<br>
                                     <input type="number" name="clockSpeed" value="1666" min="1" step="1" required /><br>
-                        <%          break;
-                                case "gpu": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("gpu")) { %>
                                     Core clock speed (GHz)?<br>
                                     <input type="number" name="coreClockSpeed" value="1.00" min="0" max="10.00" step=".01" required autofocus /><br>
                                     Number of cores?<br>
@@ -125,14 +122,12 @@
                                     <input type="number" name="numDP" value="0" min="0" step="1" required /><br>
                                     Power requirement (W)?<br>
                                     <input type="number" name="powerRequirement" value="500" min="1" step="1" required /><br>
-                        <%          break;
-                                case "storage": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("storage")) { %>
                                     Capacity (GB)?<br>
                                     <input type="number" name="capacityInGB" value="1" min=".001" max="999999.999" step=".001" required autofocus /><br>
                                     Storage type (HDD or SSD)?<br>
                                     <input type="text" name="storageType" maxlength="3" placeholder="Storage Type" required /><br>
-                        <%          break;
-                                case "case": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("case")) { %>
                                     Dimensions?<br>
                                     <input type="text" name="dimensions" maxlength="15" placeholder="Dimensions (##.#x##.#x##.#)" required autofocus /><br>
                                     Number of case fans?<br>
@@ -140,27 +135,22 @@
                                     Does the case have built in lighting?<br>
                                     <input type="radio" name="isLITT" value="yes" checked> Yes<br>
                                     <input type="radio" name="isLITT" value="no" > No<br>
-                        <%          break;
-                                case "psu": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("psu")) { %>
                                     Power output?<br>
                                     <input type="number" name="power" value="100" min="100" step="1" required autofocus /><br>
                                     Is this PSU modular?<br>
                                     <input type="radio" name="modular" value="yes" checked> Yes<br>
                                     <input type="radio" name="modular" value="no" > No<br>
-                        <%          break;
-                                case "fan": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("fan")) { %>
                                     Dimensions?<br>
                                     <input type="text" name="dimensions" maxlength="15" placeholder="Dimensions (##.#x##.#x##.#)" required autofocus /><br>
                                     Flow rate?<br>
                                     <input type="number" name="flowrate" value="0" min="0" step="1" required /><br>
                                     Maximum RPM?<br>
                                     <input type="number" name="maxRPM" value="60" min="60" step="1" required /><br>
-                        <%          break;
-                                case "other": %>
+                        <%  } else if (prodtype.equalsIgnoreCase("other")) { %>
                                     
-                        <%          break;
-                            }
-                        %>
+                        <%  } %>
                         Is there any additional information you would like to provide? If so, please add it below.<br>
                         <input type="text" name="extraInfo" placeholder="Extra Information" />
                     </p>

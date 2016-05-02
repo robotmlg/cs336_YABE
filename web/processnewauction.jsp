@@ -55,156 +55,147 @@
     Statement stmt = conn.createStatement();
     String ins_query = "";
     int res = 0;
-    switch (request.getParameter("producttype")) {
-        case "motherboard":
-            int pcieSlots = Integer.parseInt(request.getParameter("pcieSlots"));
-            int memorySlots = Integer.parseInt(request.getParameter("memorySlots"));
-            int maxRAM = Integer.parseInt(request.getParameter("maxRAM"));
-            String socketType = request.getParameter("socketType");
-            String chipset = request.getParameter("chipset");
-            boolean onBoardSound;
-            if (request.getParameter("onBoardSound").equalsIgnoreCase("yes")) {
-                onBoardSound = true;
-            } else {
-                onBoardSound = false;
-            }
-            boolean onBoardVideo;
-            if (request.getParameter("onBoardVideo").equalsIgnoreCase("yes")) {
-                onBoardVideo = true;
-            } else {
-                onBoardVideo = false;
-            }
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO motherboard (productID, pcieSlots, memorySlots, maxRAM, socketType, chipset, onBoardSound, onBoardVideo) VALUES (\'" + productID + "\', \'" + pcieSlots + "\', \'" + memorySlots + "\', \'" + maxRAM + "\', \'" + socketType + "\', \'" + chipset + "\', \'" + onBoardSound + "\', \'" + onBoardVideo + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "cpu":
-            int cores = Integer.parseInt(request.getParameter("cores"));
-            double clockSpeed = Double.parseDouble(request.getParameter("clockSpeed"));
-            String cpusocketType = request.getParameter("socketType");
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO cpu (productID, cores, clockSpeed, socketType) VALUES (\'" + productID + "\', \'" + cores + "\', \'" + clockSpeed + "\', \'" + cpusocketType + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "ram":
-            int capacity = Integer.parseInt(request.getParameter("capacity"));
-            String memoryType = request.getParameter("memoryType");
-            int ramclockSpeed = Integer.parseInt(request.getParameter("clockSpeed"));
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO ram (productID, capacity, memoryType, ramclockSpeed) VALUES (\'" + productID + "\', \'" + capacity + "\', \'" + memoryType + "\', \'" + ramclockSpeed + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "gpu":
-            double coreClockSpeed = Double.parseDouble(request.getParameter("coreClockSpeed"));
-            int numCores = Integer.parseInt(request.getParameter("numCores"));
-            int memoryCapacity = Integer.parseInt(request.getParameter("memoryCapacity"));
-            int memoryClockSpeed = Integer.parseInt(request.getParameter("memoryClockSpeed"));
-            String gpumemoryType = request.getParameter("memoryType");
-            int numHDMI = Integer.parseInt(request.getParameter("numHDMI"));
-            int numDVI = Integer.parseInt(request.getParameter("numDVI"));
-            int numDP = Integer.parseInt(request.getParameter("numDP"));
-            int powerRequirement = Integer.parseInt(request.getParameter("powerRequirement"));
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO gpu (productID, coreClockSpeed, numCores, memoryCapacity, memoryClockSpeed, memoryType, numHDMI, numDVI, numDP, powerRequirement) VALUES (\'" + productID + "\', \'" + coreClockSpeed + "\', \'" + numCores + "\', \'" + memoryCapacity + "\', \'" + memoryClockSpeed + "\', \'" + gpumemoryType + "\', \'" + numHDMI + "\', \'" + numDVI + "\', \'" + numDP + "\', \'" + powerRequirement + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "storage":
-            double capacityInGB = Double.parseDouble(request.getParameter("capacityInGB"));
-            String storageType = request.getParameter("storageType");
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO storage (productID, capacityInGB, storageType) VALUES (\'" + productID + "\', \'" + capacityInGB + "\', \'" + storageType + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "case":
-            String dimensions = request.getParameter("dimensions");
-            int numCaseFans = Integer.parseInt(request.getParameter("numCaseFans"));
-            boolean isLITT;
-            if (request.getParameter("isLITT").equalsIgnoreCase("yes")) {
-                isLITT = true;
-            } else {
-                isLITT = false;
-            }
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO case_hw (productID, dimension, numCaseFans, isLITT) VALUES (\'" + productID + "\', \'" + dimensions + "\', \'" + numCaseFans + "\', \'" + isLITT + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "psu":
-            int power = Integer.parseInt(request.getParameter("power"));
-            boolean modular;
-            if (request.getParameter("modular").equalsIgnoreCase("yes")) {
-                modular = true;
-            } else {
-                modular = false;
-            }
-            
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO psu (productID, power, modular) VALUES (\'" + productID + "\', \'" + power + "\', \'" + modular + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "fan":
-            String fandimensions = request.getParameter("dimensions");
-            int flowrate = Integer.parseInt(request.getParameter("flowrate"));
-            int maxRPM = Integer.parseInt(request.getParameter("maxRPM"));
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO fan (productID, dimensions, flowrate, maxRPM) VALUES (\'" + productID + "\', \'" + fandimensions + "\', \'" + flowrate + "\', \'" + maxRPM + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
-        case "other":
-            stmt = conn.createStatement();
-            ins_query = "INSERT INTO other (productID) VALUES (\'" + productID + "\')";
-            res = stmt.executeUpdate(ins_query);
-            if (res < 1) {
-                session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
-                session.setAttribute("alert_type","danger");
-                %><%@ include file="newauction.jsp" %><%
-            }
-            break;
+    String prodtype = request.getParameter("producttype");
+    if (prodtype.equalsIgnoreCase("motherboard")) {
+        int pcieSlots = Integer.parseInt(request.getParameter("pcieSlots"));
+        int memorySlots = Integer.parseInt(request.getParameter("memorySlots"));
+        int maxRAM = Integer.parseInt(request.getParameter("maxRAM"));
+        String socketType = request.getParameter("socketType");
+        String chipset = request.getParameter("chipset");
+        boolean onBoardSound;
+        if (request.getParameter("onBoardSound").equalsIgnoreCase("yes")) {
+            onBoardSound = true;
+        } else {
+            onBoardSound = false;
+        }
+        boolean onBoardVideo;
+        if (request.getParameter("onBoardVideo").equalsIgnoreCase("yes")) {
+            onBoardVideo = true;
+        } else {
+            onBoardVideo = false;
+        }
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO motherboard (productID, pcieSlots, memorySlots, maxRAM, socketType, chipset, onBoardSound, onBoardVideo) VALUES (\'" + productID + "\', \'" + pcieSlots + "\', \'" + memorySlots + "\', \'" + maxRAM + "\', \'" + socketType + "\', \'" + chipset + "\', \'" + onBoardSound + "\', \'" + onBoardVideo + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("cpu")) {
+        int cores = Integer.parseInt(request.getParameter("cores"));
+        double clockSpeed = Double.parseDouble(request.getParameter("clockSpeed"));
+        String cpusocketType = request.getParameter("socketType");
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO cpu (productID, cores, clockSpeed, socketType) VALUES (\'" + productID + "\', \'" + cores + "\', \'" + clockSpeed + "\', \'" + cpusocketType + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("ram")) {
+        int capacity = Integer.parseInt(request.getParameter("capacity"));
+        String memoryType = request.getParameter("memoryType");
+        int ramclockSpeed = Integer.parseInt(request.getParameter("clockSpeed"));
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO ram (productID, capacity, memoryType, ramclockSpeed) VALUES (\'" + productID + "\', \'" + capacity + "\', \'" + memoryType + "\', \'" + ramclockSpeed + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("gpu")) {
+        double coreClockSpeed = Double.parseDouble(request.getParameter("coreClockSpeed"));
+        int numCores = Integer.parseInt(request.getParameter("numCores"));
+        int memoryCapacity = Integer.parseInt(request.getParameter("memoryCapacity"));
+        int memoryClockSpeed = Integer.parseInt(request.getParameter("memoryClockSpeed"));
+        String gpumemoryType = request.getParameter("memoryType");
+        int numHDMI = Integer.parseInt(request.getParameter("numHDMI"));
+        int numDVI = Integer.parseInt(request.getParameter("numDVI"));
+        int numDP = Integer.parseInt(request.getParameter("numDP"));
+        int powerRequirement = Integer.parseInt(request.getParameter("powerRequirement"));
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO gpu (productID, coreClockSpeed, numCores, memoryCapacity, memoryClockSpeed, memoryType, numHDMI, numDVI, numDP, powerRequirement) VALUES (\'" + productID + "\', \'" + coreClockSpeed + "\', \'" + numCores + "\', \'" + memoryCapacity + "\', \'" + memoryClockSpeed + "\', \'" + gpumemoryType + "\', \'" + numHDMI + "\', \'" + numDVI + "\', \'" + numDP + "\', \'" + powerRequirement + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("storage")) {
+        double capacityInGB = Double.parseDouble(request.getParameter("capacityInGB"));
+        String storageType = request.getParameter("storageType");
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO storage (productID, capacityInGB, storageType) VALUES (\'" + productID + "\', \'" + capacityInGB + "\', \'" + storageType + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("case")) {
+        String dimensions = request.getParameter("dimensions");
+        int numCaseFans = Integer.parseInt(request.getParameter("numCaseFans"));
+        boolean isLITT;
+        if (request.getParameter("isLITT").equalsIgnoreCase("yes")) {
+            isLITT = true;
+        } else {
+            isLITT = false;
+        }
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO case_hw (productID, dimension, numCaseFans, isLITT) VALUES (\'" + productID + "\', \'" + dimensions + "\', \'" + numCaseFans + "\', \'" + isLITT + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("psu")) {
+        int power = Integer.parseInt(request.getParameter("power"));
+        boolean modular;
+        if (request.getParameter("modular").equalsIgnoreCase("yes")) {
+            modular = true;
+        } else {
+            modular = false;
+        }
+
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO psu (productID, power, modular) VALUES (\'" + productID + "\', \'" + power + "\', \'" + modular + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("fan")) {
+        String fandimensions = request.getParameter("dimensions");
+        int flowrate = Integer.parseInt(request.getParameter("flowrate"));
+        int maxRPM = Integer.parseInt(request.getParameter("maxRPM"));
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO fan (productID, dimensions, flowrate, maxRPM) VALUES (\'" + productID + "\', \'" + fandimensions + "\', \'" + flowrate + "\', \'" + maxRPM + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
+    } else if (prodtype.equalsIgnoreCase("other")) {
+        stmt = conn.createStatement();
+        ins_query = "INSERT INTO other (productID) VALUES (\'" + productID + "\')";
+        res = stmt.executeUpdate(ins_query);
+        if (res < 1) {
+            session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
+            session.setAttribute("alert_type","danger");
+            %><%@ include file="newauction.jsp" %><%
+        }
     }
     
     if (res > 0) {
