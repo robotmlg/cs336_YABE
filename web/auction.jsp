@@ -86,6 +86,7 @@
                      	<input type="number" name="amount" placeholder="[Min_Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required autofocus />
                       	<input type="number" name="max_amount" placeholder="[Max Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required />
                       	<input type="number" name="auctionID"  value=<%=new_auctionID%>required autofocus />
+                      	<input type=time name="date"  value=<%=date%>required autofocus />
                      	Bid History: <a href="bidhistory.jsp"> Number: <%=resultset.getInt("numBids")%></a><center-right>
                      	</center>
                  	</p>
