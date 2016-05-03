@@ -72,7 +72,7 @@
         session.setAttribute("alert","Bid successful.");
         session.setAttribute("alert_type","success");
     }
-    else{ // process autobids
+    else if(curr_high_user != username){ // process autobids
         session.setAttribute("alert","Bid successful.");
         session.setAttribute("alert_type","success");
 

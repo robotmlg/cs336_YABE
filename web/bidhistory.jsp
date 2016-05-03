@@ -50,7 +50,7 @@
 
 		Integer new_auctionID = Integer.parseInt(request.getParameter("auctionID"));
 				
-		Statement newest_statement = bidhistory_conn.createStatement() ;
+		Statement newest_statement = bidhistory_conn.createStatement();
                 ResultSet rs3;
                 rs3 = null;
                 String active_query = "SELECT * FROM auction a, bid b WHERE a.auctionID = "+new_auctionID+" and b.auctionID=a.auctionID";

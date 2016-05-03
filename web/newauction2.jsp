@@ -114,9 +114,7 @@
                         <%
                             String prodtype = product_type;
 
-                            Statement prod_stmt=conn.createStatement();
-                            ResultSet prod_rs = prod_stmt.executeQuery("SELECT * FROM "+product_type+" WHERE productID="+productID);
-                           if(!prod_rs.next()){ %>
+                           if(productID==0){ %>
                         <b>Product specific information:</b><br>
                         <%    if (prodtype.equalsIgnoreCase("motherboard")) { %>
                                 Number of PCIe Slots?<br>

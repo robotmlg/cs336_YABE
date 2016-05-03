@@ -50,21 +50,21 @@ if (product.equalsIgnoreCase("New")) {
         int maxRAM = Integer.parseInt(request.getParameter("maxRAM"));
         String socketType = request.getParameter("socketType");
         String chipset = request.getParameter("chipset");
-        boolean onBoardSound;
+        int onBoardSound;
         if (request.getParameter("onBoardSound").equalsIgnoreCase("yes")) {
-            onBoardSound = true;
+            onBoardSound = 1;
         } else {
-            onBoardSound = false;
+            onBoardSound = 0;
         }
-        boolean onBoardVideo;
+        int onBoardVideo;
         if (request.getParameter("onBoardVideo").equalsIgnoreCase("yes")) {
-            onBoardVideo = true;
+            onBoardVideo = 1;
         } else {
-            onBoardVideo = false;
+            onBoardVideo = 0;
         }
 
         stmt = conn.createStatement();
-        ins_query = "INSERT INTO motherboard (productID, pcieSlots, memorySlots, maxRAM, socketType, chipset, onBoardSound, onBoardVideo) VALUES (\'" + productID + "\', \'" + pcieSlots + "\', \'" + memorySlots + "\', \'" + maxRAM + "\', \'" + socketType + "\', \'" + chipset + "\', \'" + onBoardSound + "\', \'" + onBoardVideo + "\')";
+        ins_query = "INSERT INTO motherboard (productID, pcieSlots, memorySlots, maxRAM, socketType, chipset, onBoardSound, onBoardVideo) VALUES (" + productID + ", " + pcieSlots + ", " + memorySlots + ", " + maxRAM + ", \'" + socketType + "\', \'" + chipset + "\', " + onBoardSound + ", " + onBoardVideo + ")";
         res = stmt.executeUpdate(ins_query);
         if (res < 1) {
             session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
@@ -131,11 +131,11 @@ if (product.equalsIgnoreCase("New")) {
     } else if (prodtype.equalsIgnoreCase("case")) {
         String dimensions = request.getParameter("dimensions");
         int numCaseFans = Integer.parseInt(request.getParameter("numCaseFans"));
-        boolean isLITT;
+        int isLITT;
         if (request.getParameter("isLITT").equalsIgnoreCase("yes")) {
-            isLITT = true;
+            isLITT = 1;
         } else {
-            isLITT = false;
+            isLITT = 0;
         }
 
         stmt = conn.createStatement();
@@ -148,11 +148,11 @@ if (product.equalsIgnoreCase("New")) {
         }
     } else if (prodtype.equalsIgnoreCase("psu")) {
         int power = Integer.parseInt(request.getParameter("power"));
-        boolean modular;
+        int modular;
         if (request.getParameter("modular").equalsIgnoreCase("yes")) {
-            modular = true;
+            modular = 1;
         } else {
-            modular = false;
+            modular = 0;
         }
 
         stmt = conn.createStatement();
