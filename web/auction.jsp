@@ -78,7 +78,9 @@
 				<br>
 				<center><b>Quantity:<%= resultset.getInt("quantity")%></b><br></center>
 				<br>
-			
+				<center>Current Highest Bid:<%=resultset.getInt("maxBid") %></center>
+				<br>
+
 				<% if(session.getAttribute("loggedIn") == "true"){%>
         			<form action="processbid.jsp?auctionID=<%= new_auctionID %>" method="post">       
                  	<p>
