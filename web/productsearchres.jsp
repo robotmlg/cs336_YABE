@@ -24,15 +24,6 @@
         <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <form action="hybridsearchres.jsp" method="post">
-                    <p>
-                        <b>Further refine product search with keyword search:</b><br>
-                        Search brand and model names (separate keywords by spaces):<br>
-                        <input type="text" name="searchparam" value="Search keywords" /><br>
-
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Keyword Search</button>
-                    </p>
-                </form>
                 <p>
                     <b>Search Results</b><br>
                     <table border="1" style="width:100%">
@@ -137,6 +128,7 @@
                             }
                             
                             String searchquery = "SELECT * FROM " + tabletype + " p, auction a WHERE p.productID = a.productID";
+                            String oldquery = searchquery;
                             if (sort) {
                                 searchquery += " " + sb.toString();
                             }
@@ -163,6 +155,16 @@
                         <% } %>
                     </table>
                 </p>
+                <form action="hybridsearchres.jsp" method="post">
+                    <p>
+                        <b>Further refine product search with keyword search:</b><br>
+                        Search brand and model names (separate keywords by spaces):<br>
+                        <input type="text" name="searchparam" value="Search keywords" /><br>
+                        <input type="hidden" name="oldquery" value="<%= oldquery %>">
+                        <input type="hidden" name="oldsort" value="<%= sb.toString() %>">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Keyword Search</button>
+                    </p>
+                </form>
                 <a href="allauctions.jsp" class="button btn btn-lg btn-primary btn-block">New Search</a>
             </div>   
         </div>
