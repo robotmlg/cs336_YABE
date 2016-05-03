@@ -75,15 +75,17 @@
                     <h>Hello <%= session.getAttribute("username") %>!</h>
                     <form action="edituser.jsp" method="post">
                         <p>
-                            <b>Account Info:</b><br>
+                            <b>Account Info (leave present info as is to keep it):</b><br>
                             Name: 
                             <input type="text" name="name" placeholder="<%= name %>" /><br>
                             Age: 
                             <input type="number" name="age" value="<%= age %>" min="1" step="1" /><br>
                             Address: 
                             <input type="text" name="address" placeholder="<%= address %>" /><br>
-                            Password: 
-                            <input type="password" name="password" placeholder="New Password" /><br>
+                            New Password (leave empty if you want to leave the old password): 
+                            <input type="password" name="password" placeholder="" /><br>
+                            Old Password (required for any changes): 
+                            <input type="password" name="oldpassword" placeholder="Old Password" /><br>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Changes</button>
                         </p>
                     </form>

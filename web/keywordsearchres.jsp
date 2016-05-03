@@ -84,7 +84,7 @@
                             String keywordComp = sb.toString();
                             Statement statement = searchres_conn.createStatement() ;
                             ResultSet resultset;
-                            resultset = statement.executeQuery("SELECT * FROM auction a, product p WHERE (" + keywordComp + ")");
+                            resultset = statement.executeQuery("SELECT * FROM auction a, product p WHERE (" + keywordComp + ") AND a.completed = TRUE");
                         %>
                         <%  while(resultset.next()){ 
                                 int auctionID = resultset.getInt("auctionID");

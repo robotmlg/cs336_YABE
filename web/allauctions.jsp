@@ -104,7 +104,7 @@
 
                             Statement statement = products_conn.createStatement() ;
                             ResultSet resultset;
-                            resultset = statement.executeQuery("SELECT * FROM auction a, product p WHERE a.productID = p.productID");
+                            resultset = statement.executeQuery("SELECT * FROM auction a, product p WHERE a.productID = p.productID AND a.completed = TRUE");
                         %>
                         <%  while(resultset.next()){ 
                                 int auctionID = resultset.getInt("auctionID");
