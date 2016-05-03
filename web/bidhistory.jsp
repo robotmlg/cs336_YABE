@@ -39,18 +39,13 @@
                  e.printStackTrace();
                }
 
-			  Integer new_auctionID = Integer.parseInt(request.getParameter("auctionID"));
-				
-			  Statement newest_statement = bidhistory_conn.createStatement() ;
-              ResultSet rs3;
-              rs3 = null;
-              String active_query = "SELECT * FROM auction a, bid b WHERE a.auctionID = "+new_auctionID+" and b.auctionID=a.auctionID";
-              rs3 = newest_statement.executeQuery(active_query);
-              while(rs3.next()){  %>  
-			  
-
-			
-			
+		Integer new_auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		Statement newest_statement = bidhistory_conn.createStatement() ;
+              	ResultSet rs3;
+              	rs3 = null;
+              	String active_query = "SELECT * FROM auction a, bid b WHERE a.auctionID = "+new_auctionID+" and b.auctionID=a.auctionID";
+              	rs3 = newest_statement.executeQuery(active_query);
+              	while(rs3.next()){  %>  
 				<div align="center">
 				        <table border="1" cellpadding="5">
 				            <caption><h2>List of Bids</h2></caption>
@@ -61,7 +56,6 @@
 				                <th>Username</th>
 				                <th>Date</th>
 				            </tr>
-				      
 				                <tr>
 				                    <td> <%= rs3.getInt("bidID") %></td>
 				                    <td><%= rs3.getInt("amount") %></td>
