@@ -1,7 +1,7 @@
 
-drop event if exists end_auction;
-
 delimiter $$
+
+drop trigger if exists bid_check$$
 create trigger bid_check
 before insert on bid
 for each row
@@ -25,6 +25,7 @@ CONCAT("You've been outbid on auction ",new.auctionID," by ",new.username,"!"));
 end if;
 end$$
 
+drop trigger if exists max_bid_update$$
 create trigger max_bid_update
 after insert on bid
 for each row
@@ -33,19 +34,19 @@ UPDATE auction SET maxBid=new.amount WHERE auctionID=new.auctionID;
 end$$
 
 
-create event end_auction
-on schedule every 1 minute
-on completion preserve
-do begin
+drop procedure if exists end_auction$$
+create procedure end_auction()
+begin
 SET @curr_time = NOW();
-SELECT COUNT(*) FROM auction WHERE TIMESTAMPDIFF(SECOND,curr_time,end_date)<0 
-    INTO @n;
-SET @i=0;
-WHILE @i < @n DO
+SELECT COUNT(*) FROM auction WHERE TIMESTAMPDIFF(SECOND,@curr_time,end_date)<0 
+    AND completed!=true INTO @n;
+SET @i=1;
+WHILE @i <= @n DO
     SET @this_ID = (SELECT auctionID 
                     FROM (SELECT auctionID, @offset := @offset+1 AS rank 
                         FROM auction, (SELECT @offset:=0) r 
-                        WHERE TIMESTAMPDIFF(SECOND,@curr_time,end_date)<0) d
+                        WHERE TIMESTAMPDIFF(SECOND,@curr_time,end_date)<0 AND
+                              completed!=true) d
                     WHERE rank=@i);
     SET @max_bid = (SELECT maxBid FROM auction WHERE auctionID=@this_ID);
     SET @reserve = (SELECT reserve_price FROM auction WHERE auctionID=@this_ID);
@@ -77,8 +78,17 @@ WHILE @i < @n DO
                 of ",@reserve,
                 ", and thus did not sell.  Thank you for using YABE."));
     end if;
+    UPDATE auction SET completed=true WHERE auctionID=@this_ID;
     SET @i = @i + 1;
 END WHILE;
+end$$
+
+drop event if exists end_auction_event$$
+create event end_auction_event
+on schedule every 1 minute
+on completion preserve
+do begin
+call end_auction();
 end$$
 
 /*

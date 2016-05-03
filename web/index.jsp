@@ -124,7 +124,7 @@
                     "b.num_bids < (SELECT AVG(num_bids) "+
                         "FROM (SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) as c) AND "+
-                    "a.productID=p.productID";
+                    "a.productID=p.productID AND sponsored=true";
                 rs = stmt.executeQuery(sponsor_q);
 
                 for(int i=0;rs.next() && i<10; ++i){ %>

@@ -209,7 +209,7 @@
         else{
             auctionID=1;
         }
-        String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', NOW(), DATE_ADD(NOW(), INTERVAL "+auction_length+" DAY), \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', "+startprice+", '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
+        String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username, completed) VALUES (\'" + auctionID + "\', NOW(), DATE_ADD(NOW(), INTERVAL "+auction_length+" DAY), \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', "+startprice+", '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\',false)";
         System.out.println(ins_auction);
         int res2 = stmt.executeUpdate(ins_auction);
         if (res2 < 1) {
