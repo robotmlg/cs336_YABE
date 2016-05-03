@@ -55,15 +55,17 @@
                     </p>
                     <p>
                         <b>Select a product type:</b><br>
-                        <input type="radio" name="producttype" value="motherboard" checked> Motherboard<br>
-                        <input type="radio" name="producttype" value="cpu" checked> CPU<br>
-                        <input type="radio" name="producttype" value="ram"> RAM<br>
-                        <input type="radio" name="producttype" value="gpu" checked> GPU<br>
-                        <input type="radio" name="producttype" value="storage" checked> Storage<br>
-                        <input type="radio" name="producttype" value="case"> Case<br>
-                        <input type="radio" name="producttype" value="psu"> PSU<br>
-                        <input type="radio" name="producttype" value="fan"> Fan<br>
-                        <input type="radio" name="producttype" value="other"> Other
+                        <select name="producttype">
+                        <option  value="motherboard" checked> Motherboard</option><br>
+                        <option  value="cpu" checked> CPU</option>
+                        <option  value="ram"> RAM</option>
+                        <option  value="gpu" checked> GPU</option>
+                        <option  value="storage" checked> Storage</option>
+                        <option  value="case"> Case</option>
+                        <option  value="psu"> PSU</option>
+                        <option  value="fan"> Fan</option>
+                        <option  value="other"> Other</option>
+                        </select>
                     </p>
                     <p>
                         <b>Product information (required for a new product entry):</b><br>

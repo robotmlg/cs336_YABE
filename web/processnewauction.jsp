@@ -1,59 +1,48 @@
 <%@page import="java.sql.*"%>
 <%
-    Connection conn = null;
-    try{
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
+Connection conn = null;
+try{
+    Class.forName("com.mysql.jdbc.Driver").newInstance();
+    conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
+}
+catch(Exception e){
+    out.print("<p>Could not connect to SQL server.</p>");
+    e.printStackTrace();
+}
+
+int productID = 0;
+int res = 0;
+Statement stmt = conn.createStatement();
+String product = request.getParameter("products");
+String producttype = request.getParameter("producttype");
+String brand = request.getParameter("brand");
+String model = request.getParameter("model");
+
+String extraInfo = request.getParameter("extraInfo");
+
+if (product.equalsIgnoreCase("New")) {
+    // assign a new productID by incrementing the last one
+    String id_query = "SELECT MAX(p.productID) FROM product p";
+    ResultSet rs = stmt.executeQuery(id_query);
+    // if there is a result
+    if(rs.next()){
+        productID = rs.getInt(1) + 1;
     }
-    catch(Exception e){
-        out.print("<p>Could not connect to SQL server.</p>");
-        e.printStackTrace();
+    // if the table was empty and we don't have a Max ID, start at 1
+    else{
+        productID=1;
     }
-    
-    int productID = 0;
-    String product = request.getParameter("products");
-    String producttype = request.getParameter("producttype");
-    String brand = request.getParameter("brand");
-    String model = request.getParameter("model");
-    
-    String extraInfo = request.getParameter("extraInfo");
-    
-    if (product.equalsIgnoreCase("New")) {
-        // assign a new productID by incrementing the last one
-        Statement stmt = conn.createStatement();
-        String id_query = "SELECT MAX(p.productID) FROM product p";
-        ResultSet rs = stmt.executeQuery(id_query);
-        // if there is a result
-        if(rs.next()){
-            productID = rs.getInt(1) + 1;
-        }
-        // if the table was empty and we don't have a Max ID, start at 1
-        else{
-            productID=1;
-        }
-        String ins_query = "INSERT INTO product (productID, brand, model, extraInfo) VALUES (\'" + productID + "\', \'" + brand + "\', \'" + model + "\', \'" + extraInfo + "\')";
-        int res = stmt.executeUpdate(ins_query);
-        
-        if (res < 1) {
-            session.setAttribute("alert","Auction creation failed. Please try again.");
-            session.setAttribute("alert_type","danger");
-        } else {
-            session.setAttribute("alert","Auction creation successful.");
-            session.setAttribute("alert_type","success");
-        }
+    String ins_query = "INSERT INTO product (productID, brand, model, extraInfo) VALUES (\'" + productID + "\', \'" + brand + "\', \'" + model + "\', \'" + extraInfo + "\')";
+    res = stmt.executeUpdate(ins_query);
+
+    if (res < 1) {
+        session.setAttribute("alert","Auction creation failed. Please try again.");
+        session.setAttribute("alert_type","danger");
     } else {
-        productID = Integer.parseInt(product);
+        session.setAttribute("alert","Auction creation successful.");
+        session.setAttribute("alert_type","success");
     }
-    
-    int auction_length = Integer.parseInt(request.getParameter("auction_length"));
-    int reserveprice = Integer.parseInt(request.getParameter("reserveprice"));
-    int startprice = Integer.parseInt(request.getParameter("startprice"));
-    int quantity = Integer.parseInt(request.getParameter("quantity"));
-    String condition = request.getParameter("condition");
-    
-    Statement stmt = conn.createStatement();
-    String ins_query = "";
-    int res = 0;
+
     String prodtype = request.getParameter("producttype");
     if (prodtype.equalsIgnoreCase("motherboard")) {
         int pcieSlots = Integer.parseInt(request.getParameter("pcieSlots"));
@@ -196,31 +185,42 @@
             %><%@ include file="newauction.jsp" %><%
         }
     }
-    
-    if (res > 0) {
-        int auctionID = 0;
-        String auction_id_query = "SELECT MAX(a.auctionID) FROM auction a";
-        ResultSet rs = stmt.executeQuery(auction_id_query);
-        // if there is a result
-        if(rs.next()){
-            auctionID = rs.getInt(1) + 1;
-        }
-        // if the table was empty and we don't have a Max ID, start at 1
-        else{
-            auctionID=1;
-        }
-        String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username, completed) VALUES (\'" + auctionID + "\', NOW(), DATE_ADD(NOW(), INTERVAL "+auction_length+" DAY), \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', "+startprice+", '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\',false)";
-        System.out.println(ins_auction);
-        int res2 = stmt.executeUpdate(ins_auction);
-        if (res2 < 1) {
-            session.setAttribute("alert","Auction creation failed. Please try again.");
-            session.setAttribute("alert_type","danger");
-            %><%@ include file="newauction.jsp" %><%
-        } else {
-            session.setAttribute("alert","Auction creation successful.");
-            session.setAttribute("alert_type","success");
-            String a_page = "auction.jsp?auctionID="+auctionID;
-            %><jsp:include page="index.jsp" /><%
-        }
+} else {
+    productID = Integer.parseInt(product);
+    res = 1;
+}
+
+int auction_length = Integer.parseInt(request.getParameter("auction_length"));
+int reserveprice = Integer.parseInt(request.getParameter("reserveprice"));
+int startprice = Integer.parseInt(request.getParameter("startprice"));
+int quantity = Integer.parseInt(request.getParameter("quantity"));
+String condition = request.getParameter("condition");
+
+
+if (res > 0) {
+    int auctionID = 0;
+    String auction_id_query = "SELECT MAX(a.auctionID) FROM auction a";
+    ResultSet rs = stmt.executeQuery(auction_id_query);
+    // if there is a result
+    if(rs.next()){
+        auctionID = rs.getInt(1) + 1;
     }
+    // if the table was empty and we don't have a Max ID, start at 1
+    else{
+        auctionID=1;
+    }
+    String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username, completed) VALUES (\'" + auctionID + "\', NOW(), DATE_ADD(NOW(), INTERVAL "+auction_length+" DAY), \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', "+startprice+", '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\',false)";
+    System.out.println(ins_auction);
+    int res2 = stmt.executeUpdate(ins_auction);
+    if (res2 < 1) {
+        session.setAttribute("alert","Auction creation failed. Please try again.");
+        session.setAttribute("alert_type","danger");
+        %><%@ include file="newauction.jsp" %><%
+    } else {
+        session.setAttribute("alert","Auction creation successful.");
+        session.setAttribute("alert_type","success");
+        String a_page = "auction.jsp?auctionID="+auctionID;
+        %><jsp:include page="index.jsp" /><%
+    }
+}
 %>

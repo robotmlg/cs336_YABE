@@ -3,6 +3,18 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="org.mindrot.jbcrypt.BCrypt" %>
 
+<%
+    Connection conn = null;
+    try{
+        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
+    }
+
+    catch(Exception e){
+        out.print("<p>Could not connect to SQL server.</p>");
+        e.printStackTrace();
+    }
+%>
 
 <html>
     <head>
@@ -33,6 +45,8 @@
                         Product ID: 
                         <input type="text" name="products" value="<%= request.getParameter("products") %>" /><br>
                         <%
+                            String product_type = null;
+                            int productID = 0;
                             if (request.getParameter("products").equalsIgnoreCase("new")) {
                                     String brand = request.getParameter("brand");
                                     String model = request.getParameter("model"); %>
@@ -40,36 +54,43 @@
                                     <input type="text" name="brand" value="<%= brand %>" /><br>
                                     Product model: 
                                     <input type="text" name="model" value="<%= model %>" />
+                                    Product type: 
+                                    <input type="text" name="producttype" value="<%= request.getParameter("producttype") %>" />
                         <%
                             } else {
-                                Connection conn = null;
-                                try{
-                                    Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                    conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
-                                }
-
-                                catch(Exception e){
-                                    out.print("<p>Could not connect to SQL server.</p>");
-                                    e.printStackTrace();
-                                }
+                                productID=Integer.parseInt(request.getParameter("products"));
 
                                 Statement statement = conn.createStatement() ;
                                 ResultSet resultset;
                                 resultset = statement.executeQuery("SELECT * FROM product p WHERE p.productID = " + request.getParameter("products"));
                                 resultset.first();
                                 String brand = resultset.getString("brand");
-                                String model = resultset.getString("model"); %>
+                                String model = resultset.getString("model"); 
+                                
+                                //find the product type
+                                Statement type_stmt = conn.createStatement();
+                                ResultSet type_rs = type_stmt.executeQuery("SELECT * FROM item_types");
+                                while(type_rs.next()){
+                                    resultset = statement.executeQuery("SELECT COUNT(*) FROM "+type_rs.getString("table_name")+" WHERE productID="+productID);
+                                    if(resultset.first() && resultset.getInt(1)!=0){
+                                        product_type = type_rs.getString("table_name");
+                                        break;
+                                    }
+                                }
+
+
+
+                        %>
+
                                 Product brand: 
                                 <input type="text" name="brand" value="<%= brand %>" /><br>
                                 Product model: 
                                 <input type="text" name="model" value="<%= model %>" />
+                                Product type: 
+                                <input type="text" name="producttype" value="<%= product_type %>" />
                         <%
                             }
                         %>
-                    </p>
-                    <p>
-                        Product type: 
-                        <input type="text" name="producttype" value="<%= request.getParameter("producttype") %>" />
                     </p>
                     <p>
                         <b>General Auction Information:</b><br>
@@ -89,10 +110,14 @@
             <div class="col-md-6">
             <div class="jumbotron">
                     <p>
-                        <b>Product specific information:</b><br>
                         <%
-                            String prodtype = request.getParameter("producttype");
-                            if (prodtype.equalsIgnoreCase("motherboard")) { %>
+                            String prodtype = product_type;
+
+                            Statement prod_stmt=conn.createStatement();
+                            ResultSet prod_rs = prod_stmt.executeQuery("SELECT * FROM "+product_type+" WHERE productID="+productID);
+                           if(!prod_rs.next()){ %>
+                        <b>Product specific information:</b><br>
+                        <%    if (prodtype.equalsIgnoreCase("motherboard")) { %>
                                 Number of PCIe Slots?<br>
                                 <input type="number" name="pcieSlots" value="0" min="0" step="1" required autofocus /><br>
                                 Number of RAM memory slots?<br>
@@ -173,6 +198,7 @@
                         <%  } %>
                         Is there any additional information you would like to provide? If so, please add it below.<br>
                         <input type="text" name="extraInfo" placeholder="Extra Information" />
+                        <% } %>
                     </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Create Auction</button>
             </div>
