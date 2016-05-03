@@ -45,7 +45,7 @@
 
 
     Statement stmt4 = bid_conn.createStatement();
-    String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auction ID = "+auctionID+" and b.auctionID=a.auctionID";
+    String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID="+auctionID+" and b.auctionID=a.auctionID";
     ResultSet rs5 = stmt4.executeQuery(getmaxbid_query);
 
     String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
