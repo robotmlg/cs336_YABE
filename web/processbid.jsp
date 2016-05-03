@@ -43,19 +43,20 @@
     }
     
 
+
     Statement stmt2 = bid_conn.createStatement();
+    Statement stmt3 = bid_conn.createStatement();
+    Statement stmt4 = bid_conn.createStatement();
+    Statement stmt5 = bid_conn.createStatement();
+
     String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID = "+auctionID+" and b.auctionID=a.auctionID ";
     ResultSet rs5 = stmt2.executeQuery(getmaxbid_query);
-    
-    Statement stmt3 = bid_conn.createStatement();
-    String getnumbids_query ="SELECT (a.numBids) FROM auction a WHERE a.auction ID = "+auctionID+"";
+	
+    String getnumbids_query ="SELECT a.numBids FROM  auction a WHERE a.auction ID = "+auctionID+"";
     ResultSet rs7 = stmt3.executeQuery(getnumbids_query);
     
-    Statement stmt4 = bid_conn.createStatement();
-    String getauctionmaxbid_query ="SELECT (a.maxBid) FROM auction a WHERE a.auction ID = "+auctionID+"";
+    String getauctionmaxbid_query ="SELECT a.maxBid FROM  auction a WHERE a.auction ID = "+auctionID+"";
     ResultSet rs8 = stmt4.executeQuery(getauctionmaxbid_query);
-    
-    Statement stmt5 = bid_conn.createStatement();
     
     String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
     int res = 0;
@@ -74,16 +75,12 @@
         }
     }
     
-    
-    Integer x = 0;
     int res3 = 0;
     int res6 = 0;
-    x = rs7.getInt("numBids");
     
     if(amount > rs8.getInt("maxBid")){
-        x = x + 1;
         if(amount > rs5.getInt("max_amount")){
-        	String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + amount + "\', \'" + x + "\')";
+        	String updatemaxbid_query = "UPDATE auction (maxBid) VALUES (\'" + amount + "\')";
         	 
         	try{
 				res3 = stmt5.executeUpdate(updatemaxbid_query);
@@ -105,7 +102,7 @@
         if (amount <= rs5.getInt("max_amount")){
         	if(max_amount > rs5.getInt("max_amount")){
     			
-    			String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + max_amount + "\', \'" + x + "\')";
+    			String updatemaxbid_query = "UPDATE auction (maxBid) VALUES (\'" + max_amount + "\')";
 				try{
 					res3 = stmt5.executeUpdate(updatemaxbid_query);
 				}
@@ -125,7 +122,7 @@
         	 if(max_amount <= rs5.getInt("max_amount")){
             	bidID = bidID+1;
             	username = rs5.getString("username");
-            	String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + rs5.getInt("max_amount") + "\', \'" + x + "\')";
+            	String updatemaxbid_query = "UPDATE auction (maxBid) VALUES (\'" + rs5.getInt("max_amount") + "\')";
                 String ins_query2 = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + rs5.getInt("max_amount") + "\', \'" + rs5.getInt("max_amount") + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
                 
                 try{
@@ -169,4 +166,5 @@
 
     %><%@ include file="auction.jsp" %><%
 	
+%>
 %>
