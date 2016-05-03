@@ -68,7 +68,7 @@
             <div class="form-group">
                 <label for="auctionID" class="col-xs-2 control-label">ID</label>
                 <div class="col-xs-10">
-                <input type="number" name="auctionID" placeholder="Auction ID" class="form-control" required>
+                    <input type="number" name="auctionID" placeholder="Auction ID" class="form-control" required>
                 </div>
             </div>
             </fieldset>
@@ -84,7 +84,7 @@
             <div class="form-group">
                 <label for="bidID" class="col-xs-2 control-label">ID</label>
                 <div class="col-xs-10">
-                <input type="number" name="bidID" placeholder="Bid ID" class="form-control" required>
+                    <input type="number" name="bidID" placeholder="Bid ID" class="form-control" required>
                 </div>
             </div>
             </fieldset>
@@ -183,6 +183,9 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>
         <%
             }
 
@@ -196,7 +199,6 @@
         } %>
 
 
-        </div>
         </div>
         </div>
         <%@include file="includes/footer.jsp" %>
