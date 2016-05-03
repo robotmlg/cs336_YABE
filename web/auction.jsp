@@ -174,6 +174,15 @@
             </div>
             <div class="col-md-4">
             </div>   
+            	<form class="forum" method="post" action="postcomment.jsp">
+		<div align="center"><br>
+		<hr>
+		<textarea name="comments" cols="40" rows="5">
+		Enter your comments here...
+		</textarea><br>
+		<input type="submit" value="Submit" /> 
+		</div>
+		</form>
         </div>
         <%@include file="includes/footer.jsp" %>
         </div>
