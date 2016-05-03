@@ -1,4 +1,3 @@
-<%@page import="java.sql.*"%>
 <%@ page language="java" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.Date" %>
@@ -15,158 +14,117 @@
     }
     
     
-    Integer amount = Integer.parseInt(request.getParameter("amount"));
-    Integer max_amount = Integer.parseInt(request.getParameter("max_amount"));
-    String time = (request.getParameter("time"));
+    int amount = Integer.parseInt(request.getParameter("amount"));
+    int max_amount = Integer.parseInt(request.getParameter("max_amount"));
     String username = (String)session.getAttribute("username");
-    Integer auctionID = Integer.parseInt(request.getParameter("auctionID"));
-    
-    Statement new_statement = bid_conn.createStatement() ;
-    ResultSet new_resultset;
-    int res2;
-    new_resultset = null;
-    
+    int auctionID = Integer.parseInt(request.getParameter("auctionID"));
+
+    if(max_amount < amount)
+        max_amount = amount;
+     
     
     // give the bid an id
-    Integer bidID = 0;
-    
-    Statement stmt = bid_conn.createStatement();
+    int bidID = 0;
+    Statement id_stmt = bid_conn.createStatement();
     String id_query = "SELECT MAX(b.bidID) FROM bid b";
-    ResultSet rs = stmt.executeQuery(id_query);
+    ResultSet id_rs = id_stmt.executeQuery(id_query);
     
-    if(rs.next()){
-    	bidID = rs.getInt(1) + 1;
+    if(id_rs.next()){
+    	bidID = id_rs.getInt(1) + 1;
     }
     // if the table was empty and we don't have a Max ID, start at 1
     else{
     	bidID=1;
     }
-    
 
-    Statement stmt2 = bid_conn.createStatement();
-    String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID = "+auctionID+" and b.auctionID=a.auctionID ";
-    ResultSet rs5 = stmt2.executeQuery(getmaxbid_query);
-    
-    Statement stmt3 = bid_conn.createStatement();
-    String getnumbids_query ="SELECT (a.numBids) FROM auction a WHERE a.auction ID = "+auctionID+"";
-    ResultSet rs7 = stmt3.executeQuery(getnumbids_query);
-    
-    Statement stmt4 = bid_conn.createStatement();
-    String getauctionmaxbid_query ="SELECT (a.maxBid) FROM auction a WHERE a.auction ID = "+auctionID+"";
-    ResultSet rs8 = stmt4.executeQuery(getauctionmaxbid_query);
-    
-    Statement stmt5 = bid_conn.createStatement();
-    
-    String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
-    int res = 0;
+    Statement bid_stmt = bid_conn.createStatement();
+    // get old max bid info
+    String max_query = "SELECT MAX(max_amount) as high_max FROM bid "+
+        "WHERE auctionID="+auctionID;
+    System.out.println(max_query);
+    ResultSet max_rs = bid_stmt.executeQuery(max_query);
+
+    int high_max=0;
+    if(max_rs.next())
+        high_max = max_rs.getInt("high_max");
+    max_query = "SELECT username FROM bid "+
+        "WHERE auctionID="+auctionID+" AND max_amount="+high_max;
+    max_rs = bid_stmt.executeQuery(max_query);
+    String curr_high_user = "";
+    if(max_rs.next())
+        curr_high_user = max_rs.getString("username");
+
+    // insert this bid into bid table
+    String place_bid = "INSERT INTO bid (bidID, amount, max_amount, time, "+
+        "username, auctionID) VALUES ("+bidID+","+amount+","+max_amount+
+        ",NOW(),\'"+username+"\',"+auctionID+")";
+    int bid_res = 1;
     try{
-        res = stmt.executeUpdate(ins_query);
+        bid_res = bid_stmt.executeUpdate(place_bid);
     }
-    catch(Exception e){ res = 0;}
-    finally{
-    
-        if (res < 1) {
-            session.setAttribute("alert","Bid failed.");
-            session.setAttribute("alert_type","danger");
-        } else {
-            session.setAttribute("alert","Bid Successful.");
-            session.setAttribute("alert_type","success");
-        }
-    }
-    
-    
-    Integer x = 0;
-    int res3 = 0;
-    int res6 = 0;
-    x = rs7.getInt("numBids");
-    
-    if(amount > rs8.getInt("maxBid")){
-        x = x + 1;
-        if(amount > rs5.getInt("max_amount")){
-        	String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + amount + "\', \'" + x + "\')";
-        	 
-        	try{
-				res3 = stmt5.executeUpdate(updatemaxbid_query);
-			}
-			catch(Exception e){ res3 = 0;}
-		    finally{
-		    
-		        if (res3 < 1) {
-		            session.setAttribute("alert","Your Bid did not go through. Try Again!");
-		            session.setAttribute("alert_type","danger");
-		        } else {
-		            session.setAttribute("alert","You are now the current highest bidder!.");
-		            session.setAttribute("alert_type","success");
-		        }
-        	
-		    }
-        }
-        
-        if (amount <= rs5.getInt("max_amount")){
-        	if(max_amount > rs5.getInt("max_amount")){
-    			
-    			String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + max_amount + "\', \'" + x + "\')";
-				try{
-					res3 = stmt5.executeUpdate(updatemaxbid_query);
-				}
-				catch(Exception e){ res3 = 0;}
-			    finally{
-			    
-			        if (res3 < 1) {
-			            session.setAttribute("alert","Bid did not go through.");
-			            session.setAttribute("alert_type","danger");
-			        } else {
-			            session.setAttribute("alert","You are now the current highest bidder!.");
-			            session.setAttribute("alert_type","success");
-			        }
-			    }
-    		}
-        	
-        	 if(max_amount <= rs5.getInt("max_amount")){
-            	bidID = bidID+1;
-            	username = rs5.getString("username");
-            	String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + rs5.getInt("max_amount") + "\', \'" + x + "\')";
-                String ins_query2 = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + rs5.getInt("max_amount") + "\', \'" + rs5.getInt("max_amount") + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
-                
-                try{
-					res3 = stmt5.executeUpdate(updatemaxbid_query);
-				}
-				catch(Exception e){ res3 = 0;}
-			    finally{
-			    
-			        if (res3 < 1) {
-			            session.setAttribute("alert","Bid did not go through.");
-			            session.setAttribute("alert_type","danger");
-			        } else {
-			            session.setAttribute("alert","You are now the current highest bidder!.");
-			            session.setAttribute("alert_type","success");
-			        }
-			    }
-                
-                try{
-    				
-    				res6 = stmt5.executeUpdate(ins_query2);
-    			}
-    			catch(Exception e){ res6 = 0;}
-    		    finally{
-    		    
-    		        if (res6 < 1) {
-    		            session.setAttribute("alert","Bid did not go through.");
-    		            session.setAttribute("alert_type","danger");
-    		        } else {
-    		            session.setAttribute("alert","Bid Successful!.");
-    		            session.setAttribute("alert_type","success");
-    		        }
-    		    }
-        	}
-        }
-    }
-    
-    else if(amount <= rs8.getInt("maxBid")){
-    	 session.setAttribute("alert","Bid did not go through.");
-         session.setAttribute("alert_type","danger");
-    }
+    catch(Exception e){bid_res=0;}
 
+    if(bid_res==0){
+        session.setAttribute("alert","Bid could not be placed.");
+        session.setAttribute("alert_type","danger");
+    }
+    else if(high_max == 0){ // bid went through, no autobids to process
+        session.setAttribute("alert","Bid successful.");
+        session.setAttribute("alert_type","success");
+    }
+    else{ // process autobids
+        session.setAttribute("alert","Bid successful.");
+        session.setAttribute("alert_type","success");
+
+        // if the max_amount is the same as the high_max, give it to the other guy
+        if(high_max == max_amount){
+            place_bid = "INSERT INTO bid (bidID, amount, max_amount, time, "+
+                "username, auctionID) VALUES ("+(++bidID)+","+(max_amount)+","+
+                high_max+",NOW(),\'"+curr_high_user+"\',"+auctionID+")";
+            bid_res = bid_stmt.executeUpdate(place_bid);
+
+            if(bid_res==0){
+                session.setAttribute("alert","Autobid could not be placed.");
+                session.setAttribute("alert_type","danger");
+            }
+            else{
+                session.setAttribute("alert","Outbid by another user");
+                session.setAttribute("alert_type","warning");
+            }
+        }
+    
+        // if this bid's max_amount is higher than highest max_amount, bid again
+        else if(max_amount >= high_max+1){
+            place_bid = "INSERT INTO bid (bidID, amount, max_amount, time, "+
+                "username, auctionID) VALUES ("+(++bidID)+","+(high_max+1)+","+
+                max_amount+",NOW(),\'"+username+"\',"+auctionID+")";
+            bid_res = bid_stmt.executeUpdate(place_bid);
+
+            if(bid_res==0){
+                session.setAttribute("alert","Autobid could not be placed.");
+                session.setAttribute("alert_type","danger");
+            }
+        }
+        // if this bid's max_amount is lower than highest max_amount, bid again
+        else if(high_max >= max_amount+1){
+            place_bid = "INSERT INTO bid (bidID, amount, max_amount, time, "+
+                "username, auctionID) VALUES ("+(++bidID)+","+(max_amount+1)+","+
+                high_max+",NOW(),\'"+curr_high_user+"\',"+auctionID+")";
+            bid_res = bid_stmt.executeUpdate(place_bid);
+
+            if(bid_res==0){
+                session.setAttribute("alert","Autobid could not be placed.");
+                session.setAttribute("alert_type","danger");
+            }
+            else{
+                session.setAttribute("alert","Outbid by another user");
+                session.setAttribute("alert_type","warning");
+            }
+        }
+
+
+    
+    }
     %><%@ include file="auction.jsp" %><%
 	
 %>
