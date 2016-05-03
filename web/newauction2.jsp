@@ -49,7 +49,8 @@
                             int productID = 0;
                             if (request.getParameter("products").equalsIgnoreCase("new")) {
                                     String brand = request.getParameter("brand");
-                                    String model = request.getParameter("model"); %>
+                                    String model = request.getParameter("model"); 
+                                    product_type = request.getParameter("producttype");%>
                                     Product brand: 
                                     <input type="text" name="brand" value="<%= brand %>" /><br>
                                     Product model: 

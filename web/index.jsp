@@ -121,7 +121,7 @@
                         "(SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) b "+
                     "WHERE TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0 AND "+
-                    "b.num_bids < (SELECT AVG(num_bids) "+
+                    "b.num_bids <= (SELECT AVG(num_bids) "+
                         "FROM (SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) as c) AND "+
                     "a.productID=p.productID AND sponsored=true";
@@ -152,7 +152,7 @@
                         "(SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) b "+
                     "WHERE TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0 AND "+
-                    "b.num_bids > (SELECT AVG(num_bids) "+
+                    "b.num_bids >= (SELECT AVG(num_bids) "+
                         "FROM (SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) as c) AND "+
                     "a.productID=p.productID";
