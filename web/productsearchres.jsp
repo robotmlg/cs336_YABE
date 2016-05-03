@@ -127,7 +127,7 @@
                                 sb.append(request.getParameter("enddate_order"));
                             }
                             
-                            String searchquery = "SELECT * FROM " + tabletype + " p, auction a WHERE p.productID = a.productID";
+                            String searchquery = "SELECT * FROM " + tabletype + " t, product p, auction a WHERE p.productID = a.productID AND p.productID=t.productID";
                             String oldquery = searchquery;
                             if (sort) {
                                 searchquery += " " + sb.toString();
