@@ -26,16 +26,21 @@
     if(name != null && age >= 13 && address != null && username != null && password != null){
         Statement stmt = conn.createStatement();
         String ins_query = "INSERT INTO users (username, password_hash, age, name, address) VALUES (\'" + username + "\', \'" + password_hash + "\', \'" + age + "\', \'" + name + "\', \'" + address + "\')";
-        int res = stmt.executeUpdate(ins_query);
-    
-        if (res < 1) {
-            session.setAttribute("alert","Registration failed.");
-            session.setAttribute("alert_type","danger");
-            %><%@ include file="register.jsp" %><%
-        } else {
-            session.setAttribute("alert","Registration success. Login to continue.");
-            session.setAttribute("alert_type","success");
-            %><%@ include file="login.jsp" %><%
+        int res = 0;
+        try{
+            res = stmt.executeUpdate(ins_query);
+        }
+        catch(Exception e){}
+        finally{
+            if (res < 1) {
+                session.setAttribute("alert","Registration failed.");
+                session.setAttribute("alert_type","danger");
+                %><%@ include file="register.jsp" %><%
+            } else {
+                session.setAttribute("alert","Registration success. Login to continue.");
+                session.setAttribute("alert_type","success");
+                %><%@ include file="login.jsp" %><%
+            }
         }
     } else {
             session.setAttribute("alert","Invalid registration fields. Please review your information and try again.");

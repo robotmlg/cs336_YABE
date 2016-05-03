@@ -45,8 +45,7 @@
         productID = Integer.parseInt(product);
     }
     
-    String startdate = request.getParameter("startdate");
-    String enddate = request.getParameter("enddate");
+    int auction_length = Integer.parseInt(request.getParameter("auction_length"));
     int reserveprice = Integer.parseInt(request.getParameter("reserveprice"));
     int startprice = Integer.parseInt(request.getParameter("startprice"));
     int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -210,7 +209,7 @@
         else{
             auctionID=1;
         }
-        String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', \'" + startdate + "\', \'" + enddate + "\', \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', '0.00', '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
+        String ins_auction = "INSERT INTO auction (auctionID, start_date, end_date, reserve_price, start_price, quantity, item_condition, maxBid, numBids, productID, username) VALUES (\'" + auctionID + "\', NOW(), DATE_ADD(NOW, INTERVAL "+auction_length+" DAYS, \'" + reserveprice + "\', \'" + startprice + "\', \'" + quantity + "\', \'" + condition + "\', '0.00', '0', \'" + productID + "\', \'" + session.getAttribute("username") + "\')";
         int res2 = stmt.executeUpdate(ins_auction);
         if (res2 < 1) {
             session.setAttribute("alert","Auction creation failed. Please try again.");

@@ -156,10 +156,8 @@
                     </p>
                     <p>
                         <b>General Auction Information:</b><br>
-                        Start date: 
-                        <input type="datetime-local" name="startdate" value="<%= request.getParameter("startdate") %>" /><br>
-                        End date: 
-                        <input type="datetime-local" name="enddate" value="<%= request.getParameter("enddate") %>" /><br>
+                        Auction length: 
+                        <input type="number" name="auction_length" value="<%= request.getParameter("auction_length") %>" />days<br>
                         Reserve price: 
                         <input type="number" name="reserveprice" value="<%= request.getParameter("reserveprice") %>" /><br>
                         Bidding start price: 

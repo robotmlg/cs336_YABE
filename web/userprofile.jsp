@@ -174,7 +174,7 @@
 
                             Statement statement2 = userbids_conn.createStatement() ;
                             ResultSet resultset2;
-                            resultset2 = statement2.executeQuery("SELECT * FROM bid b, auction a WHERE a.auctionID = b.auctionID AND b.username = '" + username + "' ORDER BY b.time DESC");
+                            resultset2 = statement2.executeQuery("SELECT * FROM bid b, auction a, product p WHERE a.auctionID = b.auctionID AND a.productID = p.productID AND b.username = '" + username + "' ORDER BY b.time DESC");
                         %>
                         <%  while(resultset2.next()){ 
                                 int auctionID = resultset2.getInt("auctionID"); %>

@@ -71,10 +71,8 @@
                     </p>
                     <p>
                         <b>General auction information:</b><br>
-                        Start date: 
-                        <input type="datetime-local" name="startdate" placeholder="Start Date" required autofocus /><br>
-                        End date: 
-                        <input type="datetime-local" name="enddate" placeholder="End Date" required /><br>
+                        Auction length: 
+                        <input type="number" name="auction_length" value="1" min="1" step="1" required /> days<br>
                         Reserve price: 
                         <input type="number" name="reserveprice" value="0" min="0" step="any" required /><br>
                         Bidding start price: 
