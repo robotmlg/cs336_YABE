@@ -33,6 +33,16 @@
         <%
     } else {
         Connection pwcheck_conn = null;
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            pwcheck_conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
+        }
+        catch(Exception e){
+            out.print("<p>Could not connect to SQL server.</p>");
+            e.printStackTrace();
+        }
+
         Statement pwcheck_stmt = pwcheck_conn.createStatement();
         String pw_query = "SELECT password_hash FROM users WHERE username=\'"+curr_username+"\'";
         ResultSet check_rs = pwcheck_stmt.executeQuery(pw_query);
