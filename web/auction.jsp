@@ -25,7 +25,7 @@
        	<%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-6">
         <%
         	Connection auction_conn = null;
                 try{
@@ -62,38 +62,45 @@
               
               
 			  %>			  
+              <div class="jumbotron">
               <h1> 
-			  <center>Auction:<%=resultset.getString("brand")%>,<%=resultset.getString("model")%>, Sold by <%=resultset.getString("username")%> - Condition:<%=resultset.getString("item_condition")%> </center>
+			  <%=resultset.getString("brand")%> <%=resultset.getString("model")%>
               </h1>
+              <h2>Sold by <%=resultset.getString("username")%> - Condition:<%=resultset.getString("item_condition")%>
+              </h2>
                 
-            <body>
 				<br>
 				<br>
-				<center>Item Condition:<b><%=resultset.getString("item_condition")%></b></center>
+				Item Condition:<b><%=resultset.getString("item_condition")%></b>
 				<br>
-				<center>Time Left:<%=time_left %>
-				</center>
+				Time Left:<%=time_left %>
+				
 				<br>
-				<center>Starting Time:<%= resultset.getTimestamp("start_date") %></center>
+				Starting Time:<%= resultset.getTimestamp("start_date") %>
 				<br>
-				<center><b>Quantity:<%= resultset.getInt("quantity")%></b><br></center>
+				<b>Quantity:<%= resultset.getInt("quantity")%></b><br>
 				<br>
-				<center>Current Highest Bid:<%=resultset.getInt("maxBid") %></center>
+				Current Highest Bid:<%=resultset.getInt("maxBid") %>
 				<br>
+                </div>
+                </div>
 
 				<% if(session.getAttribute("loggedIn") == "true"){%>
+                <div class="col-md-6">
+                <div class="jumbotron">
+                <h3>Place bid:</h3>
         			<form action="processbid.jsp?auctionID=<%= new_auctionID %>" method="post">       
                  	<p>
-                     	<center>
                      	Amount: <input type="number" name="amount" placeholder="[Min_Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required autofocus />
+                        <br/>
                       	Max Amount: <input type="number" name="max_amount" placeholder="[Max Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required />
+                        <br/>
                       	Bid History: <a href="bidhistory.jsp?auctionID=<%= new_auctionID %>"> Number: <%=resultset.getInt("numBids")%></a><center-right>
-                     	</center>
                  	</p>
-               	<div style="text-align:center;">
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
-				</div>
             	</form>
+                </div>
+                </div>
             	
         		<%  } %>		
 			<br>
