@@ -12,6 +12,8 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <style>
         body {
+            padding-top: 60px;
+            padding-bottom: 40px;
             
         }
         </style>
@@ -22,8 +24,9 @@
         <%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <form action="newauction2.jsp" method="post">       
+                <div class="jumbotron">
                     <h2>Create A New Auction</h2>
                     <p>
                         <b>Select a product if it already exists (otherwise, select 'New'):</b><br>
@@ -83,6 +86,7 @@
                         <input type="text" name="condition" placeholder="Condition" required />
                     </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Create Auction</button>
+                </div>
                 </form>
             </div>   
         </div>

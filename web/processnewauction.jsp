@@ -101,7 +101,7 @@
         int ramclockSpeed = Integer.parseInt(request.getParameter("clockSpeed"));
 
         stmt = conn.createStatement();
-        ins_query = "INSERT INTO ram (productID, capacity, memoryType, ramclockSpeed) VALUES (\'" + productID + "\', \'" + capacity + "\', \'" + memoryType + "\', \'" + ramclockSpeed + "\')";
+        ins_query = "INSERT INTO ram (productID, capacity, memoryType, clockSpeed) VALUES (\'" + productID + "\', \'" + capacity + "\', \'" + memoryType + "\', \'" + ramclockSpeed + "\')";
         res = stmt.executeUpdate(ins_query);
         if (res < 1) {
             session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");

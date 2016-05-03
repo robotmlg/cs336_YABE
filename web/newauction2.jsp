@@ -12,7 +12,8 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <style>
         body {
-            
+            padding-top: 60px;
+            padding-bottom: 40px; 
         }
         </style>
         <script src="js/jquery-1.10.2.min.js"></script>
@@ -22,8 +23,10 @@
         <%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
-            <div class="col-md-4">
                 <form action="processnewauction.jsp" method="post">       
+            <div class="col-md-6">
+            <div class="jumbotron">
+
                     <h2>New Auction: Additional Information</h2>
                     <p>
                         <b>General product information:</b><br>
@@ -68,6 +71,23 @@
                         Product type: 
                         <input type="text" name="producttype" value="<%= request.getParameter("producttype") %>" />
                     </p>
+                    <p>
+                        <b>General Auction Information:</b><br>
+                        Auction length: 
+                        <input type="number" name="auction_length" value="<%= request.getParameter("auction_length") %>" />days<br>
+                        Reserve price: 
+                        <input type="number" name="reserveprice" value="<%= request.getParameter("reserveprice") %>" /><br>
+                        Bidding start price: 
+                        <input type="number" name="startprice" value="<%= request.getParameter("startprice") %>" /><br>
+                        Quantity being sold: 
+                        <input type="number" name="quantity" value="<%= request.getParameter("quantity") %>" /><br>
+                        Condition: 
+                        <input type="text" name="condition" value="<%= request.getParameter("condition") %>" />
+                    </p>
+            </div>
+            </div>   
+            <div class="col-md-6">
+            <div class="jumbotron">
                     <p>
                         <b>Product specific information:</b><br>
                         <%
@@ -154,22 +174,10 @@
                         Is there any additional information you would like to provide? If so, please add it below.<br>
                         <input type="text" name="extraInfo" placeholder="Extra Information" />
                     </p>
-                    <p>
-                        <b>General Auction Information:</b><br>
-                        Auction length: 
-                        <input type="number" name="auction_length" value="<%= request.getParameter("auction_length") %>" />days<br>
-                        Reserve price: 
-                        <input type="number" name="reserveprice" value="<%= request.getParameter("reserveprice") %>" /><br>
-                        Bidding start price: 
-                        <input type="number" name="startprice" value="<%= request.getParameter("startprice") %>" /><br>
-                        Quantity being sold: 
-                        <input type="number" name="quantity" value="<%= request.getParameter("quantity") %>" /><br>
-                        Condition: 
-                        <input type="text" name="condition" value="<%= request.getParameter("condition") %>" />
-                    </p>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Create Auction</button>
+            </div>
+            </div>
                 </form>
-            </div>   
         </div>
         <%@include file="includes/footer.jsp" %>
         </div>
