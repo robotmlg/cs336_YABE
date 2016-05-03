@@ -25,12 +25,13 @@ CONCAT("You've been outbid on auction ",new.auctionID," by ",new.username,"!"));
 end if;
 end$$
 
-drop trigger if exists max_bid_update$$
-create trigger max_bid_update
+drop trigger if exists bid_update$$
+create trigger bid_update
 after insert on bid
 for each row
 begin
-UPDATE auction SET maxBid=new.amount WHERE auctionID=new.auctionID;
+SET @old_count = (SELECT numBids FROM auction WHERE auctionID=new.auctionID);
+UPDATE auction SET maxBid=new.amount, numBids=@old_count+1 WHERE auctionID=new.auctionID;
 end$$
 
 
