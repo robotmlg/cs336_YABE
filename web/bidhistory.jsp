@@ -26,13 +26,6 @@
                 <h1>Below are the bids for this auction:</h1>
             </div>
             <div class="col-md-4">
-            
-             <table class="table" style="width:100%">
-                        <tr>
-                            <th>Bid ID</th>
-                            <th>Bid Amount</th>
-                            <th>Date</th>
-             </tr>
 
 <% 
 			Connection bidhistory_conn = null;
@@ -40,12 +33,10 @@
                  Class.forName("com.mysql.jdbc.Driver").newInstance();
                  bidhistory_conn = DriverManager.getConnection("jdbc:mysql://localhost/yabe","yabe","yabe");
                }
-
                catch(Exception e){
                  System.out.println("Could not connect to SQL server");
                  e.printStackTrace();
                }
-
 			 Integer new_auctionID = Integer.parseInt(request.getParameter("auctionID"));
 				
 			  Statement newest_statement = bidhistory_conn.createStatement() ;
@@ -54,7 +45,12 @@
               String active_query = "SELECT * FROM auction a, bid b WHERE a.auctionID = "+new_auctionID+" and b.auctionID=a.auctionID";
               rs3 = newest_statement.executeQuery(active_query);
               %>  
-          
+              <table class="table" style="width:100%">
+                        <tr>
+                            <th>Bid ID</th>
+                            <th>Bid Amount</th>
+                            <th>Date</th>
+                        </tr>
 
 
             </div>   
