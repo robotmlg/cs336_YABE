@@ -26,7 +26,7 @@
             <div class="col-md-4">
                 <p>
                     <b>Search Results</b><br>
-                    <table border="1" style="width:100%">
+                    <table class="table" style="width:100%">
                         <tr>
                             <th>Auction ID</th>
                             <th>Username</th>
@@ -127,7 +127,7 @@
                                 sb.append(request.getParameter("enddate_order"));
                             }
                             
-                            String searchquery = "SELECT * FROM " + tabletype + " t, product p, auction a WHERE p.productID = a.productID AND p.productID=t.productID";
+                            String searchquery = "SELECT * FROM " + tabletype + " t, product p, auction a WHERE p.productID = a.productID AND p.productID = t.productID";
                             String oldquery = searchquery;
                             if (sort) {
                                 searchquery += " " + sb.toString();

@@ -77,7 +77,7 @@
                 </form>
                 <p>
                     <b>Click on productID to visit the auction page. Click on username to visit seller.</b><br>
-                    <table border="1" style="width:100%">
+                    <table class="table" style="width:100%">
                         <tr>
                             <th>Auction ID</th>
                             <th>Username</th>

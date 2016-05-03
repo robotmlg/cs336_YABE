@@ -26,7 +26,7 @@
             <div class="col-md-4">
                 <p>
                     <b>Search Results</b><br>
-                    <table border="1" style="width:100%">
+                    <table class="table" style="width:100%">
                         <tr>
                             <th>Auction ID</th>
                             <th>Username</th>
