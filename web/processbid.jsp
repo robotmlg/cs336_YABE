@@ -43,11 +43,16 @@
     }
     
 
-
     Statement stmt4 = bid_conn.createStatement();
-    String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID="+auctionID+" and b.auctionID=a.auctionID";
+    String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID = "+auctionID+" and b.auctionID=a.auctionID ";
     ResultSet rs5 = stmt4.executeQuery(getmaxbid_query);
-
+	
+    String getnumbids_query ="SELECT a.numBids FROM  auction a WHERE a.auction ID = "+auctionID+"";
+    ResultSet rs7 = stmt4.executeQuery(getnumbids_query);
+    
+    String getauctionmaxbid_query ="SELECT a.maxBid FROM  auction a WHERE a.auction ID = "+auctionID+"";
+    ResultSet rs8 = stmt4.executeQuery(getauctionmaxbid_query);
+    
     String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
     int res = 0;
     try{
@@ -69,9 +74,9 @@
     Integer x = 0;
     int res3 = 0;
     int res6 = 0;
-    x = rs5.getInt("numBids");
+    x = rs7.getInt("numBids");
     
-    if(amount > rs5.getInt("maxBid")){
+    if(amount > rs8.getInt("maxBid")){
         x = x + 1;
         if(amount > rs5.getInt("max_amount")){
         	String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + amount + "\', \'" + x + "\')";
@@ -153,7 +158,7 @@
         }
     }
     
-    else if(amount <= rs5.getInt("maxBid")){
+    else if(amount <= rs8.getInt("maxBid")){
     	 session.setAttribute("alert","Bid did not go through.");
          session.setAttribute("alert_type","danger");
     }
