@@ -116,8 +116,8 @@
             <table class="table">
             <tr><th>Item</th><th>End Date</th></tr>
             <%
-                String sponsor_q = "SELECT p.model, p.brand, a.end_date "+
-                    "FROM auction a, product p, "+
+                String sponsor_q = "SELECT p.model, p.brand, a.end_date, "+
+                    "a.auctionID FROM auction a, product p, "+
                         "(SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) b "+
                     "WHERE TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0 AND "+
@@ -148,7 +148,7 @@
             <tr><th>User</th><th>Item</th><th>Current Bid</th><th>End Date</th></tr>
             <%
                 String popular_q = "SELECT p.model, p.brand, a.end_date, a.maxBid, "+
-                    "a.username FROM auction a, product p, "+
+                    "a.auctionID, a.username FROM auction a, product p, "+
                         "(SELECT auctionID, COUNT(*) AS num_bids FROM bid "+
                         "GROUP BY auctionID) b "+
                     "WHERE TIMESTAMPDIFF(SECOND,NOW(),a.end_date)>0 AND "+

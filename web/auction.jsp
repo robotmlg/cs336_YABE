@@ -47,7 +47,7 @@
               resultset = statement.executeQuery(active_query);
               resultset.next();
               
-
+              int productID = Integer.parseInt(resultset.getString("productID"));
                       
               Date date = new Date();
               long diff = resultset.getTimestamp("end_date").getTime() - date.getTime();
@@ -68,7 +68,71 @@
               </h1>
               <h2>Sold by <%=resultset.getString("username")%> - Condition:<%=resultset.getString("item_condition")%>
               </h2>
+
+    <%
+        //find the product type
+        String prodtype = null;
+        Statement type_stmt = auction_conn.createStatement();
+        ResultSet type_rs = type_stmt.executeQuery("SELECT * FROM item_types");
+        ResultSet count_rs;
+        Statement count_stmt = auction_conn.createStatement();
+        while(type_rs.next()){
+            count_rs = count_stmt.executeQuery("SELECT COUNT(*) FROM "+type_rs.getString("table_name")+" WHERE productID="+productID);
+            if(count_rs.first() && count_rs.getInt(1)!=0){
+                prodtype = type_rs.getString("table_name");
+                break;
+            }
+        }
+
+        Statement prod_stmt=auction_conn.createStatement();
+        ResultSet prod_rs = prod_stmt.executeQuery("SELECT * FROM "+prodtype+" WHERE productID="+productID);
+        prod_rs.first();
+        %>
+    <b>Product specific information:</b><br>
+    <%    if (prodtype.equalsIgnoreCase("motherboard")) { %>
+            Number of PCIe Slots: <%= prod_rs.getString("pcieSlots") %><br>
+            Number of RAM memory slots: <%= prod_rs.getString("memorySlots") %><br>
+            Maximum RAM capacity: <%= prod_rs.getString("maxRAM")%> GB<br>
+            Socket type: <%= prod_rs.getString("socketType") %><br>
+            Chipset: <%= prod_rs.getString("chipset") %><br>
+            On-board sound: <%= prod_rs.getString("onBoardSound") %><br>
+            On-board video: <%= prod_rs.getString("onBoardVideo") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("cpu")) { %>
+                Number of cores:<%= prod_rs.getString("cores") %><br>
+                Clock speed: <%= prod_rs.getString("clockSpeed") %> GHz<br>
+                Socket type: <%= prod_rs.getString("socketType") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("ram")) { %>
+                Capacity: <%= prod_rs.getString("capacity") %> GB<br>
+                Memory type: <%= prod_rs.getString("memoryType") %><br>
+                Clock speed: <%= prod_rs.getString("clockSpeed") %> MHz<br>
+    <%  } else if (prodtype.equalsIgnoreCase("gpu")) { %>
+                Core clock speed: <%= prod_rs.getString("coreClockSpeed") %> GHz<br>
+                Number of cores: <%= prod_rs.getString("numCores") %><br>
+                Memory: <%= prod_rs.getString("memoryCapacity") %> GB<br>
+                Memory clock speed: <%= prod_rs.getString("memoryClockSpeed") %> MHz<br>
+                Memory type: <%= prod_rs.getString("memoryType") %><br>
+                HDMI ports: <%= prod_rs.getString("numHDMI") %><br>
+                DVI ports: <%= prod_rs.getString("numDVI") %><br>
+                DisplayPorts: <%= prod_rs.getString("numDP") %><br>
+                Power requirement: <%= prod_rs.getString("powerRequirement") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("storage")) { %>
+                Capacity: <%= prod_rs.getString("capacityInGB") %> GB<br>
+                Storage type: <%= prod_rs.getString("storageType") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("case_hw")) { %>
+                Dimensions: <%= prod_rs.getString("dimensions") %><br>
+                Number of case fans: <%= prod_rs.getString("numCaseFans") %><br>
+                Built in lighting: <%= prod_rs.getString("isLITT") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("psu")) { %>
+                Power output: <%= prod_rs.getString("power") %><br>
+                Modular: <%= prod_rs.getString("modular") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("fan")) { %>
+                Dimensions: <%= prod_rs.getString("dimensions") %><br>
+                Flow rate: <%= prod_rs.getString("flowrate") %><br>
+                Maximum RPM: <%= prod_rs.getString("maxRPM") %><br>
+    <%  } else if (prodtype.equalsIgnoreCase("other")) { %>
                 
+    <%  } %>
+                Additional Information:   <%= resultset.getString("extraInfo")%>
 				<br>
 				<br>
 				Item Condition:<b><%=resultset.getString("item_condition")%></b>
