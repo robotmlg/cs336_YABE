@@ -44,14 +44,21 @@
     }
     
     String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
-    int res = stmt.executeUpdate(ins_query);
+
+    int res = 0;
+    try{
+        res = stmt.executeUpdate(ins_query);
+    }
+    catch(Exception e){ res = 0;}
+    finally{
     
-    if (res < 1) {
-        session.setAttribute("alert","Bid failed.");
-        session.setAttribute("alert_type","danger");
-    } else {
-        session.setAttribute("alert","Bid Successful.");
-        session.setAttribute("alert_type","success");
+        if (res < 1) {
+            session.setAttribute("alert","Bid failed.");
+            session.setAttribute("alert_type","danger");
+        } else {
+            session.setAttribute("alert","Bid Successful.");
+            session.setAttribute("alert_type","success");
+        }
     }
         %><%@ include file="auction.jsp" %><%
    
