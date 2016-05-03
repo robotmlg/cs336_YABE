@@ -167,4 +167,3 @@
     %><%@ include file="auction.jsp" %><%
 	
 %>
-%>
