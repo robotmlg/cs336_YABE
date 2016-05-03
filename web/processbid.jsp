@@ -47,10 +47,10 @@
     String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID = "+auctionID+" and b.auctionID=a.auctionID ";
     ResultSet rs5 = stmt4.executeQuery(getmaxbid_query);
 	
-    String getnumbids_query ="SELECT a.numBids FROM  auction a WHERE a.auction ID = "+auctionID+"";
+    String getnumbids_query ="SELECT (a.numBids) FROM auction a WHERE a.auction ID = "+auctionID+"";
     ResultSet rs7 = stmt4.executeQuery(getnumbids_query);
     
-    String getauctionmaxbid_query ="SELECT a.maxBid FROM  auction a WHERE a.auction ID = "+auctionID+"";
+    String getauctionmaxbid_query ="SELECT (a.maxBid) FROM auction a WHERE a.auction ID = "+auctionID+"";
     ResultSet rs8 = stmt4.executeQuery(getauctionmaxbid_query);
     
     String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
