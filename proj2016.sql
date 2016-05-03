@@ -184,7 +184,7 @@ delimiter ;
 
 delimiter $$
 create trigger autobid
-after insert on bid
+before insert on bid
 for each row
 begin
 SET @curr_high = (SELECT MAX(amount) FROM bid WHERE auctionID=new.auctionID);
