@@ -51,9 +51,6 @@
 
     String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID = "+auctionID+" and b.auctionID=a.auctionID ";
     ResultSet rs5 = stmt2.executeQuery(getmaxbid_query);
-	
-    String getnumbids_query ="SELECT a.numBids FROM  auction a WHERE a.auction ID = "+auctionID+"";
-    ResultSet rs7 = stmt3.executeQuery(getnumbids_query);
     
     String getauctionmaxbid_query ="SELECT a.maxBid FROM  auction a WHERE a.auction ID = "+auctionID+"";
     ResultSet rs8 = stmt4.executeQuery(getauctionmaxbid_query);
@@ -142,7 +139,7 @@
                 
                 try{
     				
-    				res6 = stmt5.executeUpdate(ins_query2);
+    				res6 = stmt3.executeUpdate(ins_query2);
     			}
     			catch(Exception e){ res6 = 0;}
     		    finally{
