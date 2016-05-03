@@ -36,38 +36,35 @@
 				                <th>Username</th>
 				                <th>Date</th>
 				    		</tr>
-
 <% 
-			Connection bidhistory_conn = null;
-               try{
-                 Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 bidhistory_conn = DriverManager.getConnection("jdbc:mysql://localhostyabe","yabe","yabe");
-               }
+		Connection bidhistory_conn = null;
+                try{
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                bidhistory_conn = DriverManager.getConnection("jdbc:mysql://localhostyabe","yabe","yabe");
+                } 
 
-               catch(Exception e){
-                 System.out.println("Could not connect to SQL server");
-                 e.printStackTrace();
-               }
+                catch(Exception e){
+                System.out.println("Could not connect to SQL server");
+                e.printStackTrace();
+                }
 
-			  Integer new_auctionID = Integer.parseInt(request.getParameter("auctionID"));
+		Integer new_auctionID = Integer.parseInt(request.getParameter("auctionID"));
 				
-			  Statement newest_statement = bidhistory_conn.createStatement() ;
-              ResultSet rs3;
-              rs3 = null;
-              String active_query = "SELECT * FROM auction a, bid b WHERE a.auctionID = "+new_auctionID+" and b.auctionID=a.auctionID";
-              rs3 = newest_statement.executeQuery(active_query);
-              while(rs3.next()){  %>  
-				
-				      
-				                <tr>
-				                    <td> <%= rs3.getInt("bidID") %></td>
-				                    <td><%= rs3.getInt("amount") %></td>
-				                    <td><%= rs3.getInt("max_amount") %></td>
-				                    <td><%= rs3.getString("username") %></td>
-				                    <td><%= rs3.getString("time") %></td>
-				                </tr>
-				        </table>
-				</div>
+		Statement newest_statement = bidhistory_conn.createStatement() ;
+                ResultSet rs3;
+                rs3 = null;
+                String active_query = "SELECT * FROM auction a, bid b WHERE a.auctionID = "+new_auctionID+" and b.auctionID=a.auctionID";
+                rs3 = newest_statement.executeQuery(active_query);
+                while(rs3.next()){  %>  
+			<tr>
+	                <td> <%= rs3.getInt("bidID") %></td>
+                        <td><%= rs3.getInt("amount") %></td>
+	                <td><%= rs3.getInt("max_amount") %></td>
+			<td><%= rs3.getString("username") %></td>
+			<td><%= rs3.getString("time") %></td>
+			</tr>
+		</table>
+		</div>
             </div>  
             <% } %>
         </div>
