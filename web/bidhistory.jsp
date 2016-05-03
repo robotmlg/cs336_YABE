@@ -27,15 +27,15 @@
             </div>
             <div class="col-md-4">
             <div align="center">
-				        <table border="1" cellpadding="5">
-				            <caption><h2>List of Bids</h2></caption>
-				            <tr>
-				                <th>Bid ID</th>
-				                <th>Bid Amount</th>
-				                <th>Max Amount</th>
-				                <th>Username</th>
-				                <th>Date</th>
-				    		</tr>
+		<table border="1" cellpadding="5">
+		<caption><h2>List of Bids</h2></caption>
+			<tr>
+			<th>Bid ID</th>
+			<th>Bid Amount</th>
+			<th>Max Amount</th>
+			<th>Username</th>
+			<th>Date</th>
+			</tr>
 <% 
 		Connection bidhistory_conn = null;
                 try{
