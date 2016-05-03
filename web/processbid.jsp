@@ -43,15 +43,19 @@
     }
     
 
-    Statement stmt4 = bid_conn.createStatement();
+    Statement stmt2 = bid_conn.createStatement();
     String getmaxbid_query = "SELECT MAX(b.max_amount) FROM bid b, auction a WHERE a.auctionID = "+auctionID+" and b.auctionID=a.auctionID ";
-    ResultSet rs5 = stmt4.executeQuery(getmaxbid_query);
-	
-    String getnumbids_query ="SELECT (a.numBids) FROM auction a WHERE a.auction ID = "+auctionID+"";
-    ResultSet rs7 = stmt4.executeQuery(getnumbids_query);
+    ResultSet rs5 = stmt2.executeQuery(getmaxbid_query);
     
+    Statement stmt3 = bid_conn.createStatement();
+    String getnumbids_query ="SELECT (a.numBids) FROM auction a WHERE a.auction ID = "+auctionID+"";
+    ResultSet rs7 = stmt3.executeQuery(getnumbids_query);
+    
+    Statement stmt4 = bid_conn.createStatement();
     String getauctionmaxbid_query ="SELECT (a.maxBid) FROM auction a WHERE a.auction ID = "+auctionID+"";
     ResultSet rs8 = stmt4.executeQuery(getauctionmaxbid_query);
+    
+    Statement stmt5 = bid_conn.createStatement();
     
     String ins_query = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + amount + "\', \'" + max_amount + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
     int res = 0;
@@ -82,7 +86,7 @@
         	String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + amount + "\', \'" + x + "\')";
         	 
         	try{
-				res3 = stmt4.executeUpdate(updatemaxbid_query);
+				res3 = stmt5.executeUpdate(updatemaxbid_query);
 			}
 			catch(Exception e){ res3 = 0;}
 		    finally{
@@ -103,7 +107,7 @@
     			
     			String updatemaxbid_query = "INSERT INTO auction (maxBid, numBids) VALUES (\'" + max_amount + "\', \'" + x + "\')";
 				try{
-					res3 = stmt4.executeUpdate(updatemaxbid_query);
+					res3 = stmt5.executeUpdate(updatemaxbid_query);
 				}
 				catch(Exception e){ res3 = 0;}
 			    finally{
@@ -125,7 +129,7 @@
                 String ins_query2 = "INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES (\'" + bidID + "\', \'" + rs5.getInt("max_amount") + "\', \'" + rs5.getInt("max_amount") + "\', NOW() , \'" + username + "\', \'" + auctionID + "\')";
                 
                 try{
-					res3 = stmt4.executeUpdate(updatemaxbid_query);
+					res3 = stmt5.executeUpdate(updatemaxbid_query);
 				}
 				catch(Exception e){ res3 = 0;}
 			    finally{
@@ -141,7 +145,7 @@
                 
                 try{
     				
-    				res6 = stmt4.executeUpdate(ins_query2);
+    				res6 = stmt5.executeUpdate(ins_query2);
     			}
     			catch(Exception e){ res6 = 0;}
     		    finally{
