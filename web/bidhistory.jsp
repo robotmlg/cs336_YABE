@@ -63,9 +63,9 @@
 				            </tr>
 				      
 				                <tr>
-				                    <td> <%= rs3.getString("bidID") %></td>
-				                    <td><%= rs3.getString("amount") %></td>
-				                    <td><%= rs3.getString("max_amount") %></td>
+				                    <td> <%= rs3.getInt("bidID") %></td>
+				                    <td><%= rs3.getInt("amount") %></td>
+				                    <td><%= rs3.getInt("max_amount") %></td>
 				                    <td><%= rs3.getString("username") %></td>
 				                    <td><%= rs3.getString("time") %></td>
 				                </tr>
