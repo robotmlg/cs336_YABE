@@ -178,9 +178,44 @@ SET @curr_high = (SELECT MAX(amount) FROM bid WHERE auctionID=new.auctionID);
 if new.amount <= @curr_high
 then 
 SET new.amount = null; -- set amount to null so that insert will get rejected
+else 
+-- bid is good, message old high bidder
+SET @max_msgID = (SELECT MAX(message_id) FROM messages);
+if COALESCE(@max_msgID, '') = ''
+then SET @max_msgID = 0;
+end if;
+SET @curr_ID   = (SELECT bidID FROM bid WHERE amount=@curr_high AND 
+    auctionID=new.auctionID);
+SET @curr_user = (SELECT username FROM bid WHERE bidID=@curr_ID);
+INSERT INTO messages (message_id, to_user, from_user, send_time, subject, body) VALUES
+(@max_msgID + 1, @curr_user, "YABE", NOW(), "You've been outbid!",
+CONCAT("You've been outbid on auction ",new.auctionID," by ",new.username,"!"));
 end if;
 end$$
+
+create trigger max_bid_update
+after insert on bid
+for each row
+begin
+UPDATE auction SET maxBid=new.amount WHERE auctionID=new.auctionID;
+end$$
+
+/*
+create trigger starting_price
+after insert on auction
+for each row
+begin
+SET @max_bidID = (SELECT MAX(bidID) FROM bid);
+if COALESCE(@max_bidID, '') = ''
+then SET @max_bidID = 0;
+end if;
+INSERT INTO bid (bidID, amount, max_amount, time, username, auctionID) VALUES
+(@max_bidID+1, new.start_price, 0, NOW(), "YABE", new.auctionID);
+end$$
+*/
 delimiter ;
+
+
 
 /*
 delimiter $$
