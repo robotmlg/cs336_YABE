@@ -24,20 +24,16 @@
         <div class="container">
         <div class="row">
             <div class="col-md-4">     
-                <h2>List Of All Auctions</h2>
+            <div class="jumbotron">
                 <form action="keywordsearchres.jsp" method="post">
-                    <p>
                         <b>Search brand and model names (separate keywords by spaces):</b><br>
-                        <input type="text" name="searchparam" value="Search keywords" /><br>
+                        <input type="text" name="searchparam" placeholder="Search keywords" /><br>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Keyword Search</button>
-                    </p>
                 </form>
-                <p>
-                    <b>Or</b>
-                </p>
+                </div>
+                <div class="jumbotron">
                 <form action="productsearchres.jsp" method="post">
-                    <p>
                         <b>Specialized product search (can be combined with keyword search after you submit):</b><br>
                         <b>Select a product type:</b><br>
                         <input type="radio" name="producttype" value="motherboard" checked> Motherboard<br>
@@ -73,17 +69,17 @@
                         <input type="radio" name="endDate_order" value="DESC" > Descending<br>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Product Search</button>
-                    </p>
                 </form>
-                <p>
-                    <b>Click on productID to visit the auction page. Click on username to visit seller.</b><br>
-                    <table class="table" style="width:100%">
+                </div>
+                </div>
+                <div class="col-md-8">
+                <div class="jumbotron">
+                <h2>List Of All Auctions</h2>
+                    <table class="table">
                         <tr>
-                            <th>Auction ID</th>
-                            <th>Username</th>
-                            <th>Brand</th>
-                            <th>Model</th>
-                            <th>Item Condition</th>
+                            <th>Seller</th>
+                            <th>Item</th>
+                            <th>Condition</th>
                             <th>Quantity</th>
                             <th>Max Bid</th>
                             <th>Number of Bids</th>
@@ -110,10 +106,8 @@
                                 int auctionID = resultset.getInt("auctionID");
                                 String username = resultset.getString("username"); %>
                         <tr>
-                            <td><a href="auction.jsp?auctionID=<%= auctionID %>" /><%= auctionID %></a></td>
                             <td><a href="userprofile.jsp?username=<%= username %>" /><%= username %> </a></td>
-                            <td><%= resultset.getString("brand") %></td>
-                            <td><%= resultset.getString("model") %></td>
+                            <td><a href="auction.jsp?auctionID=<%= auctionID %>" /><%= resultset.getString("brand") %> <%= resultset.getString("model") %></a></td>
                             <td><%= resultset.getString("item_condition") %></td>
                             <td><%= resultset.getInt("quantity") %></td>
                             <td><%= resultset.getDouble("maxBid") %></td>
@@ -123,7 +117,7 @@
                         </tr>
                         <% } %>
                     </table>
-                </p>
+                    </div>
             </div>   
         </div>
         <%@include file="includes/footer.jsp" %>

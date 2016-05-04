@@ -23,16 +23,14 @@
         <%@include file="includes/navbar.jsp" %>
         <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <p>
-                    <b>Search Results</b><br>
+            <div class="col-md-8">
+                <div class="jumbotron">
+                    <h2>Search Results</h2>
                     <table class="table" style="width:100%">
                         <tr>
-                            <th>Auction ID</th>
-                            <th>Username</th>
-                            <th>Brand</th>
-                            <th>Model</th>
-                            <th>Item Condition</th>
+                            <th>Seller</th>
+                            <th>Item</th>
+                            <th>Condition</th>
                             <th>Quantity</th>
                             <th>Max Bid</th>
                             <th>Number of Bids</th>
@@ -90,10 +88,8 @@
                                 int auctionID = resultset.getInt("auctionID");
                                 String username = resultset.getString("username"); %>
                         <tr>
-                            <td><a href="auction.jsp?auctionID=<%= auctionID %>" /><%= auctionID %></a></td>
                             <td><a href="userprofile.jsp?username=<%= username %>" /><%= username %> </a></td>
-                            <td><%= resultset.getString("brand") %></td>
-                            <td><%= resultset.getString("model") %></td>
+                            <td><a href="auction.jsp?auctionID=<%= auctionID %>" /><%= resultset.getString("brand") %> <%= resultset.getString("model") %></a></td>
                             <td><%= resultset.getString("item_condition") %></td>
                             <td><%= resultset.getInt("quantity") %></td>
                             <td><%= resultset.getDouble("maxBid") %></td>
@@ -103,8 +99,8 @@
                         </tr>
                         <% } %>
                     </table>
-                </p>
                 <a href="allauctions.jsp" class="button btn btn-lg btn-primary btn-block">New Search</a>
+                </div>
             </div>   
         </div>
         <%@include file="includes/footer.jsp" %>
