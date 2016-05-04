@@ -7,7 +7,7 @@ create table users(
 	address varchar(64) not null
 );
 
-drop table questions;
+drop table question;
 create table question(
 question_id integer primary key,
 username varchar(16) references users,
