@@ -7,6 +7,21 @@ create table users(
 	address varchar(64) not null
 );
 
+drop table questions;
+create table question(
+question_id integer primary key,
+username varchar(16) references users,
+question text
+);
+
+drop table answer;
+create table answer(
+answer_id integer primary key
+question_id integer references question,
+username varchar(16) references users,
+answer text
+);
+
 drop table messages;
 create table messages(
 	message_id integer primary key,
