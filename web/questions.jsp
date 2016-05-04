@@ -4,7 +4,7 @@
     
 <html>
     <head>
-        <title>Forum Page</title>
+        <title>Ask Questions Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -38,7 +38,7 @@
           e.printStackTrace();
         }
         %>
-        
+        <% if(session.getAttribute("loggedIn") == "true"){%>
         <form action="processquestion.jsp" method="post">       
                     <p>
                    	 	<textarea name="question" placeholder = "Enter Your Question Here!" required autofocus cols="50" rows="10"></textarea>                      
@@ -46,6 +46,28 @@
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     <a href="answers.jsp" class="button btn btn-lg btn-primary btn-block">Check out frequently asked questions!</a>
         </form>
+        <%}%>
+        
+        <%
+        String username = (String)session.getAttribute("username");
+        Statement stmt = auction_conn.createStatement();
+        String cr_query = "SELECT COUNT(*) FROM cust_reps WHERE username=\'"+username+"\'";
+        ResultSet rs = stmt.executeQuery(cr_query);
+        rs.next();
+        if(rs.getInt(1) != 0){%>
+		
+		<form action="processanswers.jsp" method="post">       
+                    <p>
+                     	<input type="number" name="question_id" placeholder="Question ID" required autofocus />     
+                   	 	<textarea name="answers" placeholder = "Enter your answer here!" required autofocus cols="50" rows="10"></textarea>                      
+                    </p>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form>
+        
+               <% }%>
+               
+        
+        
         
         </div>
         </div>
