@@ -182,7 +182,7 @@
 			<tr>
                 <td><%= rs3.getInt("bidID") %></td>
                 <td><%= rs3.getInt("amount") %></td>
-                <td><%= rs3.getString("username") %></td>
+                <td><a href="userprofile.jsp?username=<%= rs3.getString("username") %>"><%= rs3.getString("username") %></a></td>
                 <td><%= rs3.getString("time") %></td>
 			</tr>
             <% } %>

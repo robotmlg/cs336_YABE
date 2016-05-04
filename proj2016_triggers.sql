@@ -61,6 +61,7 @@ WHILE @i <= @n DO
     then -- auction won
         SET @buyer  = (SELECT username FROM bid WHERE auctionID=@this_ID AND 
             amount=@max_bid);
+        UPDATE auction SET winner=@buyer WHERE auctionID=@this_ID;
         INSERT INTO messages (message_id, to_user, from_user, send_time, subject, 
             body) VALUES
             (@max_msgID + 1, @seller, "YABE", @curr_time, "Your item sold!",
