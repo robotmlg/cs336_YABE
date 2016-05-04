@@ -59,6 +59,7 @@
 
               String time_left = ""+diffDays+" days, "+diffHours+":"+diffMinutes+":"+diffSeconds;
 
+
               
               
 			  %>			  
@@ -144,25 +145,56 @@
 				<br>
 				<b>Quantity:<%= resultset.getInt("quantity")%></b><br>
                 </div>
-                </div>
+        <div class="jumbotron">
+		<table class="table">
+		<caption><h2>Similar Items</h2></caption>
+        <tr>
+        <th>Item</th><th>Current Bid</th><th>Auction End</th>
+        </tr>
+<% 
 
-                <div class="col-md-6">
-				<% if(session.getAttribute("loggedIn") == "true"){%>
-                <div class="jumbotron">
-                <h3>Place bid:</h3>
-        			<form action="processbid.jsp?auctionID=<%= new_auctionID %>" method="post">       
-                 	<p>
-                     	Amount: <input type="number" name="amount" placeholder="[Min_Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required autofocus />
-                        <br/>
-                      	Max Amount: <input type="number" name="max_amount" placeholder="[Max Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required />
-                        <br/>
-                 	</p>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
-            	</form>
-                </div>
-            	
-        		<%  } %>		
-                <div class="jumbotron">
+				
+        ResultSet sim_rs;
+        String sim_query = "SELECT p.model, p.brand, a.end_date, a.maxBid, "+
+            "a.auctionID FROM auction a, product p "+
+            "WHERE completed=false AND a.productID=p.productID AND "+
+            "(p.brand LIKE \'"+resultset.getString("brand")+"\' OR "+
+            "p.model LIKE \'"+resultset.getString("model")+"\') AND "+
+            "a.auctionID!="+new_auctionID;
+        Statement sim_stmt = auction_conn.createStatement();
+        sim_rs = sim_stmt.executeQuery(sim_query);
+        while(sim_rs.next()){  %>  
+			<tr>
+                <td>
+                    <a href="auction.jsp?auctionID=<%= sim_rs.getInt("auctionID")%>">
+                    <%= sim_rs.getString("brand") %> <%= sim_rs.getString("model") %>
+                    </a>
+                </td>
+                <td><%= sim_rs.getDouble("maxBid") %></td>
+                <td><%= sim_rs.getTimestamp("end_date").toString() %></td>
+			</tr>
+            <% } %>
+		</table>
+        </div>
+        </div>
+
+        <div class="col-md-6">
+        <% if(session.getAttribute("loggedIn") == "true"){%>
+        <div class="jumbotron">
+        <h3>Place bid:</h3>
+            <form action="processbid.jsp?auctionID=<%= new_auctionID %>" method="post">       
+            <p>
+                Amount: <input type="number" name="amount" placeholder="[Min_Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required autofocus />
+                <br/>
+                Max Amount: <input type="number" name="max_amount" placeholder="[Max Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required />
+                <br/>
+            </p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
+        </form>
+        </div>
+        
+        <%  } %>		
+        <div class="jumbotron">
 		<table class="table"cellpadding="5">
 		<caption><h2>Bid History</h2></caption>
 			<tr>
