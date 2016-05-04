@@ -23,7 +23,7 @@
         <div class="container">
         <div class="row">
         <div class="col-lg-12">
-        <h1>Welcome to the Forum Page!</h1>
+        <h1>Have Questions? Ask them here!</h1>
         
         
         <%
@@ -39,8 +39,13 @@
         }
         %>
         
-		<a href="Question.jsp"><input type="button" name="Question"
-		value="Ask a question!" /></a>
+        <form action="processquestion.jsp" method="post">       
+                    <p>
+                   	 	<textarea name="question" placeholder = "Enter Your Question Here!" required autofocus cols="50" rows="10"></textarea>                      
+                    </p>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                    <a href="answers.jsp" class="button btn btn-lg btn-primary btn-block">Check out frequently asked questions!</a>
+        </form>
         
         </div>
         </div>
