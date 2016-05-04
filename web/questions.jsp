@@ -63,7 +63,7 @@
 		<form action="processanswers.jsp" method="post">       
                      	<input type="number" name="question_id" placeholder="Question ID" required autofocus />     
                         <br/>
-                   	 	<textarea name="answers" placeholder = "Enter your answer here!" required autofocus rows="10" cols="40"></textarea>                      
+                   	 	<textarea name="answer" placeholder = "Enter your answer here!" required autofocus rows="10" cols="40"></textarea>                      
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         </form>
         </div>

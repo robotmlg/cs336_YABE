@@ -62,8 +62,21 @@
 				                 
 				                    <td><%= answers_resultset.getInt("question_id") %></td>
 				                    <td><%= answers_resultset.getString("username") %></td>
-				                    <td colspan="90"><%= answers_resultset.getString("question") %></td>
-				                    <td colspan="90">><%= answers_resultset.getString("answer") %></td>
+				                    <td><%= answers_resultset.getString("question") %></td>
+				                    <td><%= answers_resultset.getString("answer") %></td>
+				                    
+				                </tr>
+            <%}
+              String unanswers_query = "SELECT * FROM question q  WHERE NOT EXISTS (SELECT * FROM answer a WHERE a.question_id=q.question_id)";
+              answers_resultset = answers_stmt.executeQuery(unanswers_query);
+              while(answers_resultset.next()){  %> 
+					      
+				                <tr>
+				                 
+				                    <td><%= answers_resultset.getInt("question_id") %></td>
+				                    <td><%= answers_resultset.getString("username") %></td>
+				                    <td><%= answers_resultset.getString("question") %></td>
+				                    <td></td>
 				                    
 				                </tr>
             <%}%>
