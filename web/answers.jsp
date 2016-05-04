@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@ page language="java" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="mindrot.jbcrypt.BCrypt" %>
 
 <% 
   Connection answers_conn = null;
@@ -37,11 +36,10 @@
         <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Frequently Asked Questions and Answers</h1>
-            </div>
+            <div class="jumbotron">
+                <h2>Frequently Asked Questions and Answers</h2>
             
-             <table border="1" cellpadding="5">
-				            <caption><h2>List of Bids</h2></caption>
+             <table class="table" cellpadding="5">
 				            <tr>
 				                <th>Question ID:</th>
 				                <th>Asker Username:</th>
@@ -68,12 +66,13 @@
 				                    <td colspan="90">><%= answers_resultset.getString("answer") %></td>
 				                    
 				                </tr>
+            <%}%>
 				        </table>
-				</div>
 				
-            </div>  <%}%>
             </div>   
         </div>
+        </div>
+
         <%@include file="includes/footer.jsp" %>
         </div>
     </body>

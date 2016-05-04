@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@ page language="java" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="mindrot.jbcrypt.BCrypt" %>
  
 <% 
   Connection forum_conn = null;
@@ -15,7 +14,7 @@
   }
   
   String answer = request.getParameter("answer");
-  String username = (String)session.getAttribute("username");
+  String proc_username = (String)session.getAttribute("username");
   Integer question_id = Integer.parseInt(request.getParameter("question_id"));
   
   
@@ -34,8 +33,8 @@
   
   int y = 0;
   if(request.getParameter("answer") != null){
-	  y = id_stmt.executeUpdate("INSERT INTO answer(answer_id,question_id,username,answer) VALUES ('"
-				+ answer_id + "','" + question_id + "','" + username + "','" + answer + "');");
+	  y = id_stmt.executeUpdate("INSERT INTO answer (answer_id,question_id,username,answer) VALUES ('"
+				+ answer_id + "','" + question_id + "','" + proc_username + "','" + answer + "')");
   }
   
   if (y < 1) {
