@@ -17,15 +17,6 @@
         <script src="js/jquery-1.10.2.min.js"></script>
         <script src="js/bootstrap.js"></script> 
     </head>
-    <body>
-    
-        <%@include file="includes/navbar.jsp" %>
-        <div class="container">
-        <div class="row">
-        <div class="col-lg-12">
-        <h1>Have Questions? Ask them here!</h1>
-        
-        
         <%
         Connection auction_conn = null;
         try{
@@ -38,14 +29,24 @@
           e.printStackTrace();
         }
         %>
+    <body>
+    
+        <%@include file="includes/navbar.jsp" %>
+        <div class="container">
+        <div class="row">
         <% if(session.getAttribute("loggedIn") == "true"){%>
+        <div class="col-md-6">
+        <div class="jumbotron">
+        <h2>Have Questions? Ask them here!</h2>
+        
+        
         <form action="processquestion.jsp" method="post">       
-                    <p>
-                   	 	<textarea name="question" placeholder = "Enter Your Question Here!" required autofocus cols="50" rows="10"></textarea>                      
-                    </p>
+                   	 	<textarea name="question" placeholder = "Enter Your Question Here!" required autofocus rows="10" cols="40"></textarea>                      
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     <a href="answers.jsp" class="button btn btn-lg btn-primary btn-block">Check out frequently asked questions!</a>
         </form>
+        </div>
+        </div>
         <%}%>
         
         <%
@@ -55,21 +56,24 @@
         ResultSet rs = stmt.executeQuery(cr_query);
         rs.next();
         if(rs.getInt(1) != 0){%>
+        <div class="col-md-6">
+        <div class="jumbotron">
+        <h2>Customer reps: answer question here</h2>
 		
 		<form action="processanswers.jsp" method="post">       
-                    <p>
                      	<input type="number" name="question_id" placeholder="Question ID" required autofocus />     
-                   	 	<textarea name="answers" placeholder = "Enter your answer here!" required autofocus cols="50" rows="10"></textarea>                      
-                    </p>
+                        <br/>
+                   	 	<textarea name="answers" placeholder = "Enter your answer here!" required autofocus rows="10" cols="40"></textarea>                      
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         </form>
+        </div>
+        </div>
         
                <% }%>
                
         
         
         
-        </div>
         </div>
         <%@include file="includes/footer.jsp" %>
         </div>
