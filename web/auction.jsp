@@ -143,14 +143,11 @@
 				Starting Time:<%= resultset.getTimestamp("start_date") %>
 				<br>
 				<b>Quantity:<%= resultset.getInt("quantity")%></b><br>
-				<br>
-				Current Highest Bid:<%=resultset.getInt("maxBid") %>
-				<br>
                 </div>
                 </div>
 
-				<% if(session.getAttribute("loggedIn") == "true"){%>
                 <div class="col-md-6">
+				<% if(session.getAttribute("loggedIn") == "true"){%>
                 <div class="jumbotron">
                 <h3>Place bid:</h3>
         			<form action="processbid.jsp?auctionID=<%= new_auctionID %>" method="post">       
@@ -159,21 +156,39 @@
                         <br/>
                       	Max Amount: <input type="number" name="max_amount" placeholder="[Max Bid]" value="<%=resultset.getInt("maxBid")%>" min="1" step="1" required />
                         <br/>
-                      	Bid History: <a href="bidhistory.jsp?auctionID=<%= new_auctionID %>"> <%=resultset.getInt("numBids")%></a><center-right>
                  	</p>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Place Bid</button>
             	</form>
                 </div>
-                </div>
             	
         		<%  } %>		
-			<br>
-			<br>
-			<br>
-		</body>
-            </div>
-            <div class="col-md-4">
-            </div>   
+                <div class="jumbotron">
+		<table class="table"cellpadding="5">
+		<caption><h2>Bid History</h2></caption>
+			<tr>
+			<th>Bid ID</th>
+			<th>Bid Amount</th>
+			<th>Username</th>
+			<th>Date</th>
+			</tr>
+<% 
+
+				
+        ResultSet rs3;
+        String history_query = "SELECT * FROM bid b WHERE b.auctionID = "+new_auctionID+" ORDER BY amount DESC";
+        Statement stmt = auction_conn.createStatement();
+        rs3 = stmt.executeQuery(history_query);
+        while(rs3.next()){  %>  
+			<tr>
+                <td><%= rs3.getInt("bidID") %></td>
+                <td><%= rs3.getInt("amount") %></td>
+                <td><%= rs3.getString("username") %></td>
+                <td><%= rs3.getString("time") %></td>
+			</tr>
+            <% } %>
+		</table>
+                </div>
+                </div>
 
         </div>
         <%@include file="includes/footer.jsp" %>
