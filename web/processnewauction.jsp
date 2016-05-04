@@ -139,7 +139,7 @@ if (product.equalsIgnoreCase("New")) {
         }
 
         stmt = conn.createStatement();
-        ins_query = "INSERT INTO case_hw (productID, dimension, numCaseFans, isLITT) VALUES (\'" + productID + "\', \'" + dimensions + "\', \'" + numCaseFans + "\', \'" + isLITT + "\')";
+        ins_query = "INSERT INTO case_hw (productID, dimensions, numCaseFans, isLITT) VALUES (\'" + productID + "\', \'" + dimensions + "\', \'" + numCaseFans + "\', \'" + isLITT + "\')";
         res = stmt.executeUpdate(ins_query);
         if (res < 1) {
             session.setAttribute("alert","Auction creation failed due to failed product creation. Please try again.");
