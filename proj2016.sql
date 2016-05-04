@@ -16,7 +16,7 @@ question text
 
 drop table answer;
 create table answer(
-answer_id integer primary key
+answer_id integer primary key,
 question_id integer references question,
 username varchar(16) references users,
 answer text
@@ -62,7 +62,7 @@ create table auction(
 	maxBid decimal(10,2) not null,
 	numBids integer not null,
 	productID integer references product,
-	username varchar(16) references users not null;
+	username varchar(16) references users,
 	winner varchar(16) references users,
 	sponsored boolean,
 	completed boolean
